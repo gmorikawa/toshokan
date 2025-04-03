@@ -1,5 +1,7 @@
 # README
 
+This project is the API of _toshokan_ system for managing documents like books, whitepapers, etc.
+
 ## Getting Started
 
 To execute the project run the following command:
