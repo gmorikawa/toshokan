@@ -22,4 +22,22 @@ public class UserService {
     public User insert(User user) {
         return repository.save(user);
     }
+
+    public User update(String id, User user) {
+        User current = repository.getReferenceById(id);
+
+        if(current != null) {
+            current.setEmail(user.getEmail());
+            current.setUsername(user.getUsername());
+        }
+
+        return repository.save(current);
+    }
+
+    public boolean remove(String id) {
+        User user = repository.getReferenceById(id);
+        repository.delete(user);
+
+        return true;
+    }
 }
