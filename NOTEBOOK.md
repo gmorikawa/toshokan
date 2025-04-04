@@ -1,5 +1,7 @@
 # NOTEBOOK
 
+This document contains some notes on topics that I thought it was necessary to remember, or something that I had to study further to implement in this application.
+
 ## Maven commands
 
 To execute the project run the following command:
@@ -77,3 +79,60 @@ After running the function, the return object must be converted to JSON. But, be
 
 * [Getting Started | Building a RESTful Web Service](https://spring.io/guides/gs/rest-service), accessed on April 3, 2025;
 * [Mapping Requests :: Spring Framework](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-requestmapping.html), accessed on April 3, 2025;
+
+## Throwing custom exceptions in Spring REST api
+
+In this application I used custom exceptions to handle business logic exceptions in the service layer. For example:
+
+```java
+package dev.gmorikawa.toshokan.user.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.CONFLICT, reason = "Username is already registered")
+public class UsernameNotAvailableException extends RuntimeException { }
+
+```
+
+The class above represents a exception that occurs in case the given username is already registered in the system. To ensure that Spring will handle it in a more elegant way I used the `@ResponseStatus` annotation over the custom exception class by passing two parameters: first the `code`, which represents the [Http Status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status), and the `reason`, which represents the message that will be sent in the response object.
+
+The problem with this approach is that we don't have much control on how the response body should constructed. To have more control over the response body when handling exceptions is by using a `@ControllerAdvice` annotated class:
+
+```java
+package dev.gmorikawa.toshokan;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
+import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
+
+@ControllerAdvice
+public class AppExceptionHandler 
+  extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler({ 
+        EmailNotAvailableException.class,
+        UsernameNotAvailableException.class
+    })
+    ResponseEntity<ExceptionResponseBody> handleConflict(RuntimeException ex, WebRequest request) {
+        ExceptionResponseBody responseBody = new ExceptionResponseBody(HttpStatus.CONFLICT, ex.getMessage());
+
+        return new ResponseEntity<ExceptionResponseBody>(responseBody, HttpStatus.CONFLICT);
+    }
+}
+```
+
+In this code, the function is handling in case one of the exceptions listed on `@ExceptionHandler()` annotation are thrown. The `ExceptionResponseBody` is a custom class that I created to represent the structure of response body. It should be serializable
+
+### References
+
+* [Exception Handling in Spring MVC](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc), accessed on April 4, 2025;
+* [HTTP response status codes - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status), accessed on April 4, 2025;
+* [RuntimeException (Java Platform SE 8 )](https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html), accessed on April 4, 2025;
+* [ResponseStatus (Spring Framework 6.2.5 API)](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ResponseStatus.html), accessed on April 4, 2025;
