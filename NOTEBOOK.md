@@ -136,3 +136,33 @@ In this code, the function is handling in case one of the exceptions listed on `
 * [HTTP response status codes - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status), accessed on April 4, 2025;
 * [RuntimeException (Java Platform SE 8 )](https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html), accessed on April 4, 2025;
 * [ResponseStatus (Spring Framework 6.2.5 API)](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ResponseStatus.html), accessed on April 4, 2025;
+
+## Mapping entities relationships in Spring
+
+To map a unidirectional _many-to-one_ we can use the `@ManyToOne` with `@JoinColumn` annotation. In the below example code, I am mapping the property `publisher` from Book to the entity Publisher. The `@JoinColumn` indicates that when data is read it should make a join to bring the entire entity together:
+
+```java
+package dev.gmorikawa.toshokan.document;
+
+import dev.gmorikawa.toshokan.publisher.Publisher;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "books")
+public class Book extends Document {
+    @JoinColumn(name = "publisherId")
+    @ManyToOne
+    private Publisher publisher;
+
+    @Column(unique = true)
+    private String isbn;
+}
+```
+
+### References
+
+* [Running the Persistence Examples :: Jakarta EE Tutorial :: Jakarta EE Documentation](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/persist/persistence-basicexamples/persistence-basicexamples.html#_entity_relationships_in_the_order_application), accessed on April 6, 2025;
