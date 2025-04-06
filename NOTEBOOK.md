@@ -166,3 +166,56 @@ public class Book extends Document {
 ### References
 
 * [Running the Persistence Examples :: Jakarta EE Tutorial :: Jakarta EE Documentation](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/persist/persistence-basicexamples/persistence-basicexamples.html#_entity_relationships_in_the_order_application), accessed on April 6, 2025;
+
+## Modeling inheritance in database
+
+In the database layer there is no out of the box solution to represent the OOP inheritance between entitis. _JPA_ offers some strategies of inheritance, each with pros and cons, and the main issue will be performance. These strategies are:
+
+* __MappedSuperclass__: the parent classes, can’t be entities
+* __Single Table__: The entities from different classes with a common ancestor are placed in a single table.
+* __Joined Table__: Each class has its table, and querying a subclass entity requires joining the tables.
+* __Table per Class__: All the properties of a class are in its table, so no join is required.
+
+For my case, I have a class `Document` that will act as parent class, while I can have, for example, `Book` and `Whitepaper` as children class.
+
+```java
+@Entity
+public class Document {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    private String title;
+
+    private Integer year;
+
+    private String authors;
+
+    private String description;
+
+    @JoinColumn(name = "categoryId")
+    @ManyToOne
+    private Category category;
+}
+```
+
+```java
+@Entity
+public class Book extends Document {
+    @JoinColumn(name = "publisherId")
+    @ManyToOne
+    private Publisher publisher;
+
+    @Column(unique = true)
+    private String isbn;
+}
+```
+
+For this case I decided to go with _Table per Class_ strategy, since I don't have the need to handle Documents generically yet. _Joined Table_ was something that I was imagining at first, but it might generate unnecessary overhead just for a simple listing.
+
+### References
+
+* [Introduction to Jakarta Persistence :: Jakarta EE Tutorial :: Jakarta EE Documentation](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/persist/persistence-intro/persistence-intro.html#_entity_inheritance), access on April 5, 2025;
+* [InheritanceType (Jakarta Persistence API documentation)](https://jakarta.ee/specifications/persistence/2.2/apidocs/javax/persistence/inheritancetype), accessed on April 5, 2025;
+* [Hibernate Inheritance Mapping | Baeldung](https://www.baeldung.com/hibernate-inheritance), accessed on April 5, 2025;
+* [Mastering JPA Inheritance Strategies: Hibernate 6.x JPA 3.x Spring Boot 3.x | by Praveen kumar | Medium](https://medium.com/@iampraveenkumar/mastering-jpa-inheritance-strategies-hibernate-6-x-jpa-3-x-spring-boot-3-x-06eecac1147a), accessed on April 5, 2025;
