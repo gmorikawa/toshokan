@@ -2,7 +2,6 @@ package dev.gmorikawa.toshokan.user;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,7 +17,6 @@ public class UserController {
 
     private final UserService service;
 
-    @Autowired
     public UserController(UserService service) {
         this.service = service;
     }
@@ -39,7 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean remove(@PathVariable String id) {
+    public User remove(@PathVariable String id) {
         return service.remove(id);
     }
 

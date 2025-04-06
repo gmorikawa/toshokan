@@ -41,7 +41,7 @@ public class PublisherController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean remove(@PathVariable String id) {
+    public Publisher remove(@PathVariable String id) {
         return service.remove(id);
     }
 }

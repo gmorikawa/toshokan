@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.publisher;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class PublisherService {
     }
 
     public Publisher getById(String id) {
-        return repository.getReferenceById(id);
+        return repository.findById(id).orElse(null);
     }
 
     public Publisher insert(Publisher entity) {
@@ -25,19 +26,26 @@ public class PublisherService {
     }
 
     public Publisher update(String id, Publisher entity) {
-        Publisher current = getById(id);
+        Optional<Publisher> result = repository.findById(id);
 
-        if(current != null) {
-            current.setName(entity.getName());
+        if(result.isEmpty()) {
+            return null;
         }
 
-        return repository.save(current);
+        Publisher publisher = result.get();
+
+        publisher.setName(entity.getName());
+
+        return repository.save(publisher);
     }
 
-    public boolean remove(String id) {
-        Publisher entity = getById(id);
-        repository.delete(entity);
+    public Publisher remove(String id) {
+        Optional<Publisher> publisher = repository.findById(id);
 
-        return true;
+        if(!publisher.isEmpty()) {
+            repository.delete(publisher.get());
+        }
+
+        return publisher.orElse(null);
     }
 }

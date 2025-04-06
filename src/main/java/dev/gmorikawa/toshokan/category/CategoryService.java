@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.category;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class CategoryService {
     }
 
     public Category getById(String id) {
-        return repository.getReferenceById(id);
+        return repository.findById(id).orElse(null);
     }
 
     public Category insert(Category entity) {
@@ -25,19 +26,26 @@ public class CategoryService {
     }
 
     public Category update(String id, Category entity) {
-        Category current = getById(id);
+        Optional<Category> result = repository.findById(id);
 
-        if(current != null) {
-            current.setName(entity.getName());
+        if(result.isEmpty()) {
+            return null;
         }
 
-        return repository.save(current);
+        Category category = result.get();
+
+        category.setName(entity.getName());
+
+        return repository.save(category);
     }
 
-    public boolean remove(String id) {
-        Category entity = getById(id);
-        repository.delete(entity);
+    public Category remove(String id) {
+        Optional<Category> category = repository.findById(id);
 
-        return true;
+        if(!category.isEmpty()) {
+            repository.delete(category.get());
+        }
+
+        return category.orElse(null);
     }
 }

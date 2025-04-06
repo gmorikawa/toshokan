@@ -41,7 +41,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean remove(@PathVariable String id) {
+    public Category remove(@PathVariable String id) {
         return service.remove(id);
     }
 

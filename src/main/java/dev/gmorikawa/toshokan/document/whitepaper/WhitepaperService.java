@@ -3,6 +3,9 @@ package dev.gmorikawa.toshokan.document.whitepaper;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class WhitepaperService {
     private final WhitepaperRepository repository;
 

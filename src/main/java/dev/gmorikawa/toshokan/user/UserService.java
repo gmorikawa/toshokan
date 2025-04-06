@@ -1,8 +1,8 @@
 package dev.gmorikawa.toshokan.user;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
@@ -10,10 +10,8 @@ import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
 @Service
 public class UserService {
-
     private final UserRepository repository;
 
-    @Autowired
     public UserService(UserRepository repository) {
         this.repository = repository;
     }
@@ -22,42 +20,53 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User insert(User user) {
-        if(!checkEmailIsAvailable(user.getEmail())) {
+    public User getById(String id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public User insert(User entity) {
+        if(!checkEmailIsAvailable(entity.getEmail())) {
             throw new EmailNotAvailableException();
         }
 
-        if(!checkUsernameIsAvailable(user.getUsername())) {
+        if(!checkUsernameIsAvailable(entity.getUsername())) {
             throw new UsernameNotAvailableException();
         }
+
+        return repository.save(entity);
+    }
+
+    public User update(String id, User entity) {
+        if(!checkEmailIsAvailable(entity.getEmail(), id)) {
+            throw new EmailNotAvailableException();
+        }
+
+        if(!checkUsernameIsAvailable(entity.getUsername(), id)) {
+            throw new UsernameNotAvailableException();
+        }
+
+        Optional<User> result = repository.findById(id);
+
+        if(result.isEmpty()) {
+            return null;
+        }
+
+        User user = result.get();
+
+        user.setEmail(entity.getEmail());
+        user.setUsername(entity.getUsername());
 
         return repository.save(user);
     }
 
-    public User update(String id, User user) {
-        User current = repository.getReferenceById(id);
+    public User remove(String id) {
+        Optional<User> user = repository.findById(id);
 
-        if(current != null) {
-            if(!checkEmailIsAvailable(user.getEmail(), id)) {
-                throw new EmailNotAvailableException();
-            }
-    
-            if(!checkUsernameIsAvailable(user.getUsername(), id)) {
-                throw new UsernameNotAvailableException();
-            }
-
-            current.setEmail(user.getEmail());
-            current.setUsername(user.getUsername());
+        if(!user.isEmpty()) {
+            repository.delete(user.get());
         }
 
-        return repository.save(current);
-    }
-
-    public boolean remove(String id) {
-        User user = repository.getReferenceById(id);
-        repository.delete(user);
-
-        return true;
+        return user.orElse(null);
     }
 
     private boolean checkUsernameIsAvailable(String username) {
