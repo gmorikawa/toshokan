@@ -1,6 +1,6 @@
 # NOTEBOOK
 
-This document contains some notes on topics that I thought it was necessary to remember, or something that I had to study further to implement in this application.
+This document contains some notes on topics that I thought it was necessary to remember, or something that I had to study further to implement in this application. This is not intended to be a guide.
 
 ## Maven commands
 
@@ -163,9 +163,65 @@ public class Book extends Document {
 }
 ```
 
+To map a unidirectional _many-to-many_ we can use the `@ManyToMany` annotation to indicate a collection that represents the relationship. For example, in this application I have `Documents` that can have many `Topics`, hence the relationship many-to-many:
+
+```java
+public abstract class Document {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    private String title;
+
+    private Integer year;
+
+    private String authors;
+
+    private String description;
+
+    @JoinColumn()
+    @ManyToOne
+    private Category category;
+
+    @JoinTable(
+        name = "document_topics",
+        joinColumns = @JoinColumn(
+            name = "document_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "topic_id",
+            referencedColumnName = "id"
+        )
+    )
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Topic> topics;
+
+    public Document() {
+        topics = new ArrayList<Topic>();
+    }
+}
+```
+
+```java
+public class Topic {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    private String name;
+
+    @ManyToMany(mappedBy="topics")
+    private Set<Document> documents;
+}
+```
+
+Since only the document will add topics to it, not the other way around, it is called unidirectional. Because of that, `documents` in `Topic` has a _mappedBy_ parameter to indicate the field that owns the relationship (from where it will be registered).
+
 ### References
 
 * [Running the Persistence Examples :: Jakarta EE Tutorial :: Jakarta EE Documentation](https://jakarta.ee/learn/docs/jakartaee-tutorial/current/persist/persistence-basicexamples/persistence-basicexamples.html#_entity_relationships_in_the_order_application), accessed on April 6, 2025;
+* [javax.persistence.ManyToMany - JPA Annotation - JPA API Reference](https://www.objectdb.com/api/java/jpa/ManyToMany), accessed on April 6, 2025;
 
 ## Modeling inheritance in database
 
