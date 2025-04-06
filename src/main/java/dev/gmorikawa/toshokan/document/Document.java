@@ -1,15 +1,23 @@
 package dev.gmorikawa.toshokan.document;
 
-import dev.gmorikawa.toshokan.category.Category;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+
+import dev.gmorikawa.toshokan.category.Category;
+import dev.gmorikawa.toshokan.topic.Topic;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -26,11 +34,27 @@ public abstract class Document {
 
     private String description;
 
-    @JoinColumn(name = "categoryId")
+    @JoinColumn()
     @ManyToOne
     private Category category;
 
-    public Document() { }
+    @JoinTable(
+        name = "document_topics",
+        joinColumns = @JoinColumn(
+            name = "document_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "topic_id",
+            referencedColumnName = "id"
+        )
+    )
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Topic> topics;
+
+    public Document() {
+        topics = new ArrayList<Topic>();
+    }
 
     public Document(String id, String title, Integer year, String authors, String description, Category category) {
         this.id = id;
@@ -39,6 +63,8 @@ public abstract class Document {
         this.authors = authors;
         this.description = description;
         this.category = category;
+
+        topics = new ArrayList<Topic>();
     }
 
     public Document(String title, Integer year, String authors, String description, Category category) {
@@ -47,6 +73,8 @@ public abstract class Document {
         this.authors = authors;
         this.description = description;
         this.category = category;
+
+        topics = new ArrayList<Topic>();
     }
 
     public String getId() {
@@ -95,5 +123,13 @@ public abstract class Document {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void addTopics(Topic topic) {
+        this.topics.add(topic);
     }
 }
