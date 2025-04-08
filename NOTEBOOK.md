@@ -275,3 +275,22 @@ For this case I decided to go with _Table per Class_ strategy, since I don't hav
 * [InheritanceType (Jakarta Persistence API documentation)](https://jakarta.ee/specifications/persistence/2.2/apidocs/javax/persistence/inheritancetype), accessed on April 5, 2025;
 * [Hibernate Inheritance Mapping | Baeldung](https://www.baeldung.com/hibernate-inheritance), accessed on April 5, 2025;
 * [Mastering JPA Inheritance Strategies: Hibernate 6.x JPA 3.x Spring Boot 3.x | by Praveen kumar | Medium](https://medium.com/@iampraveenkumar/mastering-jpa-inheritance-strategies-hibernate-6-x-jpa-3-x-spring-boot-3-x-06eecac1147a), accessed on April 5, 2025;
+
+## Enabling CORS on Spring REST api
+
+```java
+@Bean
+public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/api/**").allowedOrigins("http://localhost:4200");
+        }
+    };
+}
+```
+
+### References
+
+* [Getting Started | Enabling Cross Origin Requests for a RESTful Web Service](https://spring.io/guides/gs/rest-service-cors), accessed on April 8, 2025;
+* [Cross-Origin Resource Sharing (CORS) - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS), accessed on April 8, 2025;
