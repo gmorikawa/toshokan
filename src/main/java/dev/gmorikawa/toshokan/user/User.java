@@ -1,5 +1,11 @@
 package dev.gmorikawa.toshokan.user;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 import jakarta.persistence.Entity;
@@ -19,6 +25,7 @@ public class User {
     
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String email;
@@ -68,7 +75,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = encrypt(password);
     }
 
     public String getEmail() {
@@ -93,5 +100,34 @@ public class User {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public boolean comparePassword(String plainPassword) {
+        return this.password.equals(encrypt((plainPassword)));
+    }
+
+    public String encrypt(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(encodedHash);
+        } catch(NoSuchAlgorithmException e) {
+            return "";
+        }
+    }
+
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+
+            hexString.append(hex);
+        }
+
+        return hexString.toString();
     }
 }

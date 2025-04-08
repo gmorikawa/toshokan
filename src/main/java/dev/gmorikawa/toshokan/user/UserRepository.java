@@ -9,14 +9,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u FROM User u WHERE u.username = ?1")
-    Optional<User> findUserByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     @Query("SELECT u FROM User u WHERE u.username = ?1 AND u.id <> ?2")
-    Optional<User> findUserByUsername(String username, String ignoreId);
+    Optional<User> findByUsername(String username, String ignoreId);
 
     @Query("SELECT u FROM User u WHERE u.email = ?1")
-    Optional<User> findUserByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE u.email = ?1 AND u.id <> ?2")
-    Optional<User> findUserByEmail(String email, String ignoreId);
+    Optional<User> findByEmail(String email, String ignoreId);
 }

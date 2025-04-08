@@ -20,6 +20,10 @@ public class UserService {
         return repository.findAll();
     }
 
+    public User getByUsername(String username) {
+        return repository.findByUsername(username).orElse(null);
+    }
+
     public User getById(String id) {
         return repository.findById(id).orElse(null);
     }
@@ -70,18 +74,18 @@ public class UserService {
     }
 
     private boolean checkUsernameIsAvailable(String username) {
-        return repository.findUserByUsername(username).isEmpty();
+        return repository.findByUsername(username).isEmpty();
     }
 
     private boolean checkUsernameIsAvailable(String username, String ignoreId) {
-        return repository.findUserByUsername(username, ignoreId).isEmpty();
+        return repository.findByUsername(username, ignoreId).isEmpty();
     }
 
     private boolean checkEmailIsAvailable(String email) {
-        return repository.findUserByEmail(email).isEmpty();
+        return repository.findByEmail(email).isEmpty();
     }
 
     private boolean checkEmailIsAvailable(String email, String ignoreId) {
-        return repository.findUserByEmail(email, ignoreId).isEmpty();
+        return repository.findByEmail(email, ignoreId).isEmpty();
     }
 }

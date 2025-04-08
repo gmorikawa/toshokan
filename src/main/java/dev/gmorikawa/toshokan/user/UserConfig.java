@@ -17,6 +17,9 @@ public class UserConfig {
             User u1 = new User("gmorikawa", "gmorikawa", "gabriel.morikawa@email.com", UserRole.ADMIN, "Gabriel Morikawa");
             User u2 = new User("arthurm", "reddead", "arthur.morgan@email.com", UserRole.LIBRARIAN, "Arthur Morgan");
 
+            u1.setPassword(u1.encrypt(u1.getPassword()));
+            u2.setPassword(u2.encrypt(u2.getPassword()));
+
             repository.saveAll(List.of(u1, u2));
         };
     }
