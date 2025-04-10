@@ -294,3 +294,13 @@ public WebMvcConfigurer corsConfigurer() {
 
 * [Getting Started | Enabling Cross Origin Requests for a RESTful Web Service](https://spring.io/guides/gs/rest-service-cors), accessed on April 8, 2025;
 * [Cross-Origin Resource Sharing (CORS) - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS), accessed on April 8, 2025;
+
+## REST api token authentication and authorization
+
+### References
+
+* [OAuth 2.0 Resource Server JWT :: Spring Security](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html), accessed on April 8, 2025;
+* [Spring Boot 3 + Spring Security 6 - JWT Authentication and Authorisation [NEW] [2023] - YouTube](https://www.youtube.com/watch?v=KxqlJblhzfI), accessed on April 10, 2025;
+* [jwtk/jjwt: Java JWT: JSON Web Token for Java and Android](https://github.com/jwtk/jjwt#installation), accessed on April 10, 2025;
+* [JWT In Springboot 3 | by Bishal Devkota | Medium](https://medium.com/@bishalf98/jwt-in-springboot-3-e50c2ecb0879), accessed on April 10, 2025;
+* [Architecture :: Spring Security](https://docs.spring.io/spring-security/reference/servlet/architecture.html), accessed on April 10, 2025;
