@@ -2,6 +2,12 @@
 
 This project is the API of _toshokan_ system for managing documents like books, whitepapers, etc.
 
+## Objectives
+
+Since I have many digital books as PDF, I wanted some way to catalog them all so I could quickly search books of a specific topic. Also, since I read in more than one device I thought it would be cool if there were some centralized place where every device at home can access for those books.
+
+After I bought a machine to make my little home lab I decided to write this application to manage books.
+
 ## Getting Started
 
 To execute the project run the following command:
