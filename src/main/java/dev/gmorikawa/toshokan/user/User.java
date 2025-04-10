@@ -1,13 +1,15 @@
 package dev.gmorikawa.toshokan.user;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dev.gmorikawa.toshokan.user.enumerator.UserRole;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -30,7 +32,7 @@ public class User {
 
     private String email;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     private String fullname;
@@ -62,6 +64,7 @@ public class User {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -70,12 +73,13 @@ public class User {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
-        this.password = encrypt(password);
+        this.password = password;
     }
 
     public String getEmail() {
@@ -102,32 +106,8 @@ public class User {
         this.fullname = fullname;
     }
 
-    public boolean comparePassword(String plainPassword) {
-        return this.password.equals(encrypt((plainPassword)));
-    }
-
-    public String encrypt(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            return bytesToHex(encodedHash);
-        } catch(NoSuchAlgorithmException e) {
-            return "";
-        }
-    }
-
-    private String bytesToHex(byte[] hash) {
-        StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-
-            if(hex.length() == 1) {
-                hexString.append('0');
-            }
-
-            hexString.append(hex);
-        }
-
-        return hexString.toString();
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 }

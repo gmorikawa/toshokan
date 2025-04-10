@@ -3,6 +3,7 @@ package dev.gmorikawa.toshokan.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
@@ -12,8 +13,11 @@ import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 public class UserService {
     private final UserRepository repository;
 
-    public UserService(UserRepository repository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getUsers() {
@@ -36,6 +40,8 @@ public class UserService {
         if(!checkUsernameIsAvailable(entity.getUsername())) {
             throw new UsernameNotAvailableException();
         }
+
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 
         return repository.save(entity);
     }
