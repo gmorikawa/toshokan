@@ -1,0 +1,18 @@
+spring:
+    application:
+        name: toshokan
+    datasource:
+        url: jdbc:postgresql://localhost:5433/toshokan
+        username: root
+        password: example
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                "[format_sql]": true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
