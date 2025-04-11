@@ -3,14 +3,15 @@ package dev.gmorikawa.toshokan.auth;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TokenCredential {
-    @JsonProperty("access_token")
+    @JsonProperty("accessToken")
     private String accessToken;
 
-    @JsonProperty("refresh_token")
+    @JsonProperty("refreshToken")
     private String refreshToken;
 
     public String getAccessToken() {
-        return accessToken;
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Bearer ").append(accessToken).toString();
     }
 
     public void setAccessToken(String accessToken) {
