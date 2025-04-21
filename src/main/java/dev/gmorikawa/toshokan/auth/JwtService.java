@@ -41,12 +41,10 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    private static final Long EXPIRATION_TIME = 1000L * 60L * 60L * 1L;
-
     private String issue(String username, UserRole role) {
         Date issuedAt = new Date();
         Date notBefore = new Date(issuedAt.getTime());
-        Date expiresAt = new Date(issuedAt.getTime() + EXPIRATION_TIME);
+        Date expiresAt = new Date(issuedAt.getTime() + env.getProperty("JWT_EXPIRES_IN", Long.class));
 
         Algorithm algorithm = Algorithm.HMAC256(env.getProperty("JWT_SECRET"));
 
