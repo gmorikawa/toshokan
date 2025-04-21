@@ -304,3 +304,14 @@ public WebMvcConfigurer corsConfigurer() {
 * [jwtk/jjwt: Java JWT: JSON Web Token for Java and Android](https://github.com/jwtk/jjwt#installation), accessed on April 10, 2025;
 * [JWT In Springboot 3 | by Bishal Devkota | Medium](https://medium.com/@bishalf98/jwt-in-springboot-3-e50c2ecb0879), accessed on April 10, 2025;
 * [Architecture :: Spring Security](https://docs.spring.io/spring-security/reference/servlet/architecture.html), accessed on April 10, 2025;
+* [SpringBootでJWT生成と検証 #Java - Qiita](https://qiita.com/Amayz_Ryosuke_Mieda/items/d12c162daa07694ddd5a), accessed on April 21, 2025;
+
+## Implementation of Unit Tests
+
+In Spring, the test files stays in a separated directory from the main source code. Under `src` we should have two directories: `main`, which resides the application source code, and `test`, where all the tests files should be. By running `./mvnw test` (Maven) or `./gradlew test` (Gradle) it should start a mock server and check all the tests.
+
+### References
+
+* [Getting Started | Testing the Web Layer](https://spring.io/guides/gs/testing-web), accessed on April 20, 2025;
+* [Testing in Spring Boot | Baeldung](https://www.baeldung.com/spring-boot-testing), accessed on April 20, 2025;
+* [Oliver Drotbohm - Why field injection is evil](https://odrotbohm.de/2013/11/why-field-injection-is-evil/), accessed on April 20, 2025;
