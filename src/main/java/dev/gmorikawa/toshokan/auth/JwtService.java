@@ -1,36 +1,35 @@
 package dev.gmorikawa.toshokan.auth;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwe;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
+import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 @Service
 public class JwtService {
 
     @Autowired
-    private Environment environment;
+    Environment env;
+    
+    private final String tokenIssuer = "toshokan_token";
+    private final String tokenSubject = "authentication_token";
 
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public String generateToken(User user) {
+        return issue(user.getUsername(), user.getRole());
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String extractUsername(String token) {
+        return extractClaim(token, "username");
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -38,43 +37,48 @@ public class JwtService {
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    public String generateToken(Map<String, Object> customClaims, UserDetails userDetails) {
-        return Jwts
-            .builder()
-            .claims(customClaims)
-            .subject(userDetails.getUsername())
-            .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
-            .signWith(getSignInKey())
-            .compact();
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
-        return Jwts
-            .parser()
-            .verifyWith(getSignInKey())
-            .build()
-            .parse(token)
-            .accept(Jwe.CLAIMS)
-            .getPayload();
-    }
-
-    private SecretKey getSignInKey() {
-        System.out.println(environment.getProperty("MY_NAME"));
-        byte[] keyBytes = environment.getProperty("JWT_SECRET").getBytes(StandardCharsets.UTF_16);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
+    private static final Long EXPIRATION_TIME = 1000L * 60L * 60L * 1L;
+
+    private String issue(String username, UserRole role) {
+        Date issuedAt = new Date();
+        Date notBefore = new Date(issuedAt.getTime());
+        Date expiresAt = new Date(issuedAt.getTime() + EXPIRATION_TIME);
+
+        Algorithm algorithm = Algorithm.HMAC256(env.getProperty("JWT_SECRET"));
+
+        String token = JWT.create()
+            .withIssuer(tokenIssuer)
+            .withSubject(tokenSubject)
+            .withClaim("username", username)
+            .withClaim("role", role.toString())
+            .withIssuedAt(issuedAt)
+            .withNotBefore(notBefore)
+            .withExpiresAt(expiresAt)
+            .sign(algorithm);
+
+        return token;
+    }
+
     private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+        return verify(token).getExpiresAt();
+    }
+
+    private String extractClaim(String token, String claim) {
+        return verify(token).getClaim(claim).asString();
+    }
+
+    private DecodedJWT verify(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(env.getProperty("JWT_SECRET"));
+
+        JWTVerifier verifier = JWT.require(algorithm)
+            .withIssuer(tokenIssuer)
+            .withSubject(tokenSubject)
+            .build();
+        
+        return verifier.verify(token);
     }
 }
