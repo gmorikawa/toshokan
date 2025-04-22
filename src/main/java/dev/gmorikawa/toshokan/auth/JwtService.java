@@ -2,8 +2,7 @@ package dev.gmorikawa.toshokan.auth;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,17 @@ import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 @Service
 public class JwtService {
 
-    @Autowired
-    Environment env;
-    
-    private final String tokenIssuer = "toshokan_token";
-    private final String tokenSubject = "authentication_token";
+    @Value("${security.jwt.secret}")
+    private String jwtSecret;
+
+    @Value("${security.jwt.expires-in}")
+    private Long jwtExpiresIn;
+
+    @Value("${security.jwt.issuer}")
+    private String jwtIssuer;
+
+    @Value("${security.jwt.subject}")
+    private String jwtSubject;
 
     public String generateToken(User user) {
         return issue(user.getUsername(), user.getRole());
@@ -44,13 +49,13 @@ public class JwtService {
     private String issue(String username, UserRole role) {
         Date issuedAt = new Date();
         Date notBefore = new Date(issuedAt.getTime());
-        Date expiresAt = new Date(issuedAt.getTime() + env.getProperty("JWT_EXPIRES_IN", Long.class));
+        Date expiresAt = new Date(issuedAt.getTime() + jwtExpiresIn);
 
-        Algorithm algorithm = Algorithm.HMAC256(env.getProperty("JWT_SECRET"));
+        Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
 
         String token = JWT.create()
-            .withIssuer(tokenIssuer)
-            .withSubject(tokenSubject)
+            .withIssuer(jwtIssuer)
+            .withSubject(jwtSubject)
             .withClaim("username", username)
             .withClaim("role", role.toString())
             .withIssuedAt(issuedAt)
@@ -70,11 +75,11 @@ public class JwtService {
     }
 
     private DecodedJWT verify(String token) {
-        Algorithm algorithm = Algorithm.HMAC256(env.getProperty("JWT_SECRET"));
+        Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
 
         JWTVerifier verifier = JWT.require(algorithm)
-            .withIssuer(tokenIssuer)
-            .withSubject(tokenSubject)
+            .withIssuer(jwtIssuer)
+            .withSubject(jwtSubject)
             .build();
         
         return verifier.verify(token);

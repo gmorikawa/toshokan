@@ -16,3 +16,9 @@ spring:
                 "[format_sql]": true
         database: postgresql
         database-platform: org.hibernate.dialect.PostgreSQLDialect
+security:
+    jwt:
+        secret: ${JWT_SECRET:"secret"}
+        expires-in: ${JWT_EXPIRES_IN:3600000}
+        issuer: ${JWT_ISSUER:"issuer"}
+        subject: ${JWT_SUBJECT:"subject"}
