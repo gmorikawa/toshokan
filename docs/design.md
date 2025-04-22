@@ -47,3 +47,9 @@ The `@Value` annotation can also read the environments variables directly, meani
 So, why not to use the variables from the system instead of `application.yml` variables? Here, the main reason is to maintain coherence. Since other configuration informations are already been loaded through `application.yml`, it makes sense to centralize every configuration there.
 
 Futhermore, the `application.yml` is being provided with default values in case the variable is not provided by the system. It is not ideal to run without proper configuration, but still, it is not a bad configuration either.
+
+### References
+
+* [Using @Value :: Spring Framework](https://docs.spring.io/spring-framework/reference/core/beans/annotation-config/value-annotations.html), accessed on April 22, 2025;
+* [Common Application Properties :: Spring Boot](https://docs.spring.io/spring-boot/appendix/application-properties/index.html), accessed on April 22, 2025;
+* [Using application.yml vs application.properties in Spring Boot | Baeldung](https://www.baeldung.com/spring-boot-yaml-vs-properties), accessed on April 22, 2025;
