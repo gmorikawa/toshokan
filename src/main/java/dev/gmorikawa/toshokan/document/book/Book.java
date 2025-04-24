@@ -3,7 +3,6 @@ package dev.gmorikawa.toshokan.document.book;
 import dev.gmorikawa.toshokan.category.Category;
 import dev.gmorikawa.toshokan.document.Document;
 import dev.gmorikawa.toshokan.publisher.Publisher;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -14,7 +13,7 @@ import jakarta.persistence.Table;
 @Table(name = "books")
 public class Book extends Document {
 
-    @JoinColumn(name = "publisherId")
+    @JoinColumn(name = "publisher_id")
     @ManyToOne
     private Publisher publisher;
 

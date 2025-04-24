@@ -49,13 +49,14 @@ public class BookService {
         return repository.save(book);
     }
 
-    public Book remove(String id) {
+    public boolean remove(String id) {
         Optional<Book> book = repository.findById(id);
 
         if(!book.isEmpty()) {
             repository.delete(book.get());
+            return true;
         }
 
-        return book.orElse(null);
+        return false;
     }
 }

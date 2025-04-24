@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public Book remove(@PathVariable String id) {
+    public boolean remove(@PathVariable String id) {
         return service.remove(id);
     }
 }

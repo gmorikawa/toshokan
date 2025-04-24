@@ -33,7 +33,7 @@ public abstract class Document {
 
     private String description;
 
-    @JoinColumn()
+    @JoinColumn(name = "category_id")
     @ManyToOne
     private Category category;
 
