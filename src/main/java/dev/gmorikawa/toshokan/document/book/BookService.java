@@ -45,6 +45,7 @@ public class BookService {
         book.setCategory(entity.getCategory());
         book.setPublisher(entity.getPublisher());
         book.setIsbn(entity.getIsbn());
+        book.setTopics(entity.getTopics());
 
         return repository.save(book);
     }
