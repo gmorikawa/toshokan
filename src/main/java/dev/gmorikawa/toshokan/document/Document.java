@@ -128,6 +128,10 @@ public abstract class Document {
         return topics;
     }
 
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
     public void addTopics(Topic topic) {
         this.topics.add(topic);
     }

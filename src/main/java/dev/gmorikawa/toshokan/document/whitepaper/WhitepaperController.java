@@ -46,7 +46,7 @@ public class WhitepaperController {
     }
 
     @DeleteMapping("/{id}")
-    public Whitepaper remove(@PathVariable String id) {
+    public boolean remove(@PathVariable String id) {
         return service.remove(id);
     }
 }

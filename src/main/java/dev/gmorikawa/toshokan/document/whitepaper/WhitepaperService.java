@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WhitepaperService {
+
     private final WhitepaperRepository repository;
 
     public WhitepaperService(WhitepaperRepository repository) {
@@ -32,7 +33,7 @@ public class WhitepaperService {
     public Whitepaper update(String id, Whitepaper entity) {
         Optional<Whitepaper> result = repository.findById(id);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return null;
         }
 
@@ -43,17 +44,19 @@ public class WhitepaperService {
         whitepaper.setAuthors(entity.getAuthors());
         whitepaper.setDescription(entity.getDescription());
         whitepaper.setCategory(entity.getCategory());
+        whitepaper.setTopics(entity.getTopics());
 
         return repository.save(whitepaper);
     }
 
-    public Whitepaper remove(String id) {
+    public boolean remove(String id) {
         Optional<Whitepaper> whitepaper = repository.findById(id);
 
-        if(!whitepaper.isEmpty()) {
-            repository.delete(whitepaper.get());
+        if (whitepaper.isEmpty()) {
+            return false;
         }
 
-        return whitepaper.orElse(null);
+        repository.delete(whitepaper.get());
+        return true;
     }
 }
