@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "publishers")
 public class Publisher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

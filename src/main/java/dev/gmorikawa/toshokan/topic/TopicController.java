@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "api/topics")
 public class TopicController {
-    private TopicService service;
+
+    private final TopicService service;
 
     public TopicController(TopicService service) {
         this.service = service;

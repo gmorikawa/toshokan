@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "api/publishers")
 public class PublisherController {
-    private PublisherService service;
+
+    private final PublisherService service;
 
     public PublisherController(PublisherService service) {
         this.service = service;

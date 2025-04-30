@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 public class ExceptionResponseBody implements JsonSerializable{
-    private int status;
-    private String message;
+    private final int status;
+    private final String message;
 
     public ExceptionResponseBody(HttpStatus status, String message) {
         this.status = status.value();

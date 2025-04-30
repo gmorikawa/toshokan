@@ -18,18 +18,18 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         EmailNotAvailableException.class,
         UsernameNotAvailableException.class
     })
-    ResponseEntity<ExceptionResponseBody> handleConflict(RuntimeException ex, WebRequest request) {
+    public ResponseEntity<ExceptionResponseBody> handleConflict(RuntimeException ex, WebRequest request) {
         ExceptionResponseBody responseBody = new ExceptionResponseBody(HttpStatus.CONFLICT, ex.getMessage());
 
-        return new ResponseEntity<ExceptionResponseBody>(responseBody, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(responseBody, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler({
         InvalidCredentialsException.class
     })
-    ResponseEntity<ExceptionResponseBody> handleAuthorization(RuntimeException ex, WebRequest request) {
+    public ResponseEntity<ExceptionResponseBody> handleAuthorization(RuntimeException ex, WebRequest request) {
         ExceptionResponseBody responseBody = new ExceptionResponseBody(HttpStatus.UNAUTHORIZED, ex.getMessage());
 
-        return new ResponseEntity<ExceptionResponseBody>(responseBody, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
     }
 }

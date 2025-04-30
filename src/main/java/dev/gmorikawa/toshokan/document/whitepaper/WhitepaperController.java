@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "api/whitepapers")
 public class WhitepaperController {
+
     private final WhitepaperService service;
 
     public WhitepaperController(WhitepaperService service) {

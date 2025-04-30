@@ -3,6 +3,8 @@ package dev.gmorikawa.toshokan.document;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.gmorikawa.toshokan.category.Category;
+import dev.gmorikawa.toshokan.topic.Topic;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,12 +17,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
-import dev.gmorikawa.toshokan.category.Category;
-import dev.gmorikawa.toshokan.topic.Topic;
-
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -52,7 +52,7 @@ public abstract class Document {
     private List<Topic> topics;
 
     public Document() {
-        topics = new ArrayList<Topic>();
+        topics = new ArrayList<>();
     }
 
     public Document(String id, String title, Integer year, String authors, String description, Category category) {
@@ -63,7 +63,7 @@ public abstract class Document {
         this.description = description;
         this.category = category;
 
-        topics = new ArrayList<Topic>();
+        topics = new ArrayList<>();
     }
 
     public Document(String title, Integer year, String authors, String description, Category category) {
@@ -73,7 +73,7 @@ public abstract class Document {
         this.description = description;
         this.category = category;
 
-        topics = new ArrayList<Topic>();
+        topics = new ArrayList<>();
     }
 
     public String getId() {

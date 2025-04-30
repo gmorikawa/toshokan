@@ -11,6 +11,7 @@ import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
 @Service
 public class UserService {
+
     private final UserRepository repository;
 
     private final PasswordEncoder passwordEncoder;

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PublisherService {
+
     private final PublisherRepository repository;
 
     public PublisherService(PublisherRepository repository) {
