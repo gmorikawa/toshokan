@@ -18,6 +18,10 @@ public class FileTypeService {
         return repository.findAll();
     }
 
+    public FileType getByExtension(String extension) {
+        return repository.findByExtension(extension).orElse(null);
+    }
+
     public FileType getById(String id) {
         return repository.findById(id).orElse(null);
     }

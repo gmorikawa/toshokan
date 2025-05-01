@@ -2,8 +2,12 @@ package dev.gmorikawa.toshokan.file.storage;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import dev.gmorikawa.toshokan.file.File;
 
 public class LocalStorage {
     private final String rootDirectory;
@@ -12,9 +16,12 @@ public class LocalStorage {
         this.rootDirectory = rootDirectory;
     }
 
-    public void store(MultipartFile multipartFile) {
+    public void store(File file, MultipartFile multipartFile) {
         try {
-            String filepath = buildFilepath(rootDirectory, multipartFile.getOriginalFilename());
+            String filepath = buildFilepath(rootDirectory, file.getFilePath());
+
+            Files.createDirectories(Paths.get(rootDirectory.concat(file.getPath())));
+
             java.io.File binary = new java.io.File(filepath);
             binary.createNewFile();
 

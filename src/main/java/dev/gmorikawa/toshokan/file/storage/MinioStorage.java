@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.file.storage;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.gmorikawa.toshokan.file.File;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
@@ -21,7 +22,7 @@ public class MinioStorage {
         this.bucket = bucket;
     }
 
-    public void store(MultipartFile multipartFile) {
+    public void store(File file, MultipartFile multipartFile) {
         try {
             MinioClient client = MinioClient.builder()
                 .endpoint(endpoint)
@@ -36,7 +37,7 @@ public class MinioStorage {
             PutObjectArgs putCommand =
                 PutObjectArgs.builder()
                     .bucket(bucket)
-                    .object(multipartFile.getOriginalFilename())
+                    .object(file.getFilePath())
                     .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
                     .build();
             client.putObject(putCommand);

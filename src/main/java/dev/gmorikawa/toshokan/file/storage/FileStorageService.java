@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.gmorikawa.toshokan.file.File;
+
 @Service
 public class FileStorageService {
 
@@ -22,8 +24,8 @@ public class FileStorageService {
     @Value("${storage.local.root-directory}")
     private String rootDirectory;
 
-    public void store(MultipartFile multipartFile) {
-        new MinioStorage(endpoint, accessKey, secretKey, bucket).store(multipartFile);
-        new LocalStorage(rootDirectory).store(multipartFile);
+    public void store(File file, MultipartFile binary) {
+        new MinioStorage(endpoint, accessKey, secretKey, bucket).store(file, binary);
+        new LocalStorage(rootDirectory).store(file, binary);
     }
 }
