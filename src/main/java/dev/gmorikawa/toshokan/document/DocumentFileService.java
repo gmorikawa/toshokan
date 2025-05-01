@@ -1,5 +1,6 @@
 package dev.gmorikawa.toshokan.document;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ public class DocumentFileService {
     public DocumentFileService(FileService fileService, DocumentFileRepository repository) {
         this.fileService = fileService;
         this.repository = repository;
+    }
+
+    public List<File> getFilesByDocument(Document document) {
+        return repository.getFilesByDocument(document);
     }
 
     public DocumentFile create(Document document, MultipartFile binary, String description) {

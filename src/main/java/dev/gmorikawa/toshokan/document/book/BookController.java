@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dev.gmorikawa.toshokan.document.DocumentFile;
 import dev.gmorikawa.toshokan.document.DocumentFileService;
+import dev.gmorikawa.toshokan.file.File;
 
 @RestController
 @RequestMapping(path = "api/books")
@@ -36,6 +37,12 @@ public class BookController {
     @GetMapping("/year/{year}")
     public Book getByYear(@PathVariable Integer year) {
         return service.getByYear(year);
+    }
+
+    @GetMapping("/{id}/files")
+    public List<File> getFiles(@PathVariable String id) {
+        Book book = service.getById(id);
+        return documentFileService.getFilesByDocument(book);
     }
 
     @GetMapping("/{id}")
