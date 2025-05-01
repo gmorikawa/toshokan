@@ -51,4 +51,14 @@ public class Book extends Document {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
+    @Override
+    public String getFilePath() {
+        return new StringBuilder()
+            .append(publisher.getName().toLowerCase().replace(' ', '_'))
+            .append("/")
+            .append(getTitle().toLowerCase().replace(' ', '_'))
+            .append("/")
+            .toString();
+    }
 }

@@ -135,4 +135,6 @@ public abstract class Document {
     public void addTopics(Topic topic) {
         this.topics.add(topic);
     }
+
+    public abstract String getFilePath();
 }

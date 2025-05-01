@@ -1,8 +1,5 @@
 package dev.gmorikawa.toshokan.document.book;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.gmorikawa.toshokan.document.DocumentFile;
+import dev.gmorikawa.toshokan.document.DocumentFileService;
+
 @RestController
 @RequestMapping(path = "api/books")
 public class BookController {
 
     private final BookService service;
+    private final DocumentFileService documentFileService;
 
-    public BookController(BookService service) {
+    public BookController(BookService service, DocumentFileService documentFileService) {
         this.service = service;
+        this.documentFileService = documentFileService;
     }
 
     @GetMapping()
@@ -46,21 +48,10 @@ public class BookController {
         return service.insert(entity);
     }
 
-    @PostMapping("/upload")
-    public boolean upload(@RequestParam("files") MultipartFile[] files) {
-        try {
-            for (MultipartFile file : files) {
-                File convertFile = new File(file.getOriginalFilename());
-                convertFile.createNewFile();
-                try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                    fos.write(file.getBytes());
-                }
-            }
-
-            return true;
-        } catch (IOException exception) {
-            return false;
-        }
+    @PostMapping("/{id}/upload")
+    public DocumentFile upload(@PathVariable String id, @RequestParam("file") MultipartFile binary, @RequestParam("description") String description) {
+        Book book = service.getById(id);
+        return documentFileService.create(book, binary, description);
     }
 
     @PatchMapping("/{id}")
