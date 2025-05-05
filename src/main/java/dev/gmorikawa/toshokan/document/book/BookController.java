@@ -1,7 +1,12 @@
 package dev.gmorikawa.toshokan.document.book;
 
+import java.io.InputStream;
 import java.util.List;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -43,6 +48,21 @@ public class BookController {
     public List<File> getFiles(@PathVariable String id) {
         Book book = service.getById(id);
         return documentFileService.getFilesByDocument(book);
+    }
+
+    @GetMapping("/{id}/files/{fileId}")
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String id, @PathVariable("fileId") String fileId) {
+        InputStream binary = documentFileService.downloadFileById(fileId);
+
+        InputStreamResource resource = new InputStreamResource(binary);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.txt");
+
+        return ResponseEntity.ok()
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(resource);
     }
 
     @GetMapping("/{id}")

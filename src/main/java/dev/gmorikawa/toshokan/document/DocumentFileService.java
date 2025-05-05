@@ -1,5 +1,6 @@
 package dev.gmorikawa.toshokan.document;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,10 @@ public class DocumentFileService {
 
     public List<File> getFilesByDocument(Document document) {
         return repository.getFilesByDocument(document);
+    }
+
+    public InputStream downloadFileById(String fileId) {
+        return fileService.download(fileId);
     }
 
     public DocumentFile create(Document document, MultipartFile binary, String description) {

@@ -1,5 +1,6 @@
 package dev.gmorikawa.toshokan.file;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import dev.gmorikawa.toshokan.file.enumerator.FileState;
+import dev.gmorikawa.toshokan.file.exception.FileNotFoundException;
 import dev.gmorikawa.toshokan.file.storage.FileStorageService;
 import dev.gmorikawa.toshokan.file.type.FileTypeService;
 
@@ -93,5 +95,11 @@ public class FileService {
 
             return repository.save(file);
         }
+    }
+
+    public InputStream download(String id) {
+        File file = repository.findById(id).orElseThrow(FileNotFoundException::new);
+
+        return storageService.retrive(file);
     }
 }
