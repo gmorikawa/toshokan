@@ -1,5 +1,8 @@
 package dev.gmorikawa.toshokan.document.book;
 
+import java.util.List;
+
+import dev.gmorikawa.toshokan.author.Author;
 import dev.gmorikawa.toshokan.category.Category;
 import dev.gmorikawa.toshokan.document.Document;
 import dev.gmorikawa.toshokan.publisher.Publisher;
@@ -22,14 +25,14 @@ public class Book extends Document {
 
     public Book() { }
 
-    public Book(String id, String title, Integer year, String authors, String description, Category category, Publisher publisher, String isbn) {
+    public Book(String id, String title, Integer year, List<Author> authors, String description, Category category, Publisher publisher, String isbn) {
         super(id, title, year, authors, description, category);
 
         this.publisher = publisher;
         this.isbn = isbn;
     }
 
-    public Book(String title, Integer year, String authors, String description, Category category, Publisher publisher, String isbn) {
+    public Book(String title, Integer year, List<Author> authors, String description, Category category, Publisher publisher, String isbn) {
         super(title, year, authors, description, category);
 
         this.publisher = publisher;

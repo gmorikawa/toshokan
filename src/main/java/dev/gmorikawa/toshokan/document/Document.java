@@ -3,6 +3,7 @@ package dev.gmorikawa.toshokan.document;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.gmorikawa.toshokan.author.Author;
 import dev.gmorikawa.toshokan.category.Category;
 import dev.gmorikawa.toshokan.topic.Topic;
 import jakarta.persistence.Entity;
@@ -29,7 +30,19 @@ public abstract class Document {
 
     private Integer year;
 
-    private String authors;
+    @JoinTable(
+        name = "document_authors",
+        joinColumns = @JoinColumn(
+            name = "document_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        )
+    )
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Author> authors;
 
     private String description;
 
@@ -55,7 +68,7 @@ public abstract class Document {
         topics = new ArrayList<>();
     }
 
-    public Document(String id, String title, Integer year, String authors, String description, Category category) {
+    public Document(String id, String title, Integer year, List<Author> authors, String description, Category category) {
         this.id = id;
         this.title = title;
         this.year = year;
@@ -66,7 +79,7 @@ public abstract class Document {
         topics = new ArrayList<>();
     }
 
-    public Document(String title, Integer year, String authors, String description, Category category) {
+    public Document(String title, Integer year, List<Author> authors, String description, Category category) {
         this.title = title;
         this.year = year;
         this.authors = authors;
@@ -100,11 +113,11 @@ public abstract class Document {
         this.year = year;
     }
 
-    public String getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(String authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
