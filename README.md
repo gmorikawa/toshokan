@@ -25,3 +25,4 @@ To install, or reinstall, dependencies using `maven` execute the following:
 ## Study resources
 
 * [Spring Boot Tutorial | Full Course \[2023\]\[NEW\]](https://www.youtube.com/watch?v=9SGDpanrc8U) video tutorial by [Amigoscode](https://www.youtube.com/@amigoscode);
+* [MinIO Object Storage for Kubernetes &#8212; MinIO Object Storage for Kubernetes](https://min.io/docs/minio/kubernetes/upstream/index.html);

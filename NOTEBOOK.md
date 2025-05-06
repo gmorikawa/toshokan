@@ -315,6 +315,3 @@ In Spring, the test files stays in a separated directory from the main source co
 * [Getting Started | Testing the Web Layer](https://spring.io/guides/gs/testing-web), accessed on April 20, 2025;
 * [Testing in Spring Boot | Baeldung](https://www.baeldung.com/spring-boot-testing), accessed on April 20, 2025;
 * [Oliver Drotbohm - Why field injection is evil](https://odrotbohm.de/2013/11/why-field-injection-is-evil/), accessed on April 20, 2025;
-
-## Loading environment variables in the application
-
