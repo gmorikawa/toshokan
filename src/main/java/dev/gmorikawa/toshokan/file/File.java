@@ -2,7 +2,10 @@ package dev.gmorikawa.toshokan.file;
 
 import dev.gmorikawa.toshokan.file.enumerator.FileState;
 import dev.gmorikawa.toshokan.file.type.FileType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,29 +22,32 @@ public class File {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(length = 255)
     private String path;
     
+    @Column(length = 255)
     private String filename;
 
     @JoinColumn(name="type_id")
     @ManyToOne(fetch = FetchType.EAGER)
     private FileType type;
 
+    @Enumerated(EnumType.STRING)
     private FileState state;
 
     public File() { }
 
     public File(String id, String path, String filename, FileType type, FileState state) {
         this.id = id;
-        this.path = path;
-        this.filename = filename;
+        this.path = path.trim();
+        this.filename = filename.trim();
         this.type = type;
         this.state = state;
     }
 
     public File(String path, String filename, FileType type, FileState state) {
-        this.path = path;
-        this.filename = filename;
+        this.path = path.trim();
+        this.filename = filename.trim();
         this.type = type;
         this.state = state;
     }
@@ -59,10 +65,11 @@ public class File {
     }
 
     public void setPath(String path) {
-        if (path.charAt(path.length() - 1) == '/') {
-            this.path = path;
+        String trimmedPath = path.trim();
+        if (trimmedPath.charAt(trimmedPath.length() - 1) == '/') {
+            this.path = trimmedPath;
         } else {
-            this.path = path + "/";
+            this.path = trimmedPath + "/";
         }
     }
 
@@ -71,7 +78,7 @@ public class File {
     }
 
     public void setFilename(String filename) {
-        this.filename = filename;
+        this.filename = filename.trim();
     }
 
     public FileType getType() {

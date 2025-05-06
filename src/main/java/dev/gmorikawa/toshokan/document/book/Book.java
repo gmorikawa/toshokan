@@ -20,7 +20,7 @@ public class Book extends Document {
     @ManyToOne
     private Publisher publisher;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 31)
     private String isbn;
 
     public Book() { }
@@ -29,7 +29,7 @@ public class Book extends Document {
         super(id, title, year, authors, description, category);
 
         this.publisher = publisher;
-        this.isbn = isbn;
+        this.isbn = isbn.trim();
     }
 
     public Book(String title, Integer year, List<Author> authors, String description, Category category, Publisher publisher, String isbn) {
@@ -52,7 +52,7 @@ public class Book extends Document {
     }
     
     public void setIsbn(String isbn) {
-        this.isbn = isbn;
+        this.isbn = isbn.trim();
     }
 
     @Override

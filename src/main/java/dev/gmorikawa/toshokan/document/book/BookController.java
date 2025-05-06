@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import dev.gmorikawa.toshokan.document.DocumentFile;
 import dev.gmorikawa.toshokan.document.DocumentFileService;
 import dev.gmorikawa.toshokan.file.File;
+import dev.gmorikawa.toshokan.user.User;
 
 @RestController
 @RequestMapping(path = "api/books")
@@ -34,13 +36,13 @@ public class BookController {
         this.documentFileService = documentFileService;
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public List<Book> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/year/{year}")
-    public Book getByYear(@PathVariable Integer year) {
+    public List<Book> getByYear(@PathVariable Integer year) {
         return service.getByYear(year);
     }
 
@@ -51,7 +53,10 @@ public class BookController {
     }
 
     @GetMapping("/{id}/files/{fileId}")
-    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") String id, @PathVariable("fileId") String fileId) {
+    public ResponseEntity<InputStreamResource> downloadFile(
+        @PathVariable("id") String id,
+        @PathVariable("fileId") String fileId
+    ) {
         InputStream binary = documentFileService.downloadFileById(fileId);
 
         InputStreamResource resource = new InputStreamResource(binary);
@@ -70,24 +75,39 @@ public class BookController {
         return service.getById(id);
     }
 
-    @PostMapping()
-    public Book create(@RequestBody Book entity) {
-        return service.insert(entity);
+    @PostMapping("/")
+    public Book create(
+        @RequestAttribute("user") User requestor,
+        @RequestBody Book entity
+    ) {
+        return service.create(requestor, entity);
     }
 
     @PostMapping("/{id}/upload")
-    public DocumentFile upload(@PathVariable String id, @RequestParam("file") MultipartFile binary, @RequestParam("description") String description) {
+    public DocumentFile upload(
+        @RequestAttribute("user") User requestor,
+        @PathVariable String id,
+        @RequestParam("file") MultipartFile binary,
+        @RequestParam("description") String description
+    ) {
         Book book = service.getById(id);
-        return documentFileService.create(book, binary, description);
+        return documentFileService.create(requestor, book, binary, description);
     }
 
     @PatchMapping("/{id}")
-    public Book update(@PathVariable String id, @RequestBody Book entity) {
-        return service.update(id, entity);
+    public Book update(
+        @RequestAttribute("user") User requestor,
+        @PathVariable String id,
+        @RequestBody Book entity
+    ) {
+        return service.update(requestor, id, entity);
     }
 
     @DeleteMapping("/{id}")
-    public boolean remove(@PathVariable String id) {
-        return service.remove(id);
+    public boolean remove(
+        @RequestAttribute("user") User requestor,
+        @PathVariable String id
+    ) {
+        return service.remove(requestor, id);
     }
 }

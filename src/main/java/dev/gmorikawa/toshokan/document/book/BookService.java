@@ -2,8 +2,13 @@ package dev.gmorikawa.toshokan.document.book;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
+
+import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 @Service
 public class BookService {
@@ -22,15 +27,23 @@ public class BookService {
         return repository.findById(id).orElse(null);
     }
 
-    public Book getByYear(Integer year) {
-        return repository.findByYear(year).orElse(null);
+    public List<Book> getByYear(Integer year) {
+        return repository.findByYear(year);
     }
 
-    public Book insert(Book entity) {
+    public Book create(User requestor, Book entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         return repository.save(entity);
     }
 
-    public Book update(String id, Book entity) {
+    public Book update(User requestor, String id, Book entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         Optional<Book> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -51,7 +64,11 @@ public class BookService {
         return repository.save(book);
     }
 
-    public boolean remove(String id) {
+    public boolean remove(User requestor, String id) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         Optional<Book> book = repository.findById(id);
 
         if(!book.isEmpty()) {

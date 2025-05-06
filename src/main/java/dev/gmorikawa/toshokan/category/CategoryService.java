@@ -2,8 +2,13 @@ package dev.gmorikawa.toshokan.category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
+
+import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 @Service
 public class CategoryService {
@@ -22,11 +27,23 @@ public class CategoryService {
         return repository.findById(id).orElse(null);
     }
 
-    public Category insert(Category entity) {
+    public Category getByName(String name) {
+        return repository.findByName(name).orElse(null);
+    }
+
+    public Category create(User requestor, Category entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         return repository.save(entity);
     }
 
-    public Category update(String id, Category entity) {
+    public Category update(User requestor, String id, Category entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         Optional<Category> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -40,7 +57,11 @@ public class CategoryService {
         return repository.save(category);
     }
 
-    public Category remove(String id) {
+    public Category remove(User requestor, String id) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         Optional<Category> category = repository.findById(id);
 
         if(!category.isEmpty()) {

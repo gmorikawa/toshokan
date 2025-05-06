@@ -1,5 +1,6 @@
 package dev.gmorikawa.toshokan.author;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,17 +15,18 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(unique = true, length = 127)
     private String name;
 
     public Author() { }
 
     public Author(String id, String name) {
         this.id = id;
-        this.name = name;
+        this.name = name.trim();
     }
 
     public Author(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getId() {
@@ -40,6 +42,6 @@ public class Author {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 }

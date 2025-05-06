@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import dev.gmorikawa.toshokan.user.User;
 
 @RestController
 @RequestMapping(path = "api/publishers")
@@ -21,28 +24,47 @@ public class PublisherController {
         this.service = service;
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public List<Publisher> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Publisher getById(@PathVariable String id) {
+    public Publisher getById(
+        @PathVariable String id
+    ) {
         return service.getById(id);
     }
 
-    @PostMapping()
-    public Publisher create(@RequestBody Publisher publisher) {
-        return service.insert(publisher);
+    @GetMapping("/name/{name}")
+    public Publisher getByName(
+        @PathVariable String name
+    ) {
+        return service.getByName(name);
+    }
+
+    @PostMapping("/")
+    public Publisher create(
+        @RequestAttribute("user") User requestor,
+        @RequestBody Publisher publisher
+    ) {
+        return service.create(requestor, publisher);
     }
 
     @PatchMapping("/{id}")
-    public Publisher update(@PathVariable String id, @RequestBody Publisher publisher) {
-        return service.update(id, publisher);
+    public Publisher update(
+        @RequestAttribute("user") User requestor,
+        @PathVariable String id,
+        @RequestBody Publisher publisher
+    ) {
+        return service.update(requestor, id, publisher);
     }
 
     @DeleteMapping("/{id}")
-    public Publisher remove(@PathVariable String id) {
-        return service.remove(id);
+    public Publisher remove(
+        @RequestAttribute("user") User requestor,
+        @PathVariable String id
+    ) {
+        return service.remove(requestor, id);
     }
 }

@@ -15,22 +15,23 @@ public class FileType {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(length = 127)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 15)
     private String extension;
 
     public FileType() { }
 
     public FileType(String id, String name, String extension) {
         this.id = id;
-        this.name = name;
-        this.extension = extension;
+        this.name = name.trim();
+        this.extension = extension.trim();
     }
 
     public FileType(String name, String extension) {
-        this.name = name;
-        this.extension = extension;
+        this.name = name.trim();
+        this.extension = extension.trim();
     }
 
     public String getId() {
@@ -46,7 +47,7 @@ public class FileType {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getExtension() {
@@ -54,6 +55,6 @@ public class FileType {
     }
 
     public void setExtension(String extension) {
-        this.extension = extension;
+        this.extension = extension.trim();
     }
 }

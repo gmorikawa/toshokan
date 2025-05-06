@@ -2,8 +2,13 @@ package dev.gmorikawa.toshokan.publisher;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
+
+import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 @Service
 public class PublisherService {
@@ -22,11 +27,23 @@ public class PublisherService {
         return repository.findById(id).orElse(null);
     }
 
-    public Publisher insert(Publisher entity) {
+    public Publisher getByName(String name) {
+        return repository.findByName(name).orElse(null);
+    }
+
+    public Publisher create(User requestor, Publisher entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         return repository.save(entity);
     }
 
-    public Publisher update(String id, Publisher entity) {
+    public Publisher update(User requestor, String id, Publisher entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         Optional<Publisher> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -40,7 +57,11 @@ public class PublisherService {
         return repository.save(publisher);
     }
 
-    public Publisher remove(String id) {
+    public Publisher remove(User requestor, String id) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
+            throw new UnauthorizedActionException();
+        }
+
         Optional<Publisher> publisher = repository.findById(id);
 
         if(!publisher.isEmpty()) {

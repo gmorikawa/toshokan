@@ -6,6 +6,7 @@ import java.util.List;
 import dev.gmorikawa.toshokan.author.Author;
 import dev.gmorikawa.toshokan.category.Category;
 import dev.gmorikawa.toshokan.topic.Topic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,8 +27,10 @@ public abstract class Document {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(length = 255)
     private String title;
 
+    @Column(nullable = true)
     private Integer year;
 
     @JoinTable(
@@ -44,6 +47,7 @@ public abstract class Document {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Author> authors;
 
+    @Column(length = 1024, nullable = true)
     private String description;
 
     @JoinColumn(name = "category_id")
@@ -70,20 +74,20 @@ public abstract class Document {
 
     public Document(String id, String title, Integer year, List<Author> authors, String description, Category category) {
         this.id = id;
-        this.title = title;
+        this.title = title.trim();
         this.year = year;
         this.authors = authors;
-        this.description = description;
+        this.description = description.trim();
         this.category = category;
 
         topics = new ArrayList<>();
     }
 
     public Document(String title, Integer year, List<Author> authors, String description, Category category) {
-        this.title = title;
+        this.title = title.trim();
         this.year = year;
         this.authors = authors;
-        this.description = description;
+        this.description = description.trim();
         this.category = category;
 
         topics = new ArrayList<>();
@@ -102,7 +106,7 @@ public abstract class Document {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title.trim();
     }
 
     public Integer getYear() {
@@ -126,7 +130,7 @@ public abstract class Document {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description.trim();
     }
 
     public Category getCategory() {
