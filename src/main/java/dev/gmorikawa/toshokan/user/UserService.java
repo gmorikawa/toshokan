@@ -2,10 +2,13 @@ package dev.gmorikawa.toshokan.user;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
@@ -33,12 +36,16 @@ public class UserService {
         return repository.findById(id).orElse(null);
     }
 
-    public User insert(User entity) {
-        if(!checkEmailIsAvailable(entity.getEmail())) {
+    public User create(User requestor, User entity) {
+        if (!requestor.hasRole(Set.of(UserRole.ADMIN))) {
+            throw new UnauthorizedActionException();
+        }
+
+        if(!isEmailIsAvailable(entity.getEmail())) {
             throw new EmailNotAvailableException();
         }
 
-        if(!checkUsernameIsAvailable(entity.getUsername())) {
+        if(!isUsernameIsAvailable(entity.getUsername())) {
             throw new UsernameNotAvailableException();
         }
 
@@ -47,12 +54,16 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public User update(String id, User entity) {
-        if(!checkEmailIsAvailable(entity.getEmail(), id)) {
+    public User update(User requestor, String id, User entity) {
+        if (!requestor.compareId(entity) && !requestor.hasRole(Set.of(UserRole.ADMIN))) {
+            throw new UnauthorizedActionException();
+        }
+
+        if(!isEmailIsAvailable(entity.getEmail(), id)) {
             throw new EmailNotAvailableException();
         }
 
-        if(!checkUsernameIsAvailable(entity.getUsername(), id)) {
+        if(!isUsernameIsAvailable(entity.getUsername(), id)) {
             throw new UsernameNotAvailableException();
         }
 
@@ -70,29 +81,33 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User remove(String id) {
+    public User remove(User requestor, String id) {
         Optional<User> user = repository.findById(id);
 
         if(!user.isEmpty()) {
             repository.delete(user.get());
         }
 
+        if (!requestor.compareId(user.get()) && !requestor.hasRole(Set.of(UserRole.ADMIN))) {
+            throw new UnauthorizedActionException();
+        }
+
         return user.orElse(null);
     }
 
-    private boolean checkUsernameIsAvailable(String username) {
+    private boolean isUsernameIsAvailable(String username) {
         return repository.findByUsername(username).isEmpty();
     }
 
-    private boolean checkUsernameIsAvailable(String username, String ignoreId) {
+    private boolean isUsernameIsAvailable(String username, String ignoreId) {
         return repository.findByUsername(username, ignoreId).isEmpty();
     }
 
-    private boolean checkEmailIsAvailable(String email) {
+    private boolean isEmailIsAvailable(String email) {
         return repository.findByEmail(email).isEmpty();
     }
 
-    private boolean checkEmailIsAvailable(String email, String ignoreId) {
+    private boolean isEmailIsAvailable(String email, String ignoreId) {
         return repository.findByEmail(email, ignoreId).isEmpty();
     }
 }

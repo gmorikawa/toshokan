@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.user;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,20 +27,24 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    
+
+    @Column(unique = true, length = 127)
     private String username;
 
     @JsonIgnore
     private String password;
 
+    @Column(unique = true, length = 127)
     private String email;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(length = 127)
     private String fullname;
 
-    public User() { }
+    public User() {
+    }
 
     public User(String id, String username, String password, String email, UserRole role, String fullname) {
         this.id = id;
@@ -105,6 +111,14 @@ public class User implements UserDetails {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public boolean hasRole(Set<UserRole> roles) {
+        return roles.contains(getRole());
+    }
+
+    public boolean compareId(User user) {
+        return user.getId().equals(id);
     }
 
     @Override
