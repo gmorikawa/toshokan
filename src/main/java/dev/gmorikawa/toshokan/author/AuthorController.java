@@ -24,7 +24,7 @@ public class AuthorController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Author> getAll() {
         return service.getAll();
     }
@@ -34,7 +34,7 @@ public class AuthorController {
         return service.getById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public Author create(
         @RequestAttribute("user") User requestor,
         @RequestBody Author author

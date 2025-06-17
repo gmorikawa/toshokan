@@ -24,7 +24,7 @@ public class PublisherController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Publisher> getAll() {
         return service.getAll();
     }
@@ -43,7 +43,7 @@ public class PublisherController {
         return service.getByName(name);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public Publisher create(
         @RequestAttribute("user") User requestor,
         @RequestBody Publisher publisher

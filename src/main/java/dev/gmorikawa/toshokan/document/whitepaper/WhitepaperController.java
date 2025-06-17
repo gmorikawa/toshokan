@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.gmorikawa.toshokan.document.DocumentFile;
-import dev.gmorikawa.toshokan.document.DocumentFileService;
+import dev.gmorikawa.toshokan.document.file.DocumentFile;
+import dev.gmorikawa.toshokan.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.user.User;
 
 @RestController

@@ -1,5 +1,6 @@
-package dev.gmorikawa.toshokan.document;
+package dev.gmorikawa.toshokan.document.file;
 
+import dev.gmorikawa.toshokan.document.Document;
 import dev.gmorikawa.toshokan.file.File;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

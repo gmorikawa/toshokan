@@ -24,7 +24,7 @@ public class CategoryController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Category> getAll() {
         return service.getAll();
     }
@@ -39,7 +39,7 @@ public class CategoryController {
         return service.getByName(name);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public Category create(
         @RequestAttribute("user") User requestor,
         @RequestBody Category category

@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.gmorikawa.toshokan.document.DocumentFile;
-import dev.gmorikawa.toshokan.document.DocumentFileService;
+import dev.gmorikawa.toshokan.document.file.DocumentFile;
+import dev.gmorikawa.toshokan.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.file.File;
 import dev.gmorikawa.toshokan.user.User;
 
@@ -36,7 +36,7 @@ public class BookController {
         this.documentFileService = documentFileService;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Book> getAll() {
         return service.getAll();
     }
@@ -75,7 +75,7 @@ public class BookController {
         return service.getById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public Book create(
         @RequestAttribute("user") User requestor,
         @RequestBody Book entity

@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.document;
+package dev.gmorikawa.toshokan.document.file;
 
 import java.io.InputStream;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.document.Document;
 import dev.gmorikawa.toshokan.file.File;
 import dev.gmorikawa.toshokan.file.FileService;
 import dev.gmorikawa.toshokan.file.enumerator.FileState;

@@ -24,7 +24,7 @@ public class TopicController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<Topic> getAll() {
         return service.getAll();
     }
@@ -43,7 +43,7 @@ public class TopicController {
         return service.getByName(name);
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public Topic create(
         @RequestAttribute("user") User requestor,
         @RequestBody Topic topic

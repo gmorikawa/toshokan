@@ -22,12 +22,12 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public List<User> getUsers() {
         return service.getUsers();
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public User create(
         @RequestAttribute("user") User requestor,
         @RequestBody User user
