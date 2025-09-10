@@ -27,10 +27,6 @@ public class BookService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<Book> getByYear(Integer year) {
-        return repository.findByYear(year);
-    }
-
     public Book create(User requestor, Book entity) {
         if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
             throw new UnauthorizedActionException();

@@ -27,10 +27,6 @@ public class WhitepaperService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<Whitepaper> getByYear(Integer year) {
-        return repository.findByYear(year);
-    }
-
     public Whitepaper create(User requestor, Whitepaper entity) {
         if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
             throw new UnauthorizedActionException();

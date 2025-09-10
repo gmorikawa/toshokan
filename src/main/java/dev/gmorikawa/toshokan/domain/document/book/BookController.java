@@ -37,11 +37,6 @@ public class BookController {
         return service.getAll();
     }
 
-    @GetMapping("/year/{year}")
-    public List<Book> getByYear(@PathVariable Integer year) {
-        return service.getByYear(year);
-    }
-
     // @GetMapping("/{id}/files")
     // public List<File> getFiles(@PathVariable String id) {
     //     Book book = service.getById(id);

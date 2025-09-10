@@ -35,11 +35,6 @@ public class WhitepaperController {
         return service.getAll();
     }
 
-    @GetMapping("/year/{year}")
-    public List<Whitepaper> getByYear(@PathVariable Integer year) {
-        return service.getByYear(year);
-    }
-
     @GetMapping("/{id}")
     public Whitepaper getById(@PathVariable String id) {
         return service.getById(id);
