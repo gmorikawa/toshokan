@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.author;
+package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.gmorikawa.toshokan.domain.author.Author;
+import dev.gmorikawa.toshokan.domain.author.AuthorService;
 import dev.gmorikawa.toshokan.user.User;
 
 @RestController
@@ -39,7 +41,7 @@ public class AuthorController {
         @RequestAttribute("user") User requestor,
         @RequestBody Author author
     ) {
-        return service.create(requestor, author);
+        return service.create(author);
     }
 
     @PatchMapping("/{id}")
@@ -48,14 +50,14 @@ public class AuthorController {
         @PathVariable String id,
         @RequestBody Author author
     ) {
-        return service.update(requestor, id, author);
+        return service.update(id, author);
     }
 
     @DeleteMapping("/{id}")
-    public Author remove(
+    public void remove(
         @RequestAttribute("user") User requestor,
         @PathVariable String id
     ) {
-        return service.remove(requestor, id);
+        service.remove(id);
     }
 }
