@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,9 +16,6 @@ public class Category {
 
     @Column(unique = true, length = 127)
     private String name;
-
-    @OneToOne
-    private Category parent;
 
     public Category() { }
 
@@ -37,13 +33,5 @@ public class Category {
 
     public void setName(String name) {
         this.name = name.trim();
-    }
-
-    public Category getParent() {
-        return parent;
-    }
-
-    public void setParent(Category parent) {
-        this.parent = parent;
     }
 }

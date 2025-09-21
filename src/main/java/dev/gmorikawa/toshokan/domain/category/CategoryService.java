@@ -2,13 +2,10 @@ package dev.gmorikawa.toshokan.domain.category;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
 
 @Service
 public class CategoryService {
@@ -31,22 +28,22 @@ public class CategoryService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Category create(User requestor, Category entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
+    public Category create(Category entity) {
+        if (!isNameAvailable(entity.getName())) {
+            throw new CategoryNameNotAvailableException();
         }
 
         return repository.save(entity);
     }
 
-    public Category update(User requestor, String id, Category entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
+    public Category update(String id, Category entity) {
+        if (!isNameAvailable(entity.getName(), id)) {
+            throw new CategoryNameNotAvailableException();
         }
 
         Optional<Category> result = repository.findById(id);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return null;
         }
 
@@ -57,17 +54,19 @@ public class CategoryService {
         return repository.save(category);
     }
 
-    public Category remove(User requestor, String id) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public void remove(String id) {
         Optional<Category> category = repository.findById(id);
 
-        if(!category.isEmpty()) {
+        if (!category.isEmpty()) {
             repository.delete(category.get());
         }
+    }
 
-        return category.orElse(null);
+    public boolean isNameAvailable(String name) {
+        return repository.findByName(name).isEmpty();
+    }
+
+    public boolean isNameAvailable(String name, String ignoreId) {
+        return repository.findByName(name, ignoreId).isEmpty();
     }
 }

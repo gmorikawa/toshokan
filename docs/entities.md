@@ -50,8 +50,7 @@
 ### Category
 
 * _id_: __primary key, UUID, not null__;
-* _name_: __not null, varchar(127)__;
-* _parent_: __Category, foreign key, UUID, not null__;
+* _name_: __not null, unique, varchar(127)__;
 
 ### Topic
 
