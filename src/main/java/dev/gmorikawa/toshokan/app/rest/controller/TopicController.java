@@ -16,7 +16,7 @@ import dev.gmorikawa.toshokan.domain.topic.Topic;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
 import dev.gmorikawa.toshokan.user.User;
 
-@RestController
+@RestController("api.topic")
 @RequestMapping(path = "api/topics")
 public class TopicController {
 

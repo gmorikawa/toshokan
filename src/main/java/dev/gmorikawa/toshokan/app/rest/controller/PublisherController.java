@@ -16,7 +16,7 @@ import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
 import dev.gmorikawa.toshokan.user.User;
 
-@RestController
+@RestController("api.publisher")
 @RequestMapping(path = "api/publishers")
 public class PublisherController {
 

@@ -16,7 +16,7 @@ import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
 import dev.gmorikawa.toshokan.user.User;
 
-@RestController
+@RestController("api.author")
 @RequestMapping(path = "api/authors")
 public class AuthorController {
 

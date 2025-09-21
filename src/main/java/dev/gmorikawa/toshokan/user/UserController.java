@@ -32,7 +32,7 @@ public class UserController {
         @RequestAttribute("user") User requestor,
         @RequestBody User user
     ) {
-        return service.create(requestor, user);
+        return service.create(user);
     }
 
     @PatchMapping("/{id}")
@@ -41,7 +41,7 @@ public class UserController {
         @PathVariable String id,
         @RequestBody User user
     ) {
-        return service.update(requestor, id, user);
+        return service.update(id, user);
     }
 
     @DeleteMapping("/{id}")
@@ -49,7 +49,7 @@ public class UserController {
         @RequestAttribute("user") User requestor,
         @PathVariable String id
     ) {
-        return service.remove(requestor, id);
+        return service.remove(id);
     }
 
 }

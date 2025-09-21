@@ -2,13 +2,10 @@ package dev.gmorikawa.toshokan.user;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
@@ -36,11 +33,7 @@ public class UserService {
         return repository.findById(id).orElse(null);
     }
 
-    public User create(User requestor, User entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public User create(User entity) {
         if(!isEmailIsAvailable(entity.getEmail())) {
             throw new EmailNotAvailableException();
         }
@@ -54,11 +47,7 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public User update(User requestor, String id, User entity) {
-        if (!requestor.compareId(entity) && !requestor.hasRole(Set.of(UserRole.ADMIN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public User update(String id, User entity) {
         if(!isEmailIsAvailable(entity.getEmail(), id)) {
             throw new EmailNotAvailableException();
         }
@@ -81,15 +70,11 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User remove(User requestor, String id) {
+    public User remove(String id) {
         Optional<User> user = repository.findById(id);
 
         if(!user.isEmpty()) {
             repository.delete(user.get());
-        }
-
-        if (!requestor.compareId(user.get()) && !requestor.hasRole(Set.of(UserRole.ADMIN))) {
-            throw new UnauthorizedActionException();
         }
 
         return user.orElse(null);

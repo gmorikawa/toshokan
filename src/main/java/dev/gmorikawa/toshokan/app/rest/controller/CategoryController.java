@@ -17,7 +17,7 @@ import dev.gmorikawa.toshokan.domain.category.CategoryService;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
 import dev.gmorikawa.toshokan.user.User;
 
-@RestController
+@RestController("api.category")
 @RequestMapping(path = "api/categories")
 public class CategoryController {
 

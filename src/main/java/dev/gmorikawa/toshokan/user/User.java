@@ -38,7 +38,7 @@ public class User implements UserDetails {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole role = UserRole.READER;
 
     @Column(length = 127)
     private String fullname;
