@@ -2,7 +2,8 @@ spring:
     application:
         name: toshokan
     datasource:
-        url: jdbc:postgresql://localhost:5433/toshokan
+        # url: jdbc:postgresql://database:5432/toshokan
+        url: jdbc:postgresql://localhost:2010/toshokan
         username: root
         password: example
         driver-class-name: org.postgresql.Driver
@@ -16,6 +17,11 @@ spring:
                 "[format_sql]": true
         database: postgresql
         database-platform: org.hibernate.dialect.PostgreSQLDialect
+    devtools:
+        livereload:
+            enabled: true
+        restart:
+            enabled: true
 security:
     jwt:
         secret: ${JWT_SECRET:"secret"}
