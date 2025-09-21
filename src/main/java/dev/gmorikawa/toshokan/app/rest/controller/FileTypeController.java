@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.file.type;
+package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
 
@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import dev.gmorikawa.toshokan.domain.file.type.FileType;
+import dev.gmorikawa.toshokan.domain.file.type.FileTypeService;
 
 @RestController
 @RequestMapping(path = "api/file-types")
@@ -33,7 +36,7 @@ public class FileTypeController {
 
     @PostMapping()
     public FileType create(@RequestBody FileType fileType) {
-        return service.insert(fileType);
+        return service.create(fileType);
     }
 
     @PatchMapping("/{id}")

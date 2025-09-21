@@ -26,7 +26,7 @@ public class FileTypeService {
         return repository.findById(id).orElse(null);
     }
 
-    public FileType insert(FileType entity) {
+    public FileType create(FileType entity) {
         return repository.save(entity);
     }
 
