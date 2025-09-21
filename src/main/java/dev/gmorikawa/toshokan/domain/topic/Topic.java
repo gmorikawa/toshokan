@@ -18,10 +18,6 @@ public class Topic {
     @Column(unique = true, length = 127)
     private String name;
 
-    public Topic(String name) {
-        this.name = name.trim();
-    }
-
     public String getId() {
         return id;
     }

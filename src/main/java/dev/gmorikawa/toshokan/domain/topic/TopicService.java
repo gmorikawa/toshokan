@@ -2,13 +2,8 @@ package dev.gmorikawa.toshokan.domain.topic;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
-
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 @Service
 public class TopicService {
@@ -31,19 +26,11 @@ public class TopicService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Topic create(User requestor, Topic entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Topic create(Topic entity) {
         return repository.save(entity);
     }
 
-    public Topic update(User requestor, String id, Topic entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Topic update(String id, Topic entity) {
         Optional<Topic> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -57,11 +44,7 @@ public class TopicService {
         return repository.save(topic);
     }
 
-    public Topic remove(User requestor, String id) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Topic remove(String id) {
         Optional<Topic> topic = repository.findById(id);
 
         if(!topic.isEmpty()) {

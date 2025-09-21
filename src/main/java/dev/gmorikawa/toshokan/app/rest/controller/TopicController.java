@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.topic;
+package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.gmorikawa.toshokan.domain.topic.Topic;
+import dev.gmorikawa.toshokan.domain.topic.TopicService;
 import dev.gmorikawa.toshokan.user.User;
 
 @RestController
@@ -48,7 +50,7 @@ public class TopicController {
         @RequestAttribute("user") User requestor,
         @RequestBody Topic topic
     ) {
-        return service.create(requestor, topic);
+        return service.create(topic);
     }
 
     @PatchMapping("/{id}")
@@ -57,7 +59,7 @@ public class TopicController {
         @PathVariable String id,
         @RequestBody Topic topic
     ) {
-        return service.update(requestor, id, topic);
+        return service.update(id, topic);
     }
 
     @DeleteMapping("/{id}")
@@ -65,6 +67,6 @@ public class TopicController {
         @RequestAttribute("user") User requestor,
         @PathVariable String id
     ) {
-        return service.remove(requestor, id);
+        return service.remove(id);
     }
 }
