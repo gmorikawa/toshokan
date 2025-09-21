@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import dev.gmorikawa.toshokan.app.rest.controller.PublisherController;
 import dev.gmorikawa.toshokan.app.rest.controller.TopicController;
 import dev.gmorikawa.toshokan.auth.AuthenticationController;
 import dev.gmorikawa.toshokan.domain.document.book.BookController;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperController;
-import dev.gmorikawa.toshokan.domain.publisher.PublisherController;
 import dev.gmorikawa.toshokan.user.UserController;
 
 @SpringBootTest

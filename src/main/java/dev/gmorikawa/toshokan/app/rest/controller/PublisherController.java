@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.publisher;
+package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.gmorikawa.toshokan.domain.publisher.Publisher;
+import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
 import dev.gmorikawa.toshokan.user.User;
 
 @RestController
@@ -48,7 +50,7 @@ public class PublisherController {
         @RequestAttribute("user") User requestor,
         @RequestBody Publisher publisher
     ) {
-        return service.create(requestor, publisher);
+        return service.create(publisher);
     }
 
     @PatchMapping("/{id}")
@@ -57,7 +59,7 @@ public class PublisherController {
         @PathVariable String id,
         @RequestBody Publisher publisher
     ) {
-        return service.update(requestor, id, publisher);
+        return service.update(id, publisher);
     }
 
     @DeleteMapping("/{id}")
@@ -65,6 +67,6 @@ public class PublisherController {
         @RequestAttribute("user") User requestor,
         @PathVariable String id
     ) {
-        return service.remove(requestor, id);
+        return service.remove(id);
     }
 }
