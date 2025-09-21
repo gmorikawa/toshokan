@@ -1,14 +1,25 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head> 
+
+<head>
     <title th:text="${meta.title}" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
     <h1 th:text="${page.title}" />
+    <div>
+        <a href="/users/create">
+            <button>
+                Create
+            </button>
+        </a>
+    </div>
+
     <table>
         <thead>
             <tr>
+                <td>Actions</td>
                 <td>ID</td>
                 <td>Full Name</td>
                 <td>Email</td>
@@ -18,6 +29,10 @@
 
         <tbody>
             <tr th:each="user : ${users}">
+                <td>
+                    <a th:href="|/users/${user.id}/edit|">Edit</a>
+                    <a th:href="|/users/${user.id}/remove|">Delete</a>
+                </td>
                 <td th:text="${user.id}" />
                 <td th:text="${user.fullname}" />
                 <td th:text="${user.email}" />
@@ -26,4 +41,5 @@
         </tbody>
     </table>
 </body>
+
 </html>

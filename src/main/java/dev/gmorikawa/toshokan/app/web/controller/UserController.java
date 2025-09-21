@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,12 +42,37 @@ public class UserController {
         model.addAttribute("page", new Page("Create User"));
         model.addAttribute("user", new User());
 
-        return "user/form";
+        return "user/create";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String update(@PathVariable String id, Model model) {
+        User user = service.getById(id);
+
+        model.addAttribute("meta", new Meta("Update User || Toshokan"));
+        model.addAttribute("page", new Page("Update User"));
+        model.addAttribute("user", user);
+
+        return "user/update";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute User user) {
         service.create(user);
+
+        return "redirect:/users/list";
+    }
+
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable String id, @ModelAttribute User user) {
+        service.update(id, user);
+
+        return "redirect:/users/list";
+    }
+
+    @GetMapping("/{id}/remove")
+    public String remove(@PathVariable String id, @ModelAttribute User user) {
+        service.remove(id);
 
         return "redirect:/users/list";
     }

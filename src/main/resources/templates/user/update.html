@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${meta.title}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <h1 th:text="${page.title}" />
+
+    <form method="post" action="#" th:action="|/users/${user.id}/update|" th:object="${user}">
+        <div>
+            <div>
+                <label>Role</label>
+            </div>
+
+            <div>
+                <input id="user.role.admin" type="radio" value="ADMIN" th:field="*{role}">
+                <label for="user.role.admin">Admin</label>
+            </div>
+
+            <div>
+                <input id="user.role.librarian" type="radio" value="LIBRARIAN" th:field="*{role}">
+                <label for="user.role.librarian">Librarian</label>
+            </div>
+
+            <div>
+                <input id="user.role.reader" type="radio" value="READER" th:field="*{role}">
+                <label for="user.role.reader">Reader</label>
+            </div>
+        </div>
+
+        <div>
+            <label for="user.fullname">Full Name</label>
+            <input id="user.fullname" type="text" th:field="*{fullname}">
+        </div>
+
+        <div>
+            <label for="user.email">Email</label>
+            <input id="user.email" type="email" th:field="*{email}">
+        </div>
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+
+</html>
