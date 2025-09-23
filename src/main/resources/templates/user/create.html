@@ -1,53 +1,61 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title th:text="${meta.title}" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
 
-<body>
-    <h1 th:text="${page.title}" />
+<body style="display: flex;">
+    <aside th:replace="layouts/admin :: app-menu"></aside>
 
-    <form method="post" action="#" th:action="@{/users/create}" th:object="${user}">
-        <div>
-            <div>
-                <label>Role</label>
-            </div>
+    <section style="flex-grow: 1">
+        <header th:replace="layouts/admin :: header(${page.title})"></header>
 
-            <div>
-                <input id="user.role.admin" type="radio" value="ADMIN" th:field="*{role}">
-                <label for="user.role.admin">Admin</label>
-            </div>
+        <main class="p-2">
+            <form method="post" action="#" th:action="@{/users/create}" th:object="${user}">
+                <div class="field">
+                    <label class="label">Role</label>
+                    <div class="control">
+                        <label for="user.role.ADMIN" class="radio">
+                            <input type="radio" id="user.role.ADMIN" value="ADMIN" th:field="*{role}">
+                            Admin
+                        </label>
 
-            <div>
-                <input id="user.role.librarian" type="radio" value="LIBRARIAN" th:field="*{role}">
-                <label for="user.role.librarian">Librarian</label>
-            </div>
+                        <label for="user.role.LIBRARIAN" class="radio">
+                            <input type="radio" id="user.role.LIBRARIAN" value="LIBRARIAN" th:field="*{role}">
+                            Librarian
+                        </label>
 
-            <div>
-                <input id="user.role.reader" type="radio" value="READER" th:field="*{role}">
-                <label for="user.role.reader">Reader</label>
-            </div>
-        </div>
+                        <label for="user.role.READER" class="radio">
+                            <input type="radio" id="user.role.READER" value="READER" th:field="*{role}">
+                            Reader
+                        </label>
+                    </div>
+                </div>
 
-        <div>
-            <label for="user.fullname">Full Name</label>
-            <input id="user.fullname" type="text" th:field="*{fullname}">
-        </div>
+                <div class="field">
+                    <label for="user.fullname" class="label">Full Name</label>
+                    <div class="control">
+                        <input th:field="*{fullname}" id="user.fullname" class="input" type="text" placeholder="Philip K. Dick">
+                    </div>
+                </div>
 
-        <div>
-            <label for="user.email">Email</label>
-            <input id="user.email" type="email" th:field="*{email}">
-        </div>
+                <div class="field">
+                    <label for="user.email" class="label">Email</label>
+                    <div class="control">
+                        <input th:field="*{email}" id="user.email" class="input" type="email" placeholder="example@email.com">
+                    </div>
+                </div>
 
-        <div>
-            <label for="user.password">Password</label>
-            <input id="user.password" type="password" th:field="*{password}">
-        </div>
+                <div class="field">
+                    <label for="user.password" class="label">Password</label>
+                    <div class="control">
+                        <input th:field="*{password}" id="user.password" class="input" type="password" placeholder="******">
+                    </div>
+                </div>
 
-        <button type="submit">Save</button>
-    </form>
+                <button type="submit" class="button is-primary">Save</button>
+            </form>
+        </main>
+    </section>
 </body>
 
 </html>

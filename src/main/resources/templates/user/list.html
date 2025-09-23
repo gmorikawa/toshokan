@@ -1,45 +1,47 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title th:text="${meta.title}" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
 
-<body>
-    <h1 th:text="${page.title}" />
-    <div>
-        <a href="/users/create">
-            <button>
-                Create
-            </button>
-        </a>
-    </div>
+<body style="display: flex;">
+    <aside th:replace="layouts/admin :: app-menu"></aside>
 
-    <table>
-        <thead>
-            <tr>
-                <td>Actions</td>
-                <td>ID</td>
-                <td>Full Name</td>
-                <td>Email</td>
-                <td>Role</td>
-            </tr>
-        </thead>
+    <section style="flex-grow: 1">
+        <header th:replace="layouts/admin :: header(${page.title})"></header>
 
-        <tbody>
-            <tr th:each="user : ${users}">
-                <td>
-                    <a th:href="|/users/${user.id}/edit|">Edit</a>
-                    <a th:href="|/users/${user.id}/remove|">Delete</a>
-                </td>
-                <td th:text="${user.id}" />
-                <td th:text="${user.fullname}" />
-                <td th:text="${user.email}" />
-                <td th:text="${user.role}" />
-            </tr>
-        </tbody>
-    </table>
+        <main class="p-2">
+            <div>
+                <a class="button is-primary" href="/users/create">
+                    Create
+                </a>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td>
+                            <a th:href="|/users/${user.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/users/${user.id}/remove|" class="button is-danger">Delete</a>
+                        </td>
+                        <td th:text="${user.id}" />
+                        <td th:text="${user.fullname}" />
+                        <td th:text="${user.email}" />
+                        <td th:text="${user.role}" />
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </section>
 </body>
 
 </html>
