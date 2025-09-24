@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
+
+<body style="display: flex;">
+    <aside th:replace="layouts/admin :: app-menu"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="layouts/admin :: header(${page.title})"></header>
+
+        <main class="p-2">
+            <form method="post" action="#" th:action="@{/categories/create}" th:object="${category}">
+                <div class="field">
+                    <label for="category.name" class="label">Name</label>
+                    <div class="control">
+                        <input th:field="*{name}" id="category.name" class="input" type="text" placeholder="Philip K. Dick">
+                    </div>
+                </div>
+
+                <button type="submit" class="button is-primary">Save</button>
+            </form>
+        </main>
+    </section>
+</body>
+
+</html>

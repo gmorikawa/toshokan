@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
+
+<body style="display: flex;">
+    <aside th:replace="layouts/admin :: app-menu"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="layouts/admin :: header(${page.title})"></header>
+
+        <main class="p-2">
+            <div>
+                <a class="button is-primary" href="/categories/create">
+                    Create
+                </a>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="category : ${categories}">
+                        <td>
+                            <a th:href="|/categories/${category.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/categories/${category.id}/remove|" class="button is-danger">Delete</a>
+                        </td>
+                        <td th:text="${category.id}" />
+                        <td th:text="${category.name}" />
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </section>
+</body>
+
+</html>
