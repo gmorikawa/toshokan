@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
+
+<body style="display: flex;">
+    <aside th:replace="layouts/admin :: app-menu"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="layouts/admin :: header(${page.title})"></header>
+
+        <main class="p-2">
+            <form method="post" action="#" th:action="@{/topics/create}" th:object="${topic}">
+                <div class="field">
+                    <label for="topic.name" class="label">Name</label>
+                    <div class="control">
+                        <input th:field="*{name}" id="topic.name" class="input" type="text" placeholder="Database">
+                    </div>
+                </div>
+
+                <button type="submit" class="button is-primary">Save</button>
+            </form>
+        </main>
+    </section>
+</body>
+
+</html>
