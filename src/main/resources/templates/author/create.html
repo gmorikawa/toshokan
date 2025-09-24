@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
+
+<body style="display: flex;">
+    <aside th:replace="layouts/admin :: app-menu"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="layouts/admin :: header(${page.title})"></header>
+
+        <main class="p-2">
+            <form method="post" action="#" th:action="@{/authors/create}" th:object="${author}">
+                <div class="field">
+                    <label for="author.fullname" class="label">Full Name</label>
+                    <div class="control">
+                        <input th:field="*{fullname}" id="author.fullname" class="input" type="text" placeholder="Philip K. Dick">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="author.biography" class="label">Biography</label>
+                    <div class="control">
+                        <textarea th:field="*{biography}" id="author.biography" class="textarea" placeholder="Lorem ipsum..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="button is-primary">Save</button>
+            </form>
+        </main>
+    </section>
+</body>
+
+</html>
