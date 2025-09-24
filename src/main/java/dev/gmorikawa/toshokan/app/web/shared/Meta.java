@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.shared.web;
+package dev.gmorikawa.toshokan.app.web.shared;
 
 public class Meta {
     private final String title;

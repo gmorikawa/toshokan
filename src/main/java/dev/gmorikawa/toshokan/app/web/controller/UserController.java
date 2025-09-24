@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import dev.gmorikawa.toshokan.shared.web.Meta;
-import dev.gmorikawa.toshokan.shared.web.Page;
+import dev.gmorikawa.toshokan.app.web.shared.Meta;
+import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.user.User;
 import dev.gmorikawa.toshokan.user.UserService;
 

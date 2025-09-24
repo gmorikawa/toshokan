@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.shared.web;
+package dev.gmorikawa.toshokan.app.web.shared;
 
 public class Page {
     private final String title;
