@@ -1,7 +1,5 @@
 package dev.gmorikawa.toshokan.user;
 
-import org.mockito.Mockito;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
@@ -32,7 +30,7 @@ public class UserServiceTest {
 
         Mockito.when(repository.findAll()).thenReturn(list);
 
-        List<User> users = service.getUsers();
+        List<User> users = service.getAll();
 
         assert users.size() == 4 : "Expected 4 users, but got " + users.size();
         Mockito.verify(repository, Mockito.times(1)).findAll();

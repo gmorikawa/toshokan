@@ -3,9 +3,13 @@ package dev.gmorikawa.toshokan.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
@@ -21,8 +25,15 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> getUsers() {
+    public List<User> getAll() {
         return repository.findAll();
+    }
+
+    public List<User> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<User> page = repository.findAll(pageable);
+        
+        return page.getContent();
     }
 
     public User getByUsername(String username) {

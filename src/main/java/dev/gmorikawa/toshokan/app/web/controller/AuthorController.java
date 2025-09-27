@@ -35,7 +35,7 @@ public class AuthorController {
         @RequestParam(value = "size", required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
-        List<Author> authors = service.getAll();
+        List<Author> authors = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Authors || Toshokan"));
         model.addAttribute("page", new Page("List Authors"));

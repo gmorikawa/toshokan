@@ -3,7 +3,12 @@ package dev.gmorikawa.toshokan.domain.topic;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class TopicService {
@@ -12,6 +17,13 @@ public class TopicService {
 
     public TopicService(TopicRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Topic> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Topic> page = repository.findAll(pageable);
+        
+        return page.getContent();
     }
 
     public List<Topic> getAll() {

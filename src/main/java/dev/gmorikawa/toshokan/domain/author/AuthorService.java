@@ -3,7 +3,12 @@ package dev.gmorikawa.toshokan.domain.author;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class AuthorService {
@@ -12,6 +17,13 @@ public class AuthorService {
 
     public AuthorService(AuthorRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Author> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Author> page = repository.findAll(pageable);
+        
+        return page.getContent();
     }
 
     public List<Author> getAll() {

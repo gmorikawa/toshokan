@@ -35,7 +35,7 @@ public class TopicController {
         @RequestParam(value = "size", required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
-        List<Topic> topics = service.getAll();
+        List<Topic> topics = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Topics || Toshokan"));
         model.addAttribute("page", new Page("List Topics"));

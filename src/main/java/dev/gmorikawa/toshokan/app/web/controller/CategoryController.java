@@ -35,7 +35,7 @@ public class CategoryController {
         @RequestParam(value = "size", required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
-        List<Category> categories = service.getAll();
+        List<Category> categories = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Categories || Toshokan"));
         model.addAttribute("page", new Page("List Categories"));

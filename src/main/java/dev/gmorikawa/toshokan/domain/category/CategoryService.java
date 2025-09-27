@@ -3,9 +3,13 @@ package dev.gmorikawa.toshokan.domain.category;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class CategoryService {
@@ -14,6 +18,13 @@ public class CategoryService {
 
     public CategoryService(CategoryRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Category> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Category> page = repository.findAll(pageable);
+        
+        return page.getContent();
     }
 
     public List<Category> getAll() {

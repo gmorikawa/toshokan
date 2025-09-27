@@ -35,7 +35,7 @@ public class UserController {
         @RequestParam(value = "size", required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
-        List<User> users = service.getUsers();
+        List<User> users = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Users || Toshokan"));
         model.addAttribute("page", new Page("List Users"));

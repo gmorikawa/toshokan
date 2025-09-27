@@ -35,7 +35,7 @@ public class PublisherController {
         @RequestParam(value = "size", required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
-        List<Publisher> publishers = service.getAll();
+        List<Publisher> publishers = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Publishers || Toshokan"));
         model.addAttribute("page", new Page("List Publishers"));
