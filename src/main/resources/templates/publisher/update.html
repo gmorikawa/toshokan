@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layouts/admin :: metadata(${meta.title})"></head>
+<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
 
 <body style="display: flex;">
-    <aside th:replace="layouts/admin :: app-menu"></aside>
+    <aside th:replace="~{layouts/admin :: app-menu}"></aside>
 
     <section style="flex-grow: 1">
-        <header th:replace="layouts/admin :: header(${page.title})"></header>
+        <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
 
         <main class="p-2">
             <form method="post" action="#" th:action="|/publishers/${publisher.id}/update|" th:object="${publisher}">

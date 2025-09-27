@@ -5,7 +5,7 @@
     aria-label="pagination"
 >
     <a
-        th:href="${pagination.previousPage.getLink()}"
+        th:href="${pagination.hasPrevious ? pagination.previousPage.getLink() : ''}"
         th:class="${pagination.hasPrevious ? 'pagination-previous' : 'pagination-previous is-disabled'}"
         title="This is the first page"
     >
