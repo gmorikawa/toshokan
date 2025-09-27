@@ -111,4 +111,14 @@ public class Document {
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
+
+    public String getAuthorsAsString() {
+        String serialized = "";
+
+        for (Author author : authors) {
+            serialized += author.toString() + ";";
+        }
+
+        return serialized;
+    }
 }

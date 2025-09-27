@@ -34,4 +34,9 @@ public class Category {
     public void setName(String name) {
         this.name = name.trim();
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

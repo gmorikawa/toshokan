@@ -2,13 +2,13 @@ package dev.gmorikawa.toshokan.domain.document.whitepaper;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class WhitepaperService {
@@ -19,6 +19,13 @@ public class WhitepaperService {
         this.repository = repository;
     }
 
+    public List<Whitepaper> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Whitepaper> page = repository.findAll(pageable);
+
+        return page.getContent();
+    }
+
     public List<Whitepaper> getAll() {
         return repository.findAll();
     }
@@ -27,19 +34,11 @@ public class WhitepaperService {
         return repository.findById(id).orElse(null);
     }
 
-    public Whitepaper create(User requestor, Whitepaper entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Whitepaper create(Whitepaper entity) {
         return repository.save(entity);
     }
 
-    public Whitepaper update(User requestor, String id, Whitepaper entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Whitepaper update(String id, Whitepaper entity) {
         Optional<Whitepaper> result = repository.findById(id);
 
         if (result.isEmpty()) {
@@ -58,11 +57,7 @@ public class WhitepaperService {
         return repository.save(whitepaper);
     }
 
-    public boolean remove(User requestor, String id) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public boolean remove(String id) {
         Optional<Whitepaper> whitepaper = repository.findById(id);
 
         if (whitepaper.isEmpty()) {

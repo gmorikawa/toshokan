@@ -2,13 +2,13 @@ package dev.gmorikawa.toshokan.domain.document.book;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class BookService {
@@ -19,6 +19,13 @@ public class BookService {
         this.repository = repository;
     }
 
+    public List<Book> getAll(Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Book> page = repository.findAll(pageable);
+
+        return page.getContent();
+    }
+
     public List<Book> getAll() {
         return repository.findAll();
     }
@@ -27,22 +34,14 @@ public class BookService {
         return repository.findById(id).orElse(null);
     }
 
-    public Book create(User requestor, Book entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Book create(Book entity) {
         return repository.save(entity);
     }
 
-    public Book update(User requestor, String id, Book entity) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public Book update(String id, Book entity) {
         Optional<Book> result = repository.findById(id);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return null;
         }
 
@@ -59,14 +58,10 @@ public class BookService {
         return repository.save(book);
     }
 
-    public boolean remove(User requestor, String id) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public boolean remove(String id) {
         Optional<Book> book = repository.findById(id);
 
-        if(!book.isEmpty()) {
+        if (!book.isEmpty()) {
             repository.delete(book.get());
             return true;
         }

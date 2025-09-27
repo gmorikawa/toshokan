@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
+
+<body style="display: flex;">
+    <aside th:replace="~{layouts/admin :: app-menu}"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
+
+        <main class="p-2">
+            <form method="post" action="#" th:action="@{/whitepapers/create}" th:object="${whitepaper}">
+                <div class="field">
+                    <label for="whitepaper.title" class="label">Title</label>
+                    <div class="control">
+                        <input th:field="*{title}" id="whitepaper.title" class="input" type="text"
+                            placeholder="Introduction to Algorithms">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="whitepaper.authors" class="label">Authors</label>
+                    <div class="select is-multiple">
+                        <select multiple th:field="*{authors}" id="whitepaper.authors">
+                            <option th:each="author : ${authors}" th:value="${author.id}"
+                                th:text="${author.fullname}" />
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="whitepaper.category" class="label">Category</label>
+                    <div class="select">
+                        <select th:field="*{category}" id="whitepaper.categoriy">
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                th:text="${category.name}" />
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="whitepaper.topics" class="label">Topics</label>
+                    <div class="checkboxes">
+                        <label class="checkbox" th:each="topic : ${topics}">
+                            <input type="checkbox" th:value="${topic.id}">
+                            <span th:text="${topic.name}" />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="whitepaper.description" class="label">Description</label>
+                    <div class="control">
+                        <textarea th:field="*{description}" id="whitepaper.description" class="textarea"
+                            placeholder="Lorem ipsum..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="button is-primary">Save</button>
+            </form>
+        </main>
+    </section>
+</body>
+
+</html>

@@ -18,7 +18,7 @@ public class Author {
     @Column(unique = true, length = 127)
     private String fullname;
 
-    @Column(unique = true, length = 4095)
+    @Column(length = 4095)
     private String biography;
 
     public String getId() {
@@ -43,5 +43,10 @@ public class Author {
 
     public void setBiography(String biography) {
         this.biography = biography.trim();
+    }
+
+    @Override
+    public String toString() {
+        return fullname;
     }
 }

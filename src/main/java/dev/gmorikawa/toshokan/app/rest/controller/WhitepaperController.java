@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.document.whitepaper;
+package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
 
@@ -16,9 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
+import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
+import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
 import dev.gmorikawa.toshokan.user.User;
 
-@RestController
+@RestController("api.whitepaper")
 @RequestMapping(path = "api/whitepapers")
 public class WhitepaperController {
 
@@ -45,7 +47,7 @@ public class WhitepaperController {
         @RequestAttribute("user") User requestor,
         @RequestBody Whitepaper entity
     ) {
-        return service.create(requestor, entity);
+        return service.create(entity);
     }
 
     @PostMapping("/{id}/upload")
@@ -65,7 +67,7 @@ public class WhitepaperController {
         @PathVariable String id,
         @RequestBody Whitepaper entity
     ) {
-        return service.update(requestor, id, entity);
+        return service.update(id, entity);
     }
 
     @DeleteMapping("/{id}")
@@ -73,6 +75,6 @@ public class WhitepaperController {
         @RequestAttribute("user") User requestor,
         @PathVariable String id
     ) {
-        return service.remove(requestor, id);
+        return service.remove(id);
     }
 }

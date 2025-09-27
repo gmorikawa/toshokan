@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.document.book;
+package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.io.InputStream;
 import java.util.List;
@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.gmorikawa.toshokan.domain.document.book.Book;
+import dev.gmorikawa.toshokan.domain.document.book.BookService;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.user.User;
 
-@RestController
+@RestController("api.book")
 @RequestMapping(path = "api/books")
 public class BookController {
 
@@ -71,7 +73,7 @@ public class BookController {
         @RequestAttribute("user") User requestor,
         @RequestBody Book entity
     ) {
-        return service.create(requestor, entity);
+        return service.create(entity);
     }
 
     // @PostMapping("/{id}/upload")
@@ -91,7 +93,7 @@ public class BookController {
         @PathVariable String id,
         @RequestBody Book entity
     ) {
-        return service.update(requestor, id, entity);
+        return service.update(id, entity);
     }
 
     @DeleteMapping("/{id}")
@@ -99,6 +101,6 @@ public class BookController {
         @RequestAttribute("user") User requestor,
         @PathVariable String id
     ) {
-        return service.remove(requestor, id);
+        return service.remove(id);
     }
 }

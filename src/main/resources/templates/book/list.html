@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
+
+<body style="display: flex;">
+    <aside th:replace="~{layouts/admin :: app-menu}"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
+
+        <nav th:replace="~{fragments/navigation :: pagination(${pagination})}"></nav>
+
+        <main class="p-2">
+            <div>
+                <a class="button is-primary" href="/books/create">
+                    Create
+                </a>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Publisher</th>
+                        <th>Authors</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="book : ${books}">
+                        <td>
+                            <a th:href="|/books/${book.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/books/${book.id}/remove|" class="button is-danger">Delete</a>
+                        </td>
+                        <td th:text="${book.isbn}" />
+                        <td th:text="${book.title}" />
+                        <td th:text="${book.category}" />
+                        <td th:text="${book.publisher}" />
+                        <td th:text="${book.authors}" />
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </section>
+</body>
+
+</html>

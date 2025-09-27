@@ -1,0 +1,110 @@
+package dev.gmorikawa.toshokan.app.web.controller;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import dev.gmorikawa.toshokan.app.web.shared.Meta;
+import dev.gmorikawa.toshokan.app.web.shared.Page;
+import dev.gmorikawa.toshokan.domain.author.AuthorService;
+import dev.gmorikawa.toshokan.domain.category.CategoryService;
+import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
+import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
+import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
+import dev.gmorikawa.toshokan.domain.topic.TopicService;
+import dev.gmorikawa.toshokan.shared.PaginationComponent;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
+
+@Controller("web.whitepaper")
+@RequestMapping(path = "whitepapers")
+public class WhitepaperController {
+
+    private final WhitepaperService service;
+    private final AuthorService authorService;
+    private final PublisherService publisherService;
+    private final CategoryService categoryService;
+    private final TopicService topicService;
+
+    public WhitepaperController(
+            WhitepaperService service,
+            AuthorService authorService,
+            PublisherService publisherService,
+            CategoryService categoryService,
+            TopicService topicService
+    ) {
+        this.service = service;
+        this.authorService = authorService;
+        this.publisherService = publisherService;
+        this.categoryService = categoryService;
+        this.topicService = topicService;
+    }
+
+    @GetMapping("/list")
+    public String list(
+            Model model,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size
+    ) {
+        Pagination pagination = new Pagination(page, size);
+        List<Whitepaper> whitepapers = service.getAll(pagination);
+
+        model.addAttribute("meta", new Meta("List Whitepapers || Toshokan"));
+        model.addAttribute("page", new Page("List Whitepapers"));
+        model.addAttribute("pagination", new PaginationComponent("/whitepapers/list", pagination));
+        model.addAttribute("whitepapers", whitepapers);
+
+        return "whitepaper/list";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("meta", new Meta("Create Whitepaper || Toshokan"));
+        model.addAttribute("page", new Page("Create Whitepaper"));
+        model.addAttribute("whitepaper", new Whitepaper());
+        model.addAttribute("authors", this.authorService.getAll());
+        model.addAttribute("publishers", this.publisherService.getAll());
+        model.addAttribute("categories", this.categoryService.getAll());
+        model.addAttribute("topics", this.topicService.getAll());
+
+        return "whitepaper/create";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String update(@PathVariable String id, Model model) {
+        Whitepaper whitepaper = service.getById(id);
+
+        model.addAttribute("meta", new Meta("Update Whitepaper || Toshokan"));
+        model.addAttribute("page", new Page("Update Whitepaper"));
+        model.addAttribute("whitepaper", whitepaper);
+
+        return "whitepaper/update";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Whitepaper whitepaper) {
+        service.create(whitepaper);
+
+        return "redirect:/whitepapers/list";
+    }
+
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable String id, @ModelAttribute Whitepaper whitepaper) {
+        service.update(id, whitepaper);
+
+        return "redirect:/whitepapers/list";
+    }
+
+    @GetMapping("/{id}/remove")
+    public String remove(@PathVariable String id, @ModelAttribute Whitepaper whitepaper) {
+        service.remove(id);
+
+        return "redirect:/whitepapers/list";
+    }
+}
