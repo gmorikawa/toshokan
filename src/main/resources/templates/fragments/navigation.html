@@ -1,0 +1,49 @@
+<nav
+    th:fragment="pagination(pagination)"
+    class="pagination is-right"
+    role="navigation"
+    aria-label="pagination"
+>
+    <a
+        th:href="${pagination.previousPage.getLink()}"
+        th:class="${pagination.hasPrevious ? 'pagination-previous' : 'pagination-previous is-disabled'}"
+        title="This is the first page"
+    >
+        Previous
+    </a>
+
+    <a
+        th:href="${pagination.nextPage.getLink()}"
+        class="pagination-next"
+    >
+        Next
+    </a>
+
+    <ul class="pagination-list">
+        <li th:if="${pagination.hasPrevious}">
+            <a
+                th:href="${pagination.previousPage.getLink()}"
+                class="pagination-link"
+                th:aria-label="'Page' + ${pagination.previousPage.pagination.page}"
+                th:text="${pagination.previousPage.pagination.page}"
+            />
+        </li>
+        <li>
+            <a
+                th:href="${pagination.currentPage.getLink()}"
+                class="pagination-link is-current"
+                th:aria-label="'Page' + ${pagination.currentPage.pagination.page}"
+                aria-current="page"
+                th:text="${pagination.currentPage.pagination.page}"
+            />
+        </li>
+        <li>
+            <a
+                th:href="${pagination.nextPage.getLink()}"
+                class="pagination-link"
+                th:aria-label="'Page' + ${pagination.nextPage.pagination.page}"
+                th:text="${pagination.nextPage.pagination.page}"
+            />
+        </li>
+    </ul>
+</nav>

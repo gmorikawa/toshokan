@@ -9,6 +9,8 @@
     <section style="flex-grow: 1">
         <header th:replace="layouts/admin :: header(${page.title})"></header>
 
+        <nav th:replace="fragments/navigation :: pagination(${pagination})"></nav>
+
         <main class="p-2">
             <div>
                 <a class="button is-primary" href="/publishers/create">

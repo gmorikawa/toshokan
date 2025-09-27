@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.category.CategoryService;
+import dev.gmorikawa.toshokan.shared.PaginationComponent;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Controller("web.category")
 @RequestMapping(path = "categories")
@@ -26,11 +29,17 @@ public class CategoryController {
     }
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(
+        Model model,
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "size", required = false, defaultValue = "10") int size
+    ) {
+        Pagination pagination = new Pagination(page, size);
         List<Category> categories = service.getAll();
         
         model.addAttribute("meta", new Meta("List Categories || Toshokan"));
         model.addAttribute("page", new Page("List Categories"));
+        model.addAttribute("pagination", new PaginationComponent("/categories/list", pagination));
         model.addAttribute("categories", categories);
 
         return "category/list";

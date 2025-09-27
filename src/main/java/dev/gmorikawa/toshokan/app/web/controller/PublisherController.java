@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
+import dev.gmorikawa.toshokan.shared.PaginationComponent;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Controller("web.publisher")
 @RequestMapping(path = "publishers")
@@ -26,11 +29,17 @@ public class PublisherController {
     }
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(
+        Model model,
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "size", required = false, defaultValue = "10") int size
+    ) {
+        Pagination pagination = new Pagination(page, size);
         List<Publisher> publishers = service.getAll();
         
         model.addAttribute("meta", new Meta("List Publishers || Toshokan"));
         model.addAttribute("page", new Page("List Publishers"));
+        model.addAttribute("pagination", new PaginationComponent("/publishers/list", pagination));
         model.addAttribute("publishers", publishers);
 
         return "publisher/list";

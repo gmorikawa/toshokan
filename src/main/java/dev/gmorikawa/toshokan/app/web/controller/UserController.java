@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
+import dev.gmorikawa.toshokan.shared.PaginationComponent;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 import dev.gmorikawa.toshokan.user.User;
 import dev.gmorikawa.toshokan.user.UserService;
 
@@ -26,11 +29,17 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(
+        Model model,
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "size", required = false, defaultValue = "10") int size
+    ) {
+        Pagination pagination = new Pagination(page, size);
         List<User> users = service.getUsers();
         
         model.addAttribute("meta", new Meta("List Users || Toshokan"));
         model.addAttribute("page", new Page("List Users"));
+        model.addAttribute("pagination", new PaginationComponent("/users/list", pagination));
         model.addAttribute("users", users);
 
         return "user/list";
