@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
+
+<body style="display: flex;">
+    <aside th:replace="~{layouts/admin :: app-menu}"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
+
+        <a class="button is-primary" th:href="|/books/${book.id}/upload|">
+            Upload
+        </a>
+
+        <main class="p-2">
+            <ul>
+                <li th:each="documentFile : ${book.documentFiles}">
+                    <a th:href="|/books/${book.id}/download/${documentFile.file.id}|" th:text="${documentFile.label}"></a>
+
+                    <span th:text="${documentFile.file.filename}"></span>
+                </li>
+            </ul>
+        </main>
+    </section>
+</body>
+
+</html>

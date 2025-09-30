@@ -23,15 +23,16 @@ public class FileStorageService {
     @Value("${storage.minio.bucket}")
     private String bucket;
 
-    // @Value("${storage.local.root-directory}")
-    // private String rootDirectory;
+    @Value("${storage.local.root-directory}")
+    private String rootDirectory;
 
     public void store(File file, MultipartFile binary) {
-        new MinioStorage(endpoint, accessKey, secretKey, bucket).store(file, binary);
-        // new LocalStorage(rootDirectory).store(file, binary);
+        // new MinioStorage(endpoint, accessKey, secretKey, bucket).store(file, binary);
+        new LocalStorage(rootDirectory).store(file, binary);
     }
 
     public InputStream retrive(File file) {
-        return new MinioStorage(endpoint, accessKey, secretKey, bucket).retrive(file);
+        // return new MinioStorage(endpoint, accessKey, secretKey, bucket).retrive(file);
+        return new LocalStorage(rootDirectory).retrive(file);
     }
 }

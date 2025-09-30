@@ -4,6 +4,7 @@ import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,33 +22,33 @@ public class DocumentFile {
             name = "document_id",
             referencedColumnName = "id"
     )
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Document document;
 
     @JoinColumn(
             name = "file_id",
             referencedColumnName = "id"
     )
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private File file;
 
     @Column(nullable = true, length = 4095)
-    private String description;
+    private String label;
 
     public DocumentFile() {
     }
 
-    public DocumentFile(String id, Document document, File file, String description) {
+    public DocumentFile(String id, Document document, File file, String label) {
         this.id = id;
         this.document = document;
         this.file = file;
-        this.description = description;
+        this.label = label;
     }
 
-    public DocumentFile(Document document, File file, String description) {
+    public DocumentFile(Document document, File file, String label) {
         this.document = document;
         this.file = file;
-        this.description = description;
+        this.label = label;
     }
 
     public String getId() {
@@ -74,11 +75,11 @@ public class DocumentFile {
         this.file = file;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLabel() {
+        return label;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

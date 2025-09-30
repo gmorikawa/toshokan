@@ -31,7 +31,7 @@
                 </thead>
 
                 <tbody>
-                    <tr th:each="book : ${books}">
+                    <tr th:each="book : ${books}" class="clickable-row" th:data-href="|/books/${book.id}|">
                         <td>
                             <a th:href="|/books/${book.id}/edit|" class="button is-primary">Edit</a>
                             <a th:href="|/books/${book.id}/remove|" class="button is-danger">Delete</a>

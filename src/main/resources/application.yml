@@ -17,6 +17,14 @@ spring:
                 "[format_sql]": true
         database: postgresql
         database-platform: org.hibernate.dialect.PostgreSQLDialect
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+    # flyway:
+    #     enabled: true
+    #     locations: classpath:db/migration/structure, classpath:db/migration/data
+    #     validate-on-migrate: true
     devtools:
         livereload:
             enabled: true

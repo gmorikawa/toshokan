@@ -1,7 +1,10 @@
 package dev.gmorikawa.toshokan.domain.file.storage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -25,11 +28,29 @@ public class LocalStorage {
             java.io.File binary = new java.io.File(filepath);
             binary.createNewFile();
 
-            try (FileOutputStream fos = new FileOutputStream(binary)) {
-                fos.write(multipartFile.getBytes());
-            }
-        } catch (IOException e) {
+            FileOutputStream stream = new FileOutputStream(binary);
+            stream.write(multipartFile.getBytes());
+            stream.close();
+        } 
+        catch(FileNotFoundException e) {
+            System.out.println("LinuxStorage: FileNotFoundException => " + e.getMessage());
+        }
+        catch (IOException e) {
             System.out.println("LinuxStorage: IOException => " + e.getMessage());
+        }
+    }
+
+    public InputStream retrive(File file) {
+        try {
+            String filepath = buildFilepath(rootDirectory, file.getFilePath());
+            
+            FileInputStream stream = new FileInputStream(filepath);
+
+            return stream;
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("LinuxStorage: FileNotFoundException => " + e.getMessage());
+            return null;
         }
     }
 

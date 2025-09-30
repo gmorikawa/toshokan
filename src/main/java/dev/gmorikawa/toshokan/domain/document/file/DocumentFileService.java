@@ -3,18 +3,14 @@ package dev.gmorikawa.toshokan.domain.document.file;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
 import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.file.enumerator.FileState;
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
 
 @Service
 public class DocumentFileService {
@@ -35,18 +31,14 @@ public class DocumentFileService {
         return fileService.download(fileId);
     }
 
-    public DocumentFile create(User requestor, Document document, MultipartFile binary, String description) {
-        if (!requestor.hasRole(Set.of(UserRole.ADMIN, UserRole.LIBRARIAN))) {
-            throw new UnauthorizedActionException();
-        }
-
+    public DocumentFile create(Document document, MultipartFile binary, String label) {
         File file = fileService.upload(
-            fileService.create(binary, /*document.getFilePath()*/"").getId(),
+            fileService.create(binary, document.getTitle()).getId(),
             binary
         );
 
         if (file.getState() == FileState.AVAILABLE) {
-            DocumentFile documentFile = new DocumentFile(document, file, description);
+            DocumentFile documentFile = new DocumentFile(document, file, label);
 
             return repository.save(documentFile);
         } else {

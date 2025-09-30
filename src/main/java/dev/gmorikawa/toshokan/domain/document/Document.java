@@ -4,7 +4,9 @@ import java.util.List;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.category.Category;
+import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.topic.Topic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -64,6 +67,13 @@ public class Document {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Topic> topics;
 
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    private List<DocumentFile> documentFiles;
+
     public String getId() {
         return id;
     }
@@ -110,6 +120,10 @@ public class Document {
 
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
+    }
+
+    public List<DocumentFile> getDocumentFiles() {
+        return documentFiles;
     }
 
     public String getAuthorsAsString() {

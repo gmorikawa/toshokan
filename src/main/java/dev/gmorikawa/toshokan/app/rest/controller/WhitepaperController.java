@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
@@ -50,16 +47,16 @@ public class WhitepaperController {
         return service.create(entity);
     }
 
-    @PostMapping("/{id}/upload")
-    public DocumentFile upload(
-        @RequestAttribute("user") User requestor,
-        @PathVariable String id,
-        @RequestParam("file") MultipartFile binary,
-        @RequestParam("description") String description
-    ) {
-        Whitepaper whitepaper = service.getById(id);
-        return documentFileService.create(requestor, whitepaper, binary, description);
-    }
+    // @PostMapping("/{id}/upload")
+    // public DocumentFile upload(
+    //     @RequestAttribute("user") User requestor,
+    //     @PathVariable String id,
+    //     @RequestParam("file") MultipartFile binary,
+    //     @RequestParam("description") String description
+    // ) {
+    //     Whitepaper whitepaper = service.getById(id);
+    //     return documentFileService.create(requestor, whitepaper, binary, description);
+    // }
 
     @PatchMapping("/{id}")
     public Whitepaper update(
