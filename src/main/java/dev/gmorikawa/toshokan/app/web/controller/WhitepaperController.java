@@ -1,5 +1,8 @@
 package dev.gmorikawa.toshokan.app.web.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,17 +13,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
 import dev.gmorikawa.toshokan.domain.category.CategoryService;
+import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
+import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
+import dev.gmorikawa.toshokan.domain.file.File;
+import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller("web.whitepaper")
 @RequestMapping(path = "whitepapers")
@@ -31,19 +41,25 @@ public class WhitepaperController {
     private final PublisherService publisherService;
     private final CategoryService categoryService;
     private final TopicService topicService;
+    private final FileService fileService;
+    private final DocumentFileService documentFileService;
 
     public WhitepaperController(
             WhitepaperService service,
             AuthorService authorService,
             PublisherService publisherService,
             CategoryService categoryService,
-            TopicService topicService
+            TopicService topicService,
+            FileService fileService,
+            DocumentFileService documentFileService
     ) {
         this.service = service;
         this.authorService = authorService;
         this.publisherService = publisherService;
         this.categoryService = categoryService;
         this.topicService = topicService;
+        this.fileService = fileService;
+        this.documentFileService = documentFileService;
     }
 
     @GetMapping("/list")
@@ -76,6 +92,55 @@ public class WhitepaperController {
         return "whitepaper/create";
     }
 
+    @GetMapping("/{id}")
+    public String details(
+            @PathVariable String id,
+            Model model
+    ) {
+        Whitepaper whitepaper = service.getById(id);
+
+        model.addAttribute("meta", new Meta("Whitepaper Details || Toshokan"));
+        model.addAttribute("page", new Page(whitepaper.getTitle()));
+        model.addAttribute("whitepaper", whitepaper);
+
+        return "whitepaper/details";
+    }
+
+    @GetMapping("/{id}/upload")
+    public String upload(
+        @PathVariable String id,
+        Model model
+    ) {
+        model.addAttribute("meta", new Meta("Upload Whitepaper || Toshokan"));
+        model.addAttribute("page", new Page("Upload Whitepaper"));
+        model.addAttribute("whitepaper", service.getById(id));
+        model.addAttribute("documentFile", new DocumentFile());
+
+        return "whitepaper/upload";
+    }
+
+     @GetMapping("/{id}/download/{fileId}")
+    public void download(
+        @PathVariable String id,
+        @PathVariable String fileId,
+        HttpServletResponse response
+    ) {
+        File file = fileService.getById(fileId);
+
+        try (
+            InputStream inputStream = fileService.download(fileId);
+            OutputStream outputStream = response.getOutputStream();
+        ) {
+            response.setHeader("Content-Transfer-Encoding", "binary;");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
+
+            inputStream.transferTo(outputStream);
+        }
+        catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @GetMapping("/{id}/edit")
     public String update(@PathVariable String id, Model model) {
         Whitepaper whitepaper = service.getById(id);
@@ -106,5 +171,17 @@ public class WhitepaperController {
         service.remove(id);
 
         return "redirect:/whitepapers/list";
+    }
+
+    @PostMapping("/{id}/upload")
+    public String upload(
+        @PathVariable String id,
+        @RequestParam("file") MultipartFile file,
+        @RequestParam("label") String label,
+        RedirectAttributes redirectAttributes
+    ) {
+        documentFileService.create(service.getById(id), file, label);
+
+        return String.format("redirect:/whitepapers/%s", id);
     }
 }

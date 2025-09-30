@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
+
+<body style="display: flex;">
+    <aside th:replace="~{layouts/admin :: app-menu}"></aside>
+
+    <section style="flex-grow: 1">
+        <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
+
+        <a class="button is-primary" th:href="|/whitepapers/${whitepaper.id}/upload|">
+            Upload
+        </a>
+
+        <main class="p-2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Label</th>
+                        <th>Filename</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="documentFile : ${whitepaper.documentFiles}">
+                        <td>
+                            <a th:href="|/whitepapers/${whitepaper.id}/download/${documentFile.file.id}|" class="button is-primary">Download</a>
+                        </td>
+                        <td th:text="${documentFile.label}" />
+                        <td th:text="${documentFile.file.filename}" />
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </section>
+</body>
+
+</html>

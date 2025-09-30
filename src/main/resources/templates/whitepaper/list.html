@@ -29,7 +29,7 @@
                 </thead>
 
                 <tbody>
-                    <tr th:each="whitepaper : ${whitepapers}">
+                    <tr th:each="whitepaper : ${whitepapers}" class="clickable-row" th:data-href="|/whitepapers/${whitepaper.id}|">
                         <td>
                             <a th:href="|/whitepapers/${whitepaper.id}/edit|" class="button is-primary">Edit</a>
                             <a th:href="|/whitepapers/${whitepaper.id}/remove|" class="button is-danger">Delete</a>
