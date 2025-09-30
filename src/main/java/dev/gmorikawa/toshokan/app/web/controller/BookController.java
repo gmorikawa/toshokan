@@ -186,8 +186,6 @@ public class BookController {
     ) {
         documentFileService.create(service.getById(id), file, label);
 
-        redirectAttributes.addFlashAttribute("id", id);
-
-        return "redirect:/books/details";
+        return String.format("redirect:/books/%s", id);
     }
 }

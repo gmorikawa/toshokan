@@ -14,13 +14,25 @@
         </a>
 
         <main class="p-2">
-            <ul>
-                <li th:each="documentFile : ${book.documentFiles}">
-                    <a th:href="|/books/${book.id}/download/${documentFile.file.id}|" th:text="${documentFile.label}"></a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Label</th>
+                        <th>Filename</th>
+                    </tr>
+                </thead>
 
-                    <span th:text="${documentFile.file.filename}"></span>
-                </li>
-            </ul>
+                <tbody>
+                    <tr th:each="documentFile : ${book.documentFiles}">
+                        <td>
+                            <a th:href="|/books/${book.id}/download/${documentFile.file.id}|" class="button is-primary">Download</a>
+                        </td>
+                        <td th:text="${documentFile.label}" />
+                        <td th:text="${documentFile.file.filename}" />
+                    </tr>
+                </tbody>
+            </table>
         </main>
     </section>
 </body>
