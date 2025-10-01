@@ -15,12 +15,12 @@
                     <label class="label">Book Type</label>
                     <div class="control">
                         <label for="book.type.FICTION" class="radio">
-                            <input type="radio" id="book.type.FICTION" value="FICTION" th:field="*{type}">
+                            <input th:field="*{type}" type="radio" id="book.type.FICTION" value="FICTION">
                             Fiction
                         </label>
 
                         <label for="book.type.NON_FICTION" class="radio">
-                            <input type="radio" id="book.type.NON_FICTION" value="NON_FICTION" th:field="*{type}">
+                            <input th:field="*{type}" type="radio" id="book.type.NON_FICTION" value="NON_FICTION">
                             Non-fiction
                         </label>
                     </div>
@@ -76,7 +76,7 @@
                     <label for="book.topics" class="label">Topics</label>
                     <div class="checkboxes">
                         <label class="checkbox" th:each="topic : ${topics}">
-                            <input type="checkbox" th:value="${topic.id}">
+                            <input th:field="*{topics}" type="checkbox" th:value="${topic.id}">
                             <span th:text="${topic.name}" />
                         </label>
                     </div>

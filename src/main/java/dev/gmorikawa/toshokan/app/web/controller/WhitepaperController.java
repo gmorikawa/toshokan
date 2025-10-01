@@ -148,6 +148,10 @@ public class WhitepaperController {
         model.addAttribute("meta", new Meta("Update Whitepaper || Toshokan"));
         model.addAttribute("page", new Page("Update Whitepaper"));
         model.addAttribute("whitepaper", whitepaper);
+        model.addAttribute("authors", this.authorService.getAll());
+        model.addAttribute("publishers", this.publisherService.getAll());
+        model.addAttribute("categories", this.categoryService.getAll());
+        model.addAttribute("topics", this.topicService.getAll());
 
         return "whitepaper/update";
     }

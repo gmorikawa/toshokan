@@ -76,7 +76,7 @@
                     <label for="book.topics" class="label">Topics</label>
                     <div class="checkboxes">
                         <label class="checkbox" th:each="topic : ${topics}">
-                            <input type="checkbox" th:value="${topic.id}">
+                            <input th:field="*{topics}" type="checkbox" th:value="${topic.id}">
                             <span th:text="${topic.name}" />
                         </label>
                     </div>
