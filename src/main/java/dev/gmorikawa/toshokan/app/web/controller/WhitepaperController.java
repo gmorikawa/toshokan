@@ -65,8 +65,8 @@ public class WhitepaperController {
     @GetMapping("/list")
     public String list(
             Model model,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int size
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
         List<Whitepaper> whitepapers = service.getAll(pagination);
@@ -180,8 +180,8 @@ public class WhitepaperController {
     @PostMapping("/{id}/upload")
     public String upload(
         @PathVariable String id,
-        @RequestParam("file") MultipartFile file,
-        @RequestParam("label") String label,
+        @RequestParam MultipartFile file,
+        @RequestParam String label,
         RedirectAttributes redirectAttributes
     ) {
         documentFileService.create(service.getById(id), file, label);

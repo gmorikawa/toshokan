@@ -31,8 +31,8 @@ public class TopicController {
     @GetMapping("/list")
     public String list(
         Model model,
-        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-        @RequestParam(value = "size", required = false, defaultValue = "10") int size
+        @RequestParam(required = false, defaultValue = "1") int page,
+        @RequestParam(required = false, defaultValue = "10") int size
     ) {
         Pagination pagination = new Pagination(page, size);
         List<Topic> topics = service.getAll(pagination);
