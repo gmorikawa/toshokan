@@ -315,3 +315,9 @@ In Spring, the test files stays in a separated directory from the main source co
 * [Getting Started | Testing the Web Layer](https://spring.io/guides/gs/testing-web), accessed on April 20, 2025;
 * [Testing in Spring Boot | Baeldung](https://www.baeldung.com/spring-boot-testing), accessed on April 20, 2025;
 * [Oliver Drotbohm - Why field injection is evil](https://odrotbohm.de/2013/11/why-field-injection-is-evil/), accessed on April 20, 2025;
+
+## Empty authentication cookie on login page
+
+The _login page_ is supposed to allow unauthenticated access, but, if I request for a _logout_ and redirect it to the login page, the `403 Unauthorized` error is thrown.
+
+Apparently, this only occurs if the cookie `Authorization` is present with a empty value.

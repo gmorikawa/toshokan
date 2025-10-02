@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
+
+<body>
+    <main>
+        <form method="post" th:action="@{/auth/login}" th:object="${credential}">
+            <div class="field">
+                <label for="credential.username" class="label">Username</label>
+                <div class="control">
+                    <input th:field="*{username}" id="credential.username" class="input" type="text"
+                        placeholder="example@email.com">
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="credential.password" class="label">Password</label>
+                <div class="control">
+                    <input th:field="*{password}" id="credential.password" class="input" type="password"
+                        placeholder="******">
+                </div>
+            </div>
+
+            <button type="submit" class="button is-primary">Login</button>
+        </form>
+    </main>
+</body>
+
+</html>

@@ -10,8 +10,7 @@ public class TokenCredential {
     private String refreshToken;
 
     public String getAccessToken() {
-        StringBuilder builder = new StringBuilder();
-        return builder.append("Bearer ").append(accessToken).toString();
+        return accessToken;
     }
 
     public void setAccessToken(String accessToken) {
