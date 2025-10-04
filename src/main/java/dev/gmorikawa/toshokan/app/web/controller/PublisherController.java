@@ -38,7 +38,7 @@ public class PublisherController {
         List<Publisher> publishers = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Publishers || Toshokan"));
-        model.addAttribute("page", new Page("List Publishers"));
+        model.addAttribute("page", new Page("Publishers", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/publishers/list", pagination));
         model.addAttribute("publishers", publishers);
 
@@ -48,7 +48,7 @@ public class PublisherController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create Publisher || Toshokan"));
-        model.addAttribute("page", new Page("Create Publisher"));
+        model.addAttribute("page", new Page("Publisher", "Create"));
         model.addAttribute("publisher", new Publisher());
 
         return "publisher/create";
@@ -59,7 +59,7 @@ public class PublisherController {
         Publisher publisher = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Publisher || Toshokan"));
-        model.addAttribute("page", new Page("Update Publisher"));
+        model.addAttribute("page", new Page("Publisher", "Update"));
         model.addAttribute("publisher", publisher);
 
         return "publisher/update";

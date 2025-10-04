@@ -38,7 +38,7 @@ public class AuthorController {
         List<Author> authors = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Authors || Toshokan"));
-        model.addAttribute("page", new Page("List Authors"));
+        model.addAttribute("page", new Page("Authors", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/authors/list", pagination));
         model.addAttribute("authors", authors);
 
@@ -48,7 +48,7 @@ public class AuthorController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create Author || Toshokan"));
-        model.addAttribute("page", new Page("Create Author"));
+        model.addAttribute("page", new Page("Author", "Create"));
         model.addAttribute("author", new Author());
 
         return "author/create";
@@ -59,7 +59,7 @@ public class AuthorController {
         Author author = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Author || Toshokan"));
-        model.addAttribute("page", new Page("Update Author"));
+        model.addAttribute("page", new Page("Author", "Update"));
         model.addAttribute("author", author);
 
         return "author/update";

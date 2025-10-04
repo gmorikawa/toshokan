@@ -38,7 +38,7 @@ public class TopicController {
         List<Topic> topics = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Topics || Toshokan"));
-        model.addAttribute("page", new Page("List Topics"));
+        model.addAttribute("page", new Page("Topics", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/topics/list", pagination));
         model.addAttribute("topics", topics);
 
@@ -48,7 +48,7 @@ public class TopicController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create Topic || Toshokan"));
-        model.addAttribute("page", new Page("Create Topic"));
+        model.addAttribute("page", new Page("Topic", "Create"));
         model.addAttribute("topic", new Topic());
 
         return "topic/create";
@@ -59,7 +59,7 @@ public class TopicController {
         Topic topic = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Topic || Toshokan"));
-        model.addAttribute("page", new Page("Update Topic"));
+        model.addAttribute("page", new Page("Topic", "Update"));
         model.addAttribute("topic", topic);
 
         return "topic/update";

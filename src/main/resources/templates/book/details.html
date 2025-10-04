@@ -7,7 +7,7 @@
     <nav th:replace="~{fragments/menu}" />
 
     <section style="flex-grow: 1">
-        <header th:replace="~{fragments/header :: header(${page.title})}" />
+        <header th:replace="~{fragments/header :: header(${page})}" />
 
         <a class="button is-primary" th:href="|/app/books/${book.id}/upload|">
             Upload

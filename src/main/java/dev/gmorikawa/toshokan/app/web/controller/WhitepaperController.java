@@ -72,7 +72,7 @@ public class WhitepaperController {
         List<Whitepaper> whitepapers = service.getAll(pagination);
 
         model.addAttribute("meta", new Meta("List Whitepapers || Toshokan"));
-        model.addAttribute("page", new Page("List Whitepapers"));
+        model.addAttribute("page", new Page("Whitepapers", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/whitepapers/list", pagination));
         model.addAttribute("whitepapers", whitepapers);
 
@@ -82,7 +82,7 @@ public class WhitepaperController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create Whitepaper || Toshokan"));
-        model.addAttribute("page", new Page("Create Whitepaper"));
+        model.addAttribute("page", new Page("Whitepaper", "Create"));
         model.addAttribute("whitepaper", new Whitepaper());
         model.addAttribute("authors", this.authorService.getAll());
         model.addAttribute("publishers", this.publisherService.getAll());
@@ -100,7 +100,7 @@ public class WhitepaperController {
         Whitepaper whitepaper = service.getById(id);
 
         model.addAttribute("meta", new Meta("Whitepaper Details || Toshokan"));
-        model.addAttribute("page", new Page(whitepaper.getTitle()));
+        model.addAttribute("page", new Page("Whitepaper", whitepaper.getTitle()));
         model.addAttribute("whitepaper", whitepaper);
 
         return "whitepaper/details";
@@ -111,9 +111,11 @@ public class WhitepaperController {
         @PathVariable String id,
         Model model
     ) {
+        Whitepaper whitepaper = service.getById(id);
+
         model.addAttribute("meta", new Meta("Upload Whitepaper || Toshokan"));
-        model.addAttribute("page", new Page("Upload Whitepaper"));
-        model.addAttribute("whitepaper", service.getById(id));
+        model.addAttribute("page", new Page("Whitepaper", "Upload: " + whitepaper.getTitle()));
+        model.addAttribute("whitepaper", whitepaper);
         model.addAttribute("documentFile", new DocumentFile());
 
         return "whitepaper/upload";
@@ -146,7 +148,7 @@ public class WhitepaperController {
         Whitepaper whitepaper = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Whitepaper || Toshokan"));
-        model.addAttribute("page", new Page("Update Whitepaper"));
+        model.addAttribute("page", new Page("Whitepaper", "Update"));
         model.addAttribute("whitepaper", whitepaper);
         model.addAttribute("authors", this.authorService.getAll());
         model.addAttribute("publishers", this.publisherService.getAll());

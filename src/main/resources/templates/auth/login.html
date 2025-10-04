@@ -3,27 +3,29 @@
 
 <head th:replace="~{fragments/head :: metadata(${meta.title})}" />
 
-<body>
-    <main>
-        <form method="post" th:action="@{/app/auth/login}" th:object="${credential}">
-            <div class="field">
-                <label for="credential.username" class="label">Username</label>
-                <div class="control">
-                    <input th:field="*{username}" id="credential.username" class="input" type="text"
-                        placeholder="example@email.com">
+<body style="display: flex; justify-content: center;">
+    <main style="max-width: 512px; width: 100%;">
+        <div class="card">
+            <form method="post" th:action="@{/app/auth/login}" th:object="${credential}" class="card-content">
+                <div class="field">
+                    <label for="credential.username" class="label">Username</label>
+                    <div class="control">
+                        <input th:field="*{username}" id="credential.username" class="input" type="text"
+                            placeholder="example@email.com">
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label for="credential.password" class="label">Password</label>
-                <div class="control">
-                    <input th:field="*{password}" id="credential.password" class="input" type="password"
-                        placeholder="******">
+                <div class="field">
+                    <label for="credential.password" class="label">Password</label>
+                    <div class="control">
+                        <input th:field="*{password}" id="credential.password" class="input" type="password"
+                            placeholder="******">
+                    </div>
                 </div>
-            </div>
 
-            <button type="submit" class="button is-primary">Login</button>
-        </form>
+                <button type="submit" class="button is-primary">Login</button>
+            </form>
+        </div>
     </main>
 </body>
 

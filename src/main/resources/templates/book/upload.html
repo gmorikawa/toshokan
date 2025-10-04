@@ -7,7 +7,7 @@
     <nav th:replace="~{fragments/menu}" />
 
     <section style="flex-grow: 1">
-        <header th:replace="~{fragments/header :: header(${page.title})}" />
+        <header th:replace="~{fragments/header :: header(${page})}" />
 
         <main class="p-2">
             <form enctype="multipart/form-data" method="post" action="#" th:action="|/app/books/${book.id}/upload|" th:object="${documentFile}">

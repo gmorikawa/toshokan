@@ -7,7 +7,7 @@
     <nav th:replace="~{fragments/menu}" />
 
     <section style="flex-grow: 1">
-        <header th:replace="~{fragments/header :: header(${page.title})}" />
+        <header th:replace="~{fragments/header :: header(${page})}" />
 
         <nav th:replace="~{components/navigation :: navigation(${pagination})}"></nav>
 

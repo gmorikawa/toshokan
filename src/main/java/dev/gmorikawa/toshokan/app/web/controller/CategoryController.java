@@ -38,7 +38,7 @@ public class CategoryController {
         List<Category> categories = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Categories || Toshokan"));
-        model.addAttribute("page", new Page("List Categories"));
+        model.addAttribute("page", new Page("Categories", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/categories/list", pagination));
         model.addAttribute("categories", categories);
 
@@ -48,7 +48,7 @@ public class CategoryController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create Category || Toshokan"));
-        model.addAttribute("page", new Page("Create Category"));
+        model.addAttribute("page", new Page("Category", "Create"));
         model.addAttribute("category", new Category());
 
         return "category/create";
@@ -59,7 +59,7 @@ public class CategoryController {
         Category category = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Category || Toshokan"));
-        model.addAttribute("page", new Page("Update Category"));
+        model.addAttribute("page", new Page("Category", "Update"));
         model.addAttribute("category", category);
 
         return "category/update";

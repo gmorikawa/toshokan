@@ -1,9 +1,9 @@
 <section
-    th:fragment="banner(title)"
+    th:fragment="banner(page)"
     class="hero is-primary"
 >
     <div class="hero-body">
-        <h1 class="title" th:text="${title}" />
-        <!-- <p class="subtitle"></p> -->
+        <h1 class="title" th:text="${page.title}" />
+        <h2 class="subtitle" th:text="${page.subtitle}">
     </div>
 </section>

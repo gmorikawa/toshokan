@@ -70,7 +70,7 @@ public class BookController {
         Book book = service.getById(id);
 
         model.addAttribute("meta", new Meta("Book Details || Toshokan"));
-        model.addAttribute("page", new Page(book.getTitle()));
+        model.addAttribute("page", new Page("Book", book.getTitle()));
         model.addAttribute("book", book);
 
         return "book/details";
@@ -86,7 +86,7 @@ public class BookController {
         List<Book> books = service.getAll(pagination);
 
         model.addAttribute("meta", new Meta("List Books || Toshokan"));
-        model.addAttribute("page", new Page("List Books"));
+        model.addAttribute("page", new Page("Books", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/books/list", pagination));
         model.addAttribute("books", books);
 
@@ -96,7 +96,7 @@ public class BookController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create Book || Toshokan"));
-        model.addAttribute("page", new Page("Create Book"));
+        model.addAttribute("page", new Page("Book", "Create"));
         model.addAttribute("book", new Book());
         model.addAttribute("authors", this.authorService.getAll());
         model.addAttribute("publishers", this.publisherService.getAll());
@@ -111,9 +111,10 @@ public class BookController {
         @PathVariable String id,
         Model model
     ) {
+        Book book = service.getById(id);
         model.addAttribute("meta", new Meta("Upload Book || Toshokan"));
-        model.addAttribute("page", new Page("Upload Book"));
-        model.addAttribute("book", service.getById(id));
+        model.addAttribute("page", new Page("Book", "Upload: " + book.getTitle()));
+        model.addAttribute("book", book);
         model.addAttribute("documentFile", new DocumentFile());
 
         return "book/upload";
@@ -146,7 +147,7 @@ public class BookController {
         Book book = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Book || Toshokan"));
-        model.addAttribute("page", new Page("Update Book"));
+        model.addAttribute("page", new Page("Book", "Update"));
         model.addAttribute("book", book);
         model.addAttribute("authors", this.authorService.getAll());
         model.addAttribute("publishers", this.publisherService.getAll());

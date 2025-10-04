@@ -38,7 +38,7 @@ public class UserController {
         List<User> users = service.getAll(pagination);
         
         model.addAttribute("meta", new Meta("List Users || Toshokan"));
-        model.addAttribute("page", new Page("List Users"));
+        model.addAttribute("page", new Page("Users", "List"));
         model.addAttribute("pagination", new PaginationComponent("/app/users/list", pagination));
         model.addAttribute("users", users);
 
@@ -48,7 +48,7 @@ public class UserController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meta", new Meta("Create User || Toshokan"));
-        model.addAttribute("page", new Page("Create User"));
+        model.addAttribute("page", new Page("User", "Create"));
         model.addAttribute("user", new User());
 
         return "user/create";
@@ -59,7 +59,7 @@ public class UserController {
         User user = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update User || Toshokan"));
-        model.addAttribute("page", new Page("Update User"));
+        model.addAttribute("page", new Page("User", "Update"));
         model.addAttribute("user", user);
 
         return "user/update";

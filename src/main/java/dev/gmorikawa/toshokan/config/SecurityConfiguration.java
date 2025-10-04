@@ -55,10 +55,10 @@ public class SecurityConfiguration {
                                 .requestMatchers("/app/auth/login").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin(
-                        (login) -> login
-                                .loginPage("/app/auth/login").permitAll()
-                )
+                // .formLogin(
+                //         (login) -> login
+                //                 .loginPage("/app/auth/login").permitAll()
+                // )
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
