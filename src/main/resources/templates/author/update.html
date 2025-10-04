@@ -10,7 +10,7 @@
         <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
 
         <main class="p-2">
-            <form method="post" action="#" th:action="|/authors/${author.id}/update|" th:object="${author}">
+            <form method="post" action="#" th:action="|/app/authors/${author.id}/update|" th:object="${author}">
                 <div class="field">
                     <label for="author.fullname" class="label">Full Name</label>
                     <div class="control">

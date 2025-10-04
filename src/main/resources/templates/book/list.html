@@ -13,7 +13,7 @@
 
         <main class="p-2">
             <div>
-                <a class="button is-primary" href="/books/create">
+                <a class="button is-primary" href="/app/books/create">
                     Create
                 </a>
             </div>
@@ -31,10 +31,10 @@
                 </thead>
 
                 <tbody>
-                    <tr th:each="book : ${books}" class="clickable-row" th:data-href="|/books/${book.id}|">
+                    <tr th:each="book : ${books}" class="clickable-row" th:data-href="|/app/books/${book.id}|">
                         <td>
-                            <a th:href="|/books/${book.id}/edit|" class="button is-primary">Edit</a>
-                            <a th:href="|/books/${book.id}/remove|" class="button is-danger">Delete</a>
+                            <a th:href="|/app/books/${book.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/app/books/${book.id}/remove|" class="button is-danger">Delete</a>
                         </td>
                         <td th:text="${book.isbn}" />
                         <td th:text="${book.title}" />

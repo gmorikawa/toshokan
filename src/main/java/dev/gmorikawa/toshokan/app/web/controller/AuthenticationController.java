@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller("web.authentication")
-@RequestMapping("/auth")
+@RequestMapping("app/auth")
 public class AuthenticationController {
 
     private final AuthenticationService service;
@@ -50,7 +50,7 @@ public class AuthenticationController {
         TokenCredential tokenCredential = service.login(credential);
         response.addCookie(new AuthorizationCookie(tokenCredential.getAccessToken()));
 
-        return "redirect:/users/list";
+        return "redirect:/app/users/list";
     }
 
     @PostMapping("/logout")
@@ -60,6 +60,6 @@ public class AuthenticationController {
     ) {
         response.addCookie(new AuthorizationCookie(null));
 
-        return "redirect:/auth/login";
+        return "redirect:/app/auth/login";
     }
 }

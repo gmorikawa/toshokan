@@ -10,7 +10,7 @@
         <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
 
         <main class="p-2">
-            <form method="post" action="#" th:action="|/books/${book.id}/update|" th:object="${book}">
+            <form method="post" action="#" th:action="|/app/books/${book.id}/update|" th:object="${book}">
                 <div class="field">
                     <label class="label">Book Type</label>
                     <div class="control">

@@ -13,7 +13,7 @@
 
         <main class="p-2">
             <div>
-                <a class="button is-primary" href="/categories/create">
+                <a class="button is-primary" href="/app/categories/create">
                     Create
                 </a>
             </div>
@@ -30,8 +30,8 @@
                 <tbody>
                     <tr th:each="category : ${categories}">
                         <td>
-                            <a th:href="|/categories/${category.id}/edit|" class="button is-primary">Edit</a>
-                            <a th:href="|/categories/${category.id}/remove|" class="button is-danger">Delete</a>
+                            <a th:href="|/app/categories/${category.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/app/categories/${category.id}/remove|" class="button is-danger">Delete</a>
                         </td>
                         <td th:text="${category.id}" />
                         <td th:text="${category.name}" />

@@ -10,7 +10,7 @@
         <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
 
         <main class="p-2">
-            <form enctype="multipart/form-data" method="post" action="#" th:action="|/whitepapers/${whitepaper.id}/upload|" th:object="${documentFile}">
+            <form enctype="multipart/form-data" method="post" action="#" th:action="|/app/whitepapers/${whitepaper.id}/upload|" th:object="${documentFile}">
                 <div class="field">
                     <label for="document.file" class="label">File</label>
                     <div class="file has-name">

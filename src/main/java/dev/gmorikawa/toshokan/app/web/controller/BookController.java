@@ -33,7 +33,7 @@ import dev.gmorikawa.toshokan.shared.query.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller("web.book")
-@RequestMapping(path = "books")
+@RequestMapping(path = "app/books")
 public class BookController {
 
     private final BookService service;
@@ -87,7 +87,7 @@ public class BookController {
 
         model.addAttribute("meta", new Meta("List Books || Toshokan"));
         model.addAttribute("page", new Page("List Books"));
-        model.addAttribute("pagination", new PaginationComponent("/books/list", pagination));
+        model.addAttribute("pagination", new PaginationComponent("/app/books/list", pagination));
         model.addAttribute("books", books);
 
         return "book/list";
@@ -160,21 +160,21 @@ public class BookController {
     public String create(@ModelAttribute Book book) {
         service.create(book);
 
-        return "redirect:/books/list";
+        return "redirect:/app/books/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable String id, @ModelAttribute Book book) {
         service.update(id, book);
 
-        return "redirect:/books/list";
+        return "redirect:/app/books/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(@PathVariable String id, @ModelAttribute Book book) {
         service.remove(id);
 
-        return "redirect:/books/list";
+        return "redirect:/app/books/list";
     }
 
     @PostMapping("/{id}/upload")
@@ -186,6 +186,6 @@ public class BookController {
     ) {
         documentFileService.create(service.getById(id), file, label);
 
-        return String.format("redirect:/books/%s", id);
+        return String.format("redirect:/app/books/%s", id);
     }
 }

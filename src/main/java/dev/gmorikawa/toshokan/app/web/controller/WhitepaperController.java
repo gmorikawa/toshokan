@@ -33,7 +33,7 @@ import dev.gmorikawa.toshokan.shared.query.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller("web.whitepaper")
-@RequestMapping(path = "whitepapers")
+@RequestMapping(path = "app/whitepapers")
 public class WhitepaperController {
 
     private final WhitepaperService service;
@@ -73,7 +73,7 @@ public class WhitepaperController {
 
         model.addAttribute("meta", new Meta("List Whitepapers || Toshokan"));
         model.addAttribute("page", new Page("List Whitepapers"));
-        model.addAttribute("pagination", new PaginationComponent("/whitepapers/list", pagination));
+        model.addAttribute("pagination", new PaginationComponent("/app/whitepapers/list", pagination));
         model.addAttribute("whitepapers", whitepapers);
 
         return "whitepaper/list";
@@ -160,21 +160,21 @@ public class WhitepaperController {
     public String create(@ModelAttribute Whitepaper whitepaper) {
         service.create(whitepaper);
 
-        return "redirect:/whitepapers/list";
+        return "redirect:/app/whitepapers/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable String id, @ModelAttribute Whitepaper whitepaper) {
         service.update(id, whitepaper);
 
-        return "redirect:/whitepapers/list";
+        return "redirect:/app/whitepapers/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(@PathVariable String id, @ModelAttribute Whitepaper whitepaper) {
         service.remove(id);
 
-        return "redirect:/whitepapers/list";
+        return "redirect:/app/whitepapers/list";
     }
 
     @PostMapping("/{id}/upload")
@@ -186,6 +186,6 @@ public class WhitepaperController {
     ) {
         documentFileService.create(service.getById(id), file, label);
 
-        return String.format("redirect:/whitepapers/%s", id);
+        return String.format("redirect:/app/whitepapers/%s", id);
     }
 }

@@ -13,7 +13,7 @@
 
         <main class="p-2">
             <div>
-                <a class="button is-primary" href="/users/create">
+                <a class="button is-primary" href="/app/users/create">
                     Create
                 </a>
             </div>
@@ -32,8 +32,8 @@
                 <tbody>
                     <tr th:each="user : ${users}">
                         <td>
-                            <a th:href="|/users/${user.id}/edit|" class="button is-primary">Edit</a>
-                            <a th:href="|/users/${user.id}/remove|" class="button is-danger">Delete</a>
+                            <a th:href="|/app/users/${user.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/app/users/${user.id}/remove|" class="button is-danger">Delete</a>
                         </td>
                         <td th:text="${user.id}" />
                         <td th:text="${user.fullname}" />

@@ -19,7 +19,7 @@ import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Controller("web.publisher")
-@RequestMapping(path = "publishers")
+@RequestMapping(path = "app/publishers")
 public class PublisherController {
 
     private final PublisherService service;
@@ -39,7 +39,7 @@ public class PublisherController {
         
         model.addAttribute("meta", new Meta("List Publishers || Toshokan"));
         model.addAttribute("page", new Page("List Publishers"));
-        model.addAttribute("pagination", new PaginationComponent("/publishers/list", pagination));
+        model.addAttribute("pagination", new PaginationComponent("/app/publishers/list", pagination));
         model.addAttribute("publishers", publishers);
 
         return "publisher/list";
@@ -69,20 +69,20 @@ public class PublisherController {
     public String create(@ModelAttribute Publisher publisher) {
         service.create(publisher);
 
-        return "redirect:/publishers/list";
+        return "redirect:/app/publishers/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable String id, @ModelAttribute Publisher publisher) {
         service.update(id, publisher);
 
-        return "redirect:/publishers/list";
+        return "redirect:/app/publishers/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(@PathVariable String id, @ModelAttribute Publisher publisher) {
         service.remove(id);
 
-        return "redirect:/publishers/list";
+        return "redirect:/app/publishers/list";
     }
 }

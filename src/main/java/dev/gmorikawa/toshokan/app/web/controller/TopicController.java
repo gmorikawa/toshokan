@@ -19,7 +19,7 @@ import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Controller("web.topic")
-@RequestMapping(path = "topics")
+@RequestMapping(path = "app/topics")
 public class TopicController {
 
     private final TopicService service;
@@ -39,7 +39,7 @@ public class TopicController {
         
         model.addAttribute("meta", new Meta("List Topics || Toshokan"));
         model.addAttribute("page", new Page("List Topics"));
-        model.addAttribute("pagination", new PaginationComponent("/topics/list", pagination));
+        model.addAttribute("pagination", new PaginationComponent("/app/topics/list", pagination));
         model.addAttribute("topics", topics);
 
         return "topic/list";
@@ -69,20 +69,20 @@ public class TopicController {
     public String create(@ModelAttribute Topic topic) {
         service.create(topic);
 
-        return "redirect:/topics/list";
+        return "redirect:/app/topics/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable String id, @ModelAttribute Topic topic) {
         service.update(id, topic);
 
-        return "redirect:/topics/list";
+        return "redirect:/app/topics/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(@PathVariable String id, @ModelAttribute Topic topic) {
         service.remove(id);
 
-        return "redirect:/topics/list";
+        return "redirect:/app/topics/list";
     }
 }

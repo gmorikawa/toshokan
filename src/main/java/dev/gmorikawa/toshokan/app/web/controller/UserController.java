@@ -19,7 +19,7 @@ import dev.gmorikawa.toshokan.user.User;
 import dev.gmorikawa.toshokan.user.UserService;
 
 @Controller("web.user")
-@RequestMapping(path = "users")
+@RequestMapping(path = "app/users")
 public class UserController {
 
     private final UserService service;
@@ -39,7 +39,7 @@ public class UserController {
         
         model.addAttribute("meta", new Meta("List Users || Toshokan"));
         model.addAttribute("page", new Page("List Users"));
-        model.addAttribute("pagination", new PaginationComponent("/users/list", pagination));
+        model.addAttribute("pagination", new PaginationComponent("/app/users/list", pagination));
         model.addAttribute("users", users);
 
         return "user/list";
@@ -69,20 +69,20 @@ public class UserController {
     public String create(@ModelAttribute User user) {
         service.create(user);
 
-        return "redirect:/users/list";
+        return "redirect:/app/users/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable String id, @ModelAttribute User user) {
         service.update(id, user);
 
-        return "redirect:/users/list";
+        return "redirect:/app/users/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(@PathVariable String id, @ModelAttribute User user) {
         service.remove(id);
 
-        return "redirect:/users/list";
+        return "redirect:/app/users/list";
     }
 }

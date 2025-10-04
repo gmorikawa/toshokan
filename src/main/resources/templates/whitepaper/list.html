@@ -13,7 +13,7 @@
 
         <main class="p-2">
             <div>
-                <a class="button is-primary" href="/whitepapers/create">
+                <a class="button is-primary" href="/app/whitepapers/create">
                     Create
                 </a>
             </div>
@@ -29,10 +29,10 @@
                 </thead>
 
                 <tbody>
-                    <tr th:each="whitepaper : ${whitepapers}" class="clickable-row" th:data-href="|/whitepapers/${whitepaper.id}|">
+                    <tr th:each="whitepaper : ${whitepapers}" class="clickable-row" th:data-href="|/app/whitepapers/${whitepaper.id}|">
                         <td>
-                            <a th:href="|/whitepapers/${whitepaper.id}/edit|" class="button is-primary">Edit</a>
-                            <a th:href="|/whitepapers/${whitepaper.id}/remove|" class="button is-danger">Delete</a>
+                            <a th:href="|/app/whitepapers/${whitepaper.id}/edit|" class="button is-primary">Edit</a>
+                            <a th:href="|/app/whitepapers/${whitepaper.id}/remove|" class="button is-danger">Delete</a>
                         </td>
                         <td th:text="${whitepaper.title}" />
                         <td th:text="${whitepaper.category}" />

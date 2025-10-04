@@ -10,7 +10,7 @@
         <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
 
         <main class="p-2">
-            <form method="post" action="#" th:action="|/whitepapers/${whitepaper.id}/update|" th:object="${whitepaper}">
+            <form method="post" action="#" th:action="|/app/whitepapers/${whitepaper.id}/update|" th:object="${whitepaper}">
                 <div class="field">
                     <label for="whitepaper.title" class="label">Title</label>
                     <div class="control">

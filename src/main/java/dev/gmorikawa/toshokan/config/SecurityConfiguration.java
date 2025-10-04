@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,18 +27,41 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(
-                (request) -> request
-                    .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                    .requestMatchers("/auth/**", "/api/auth/**").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .securityMatcher("/api/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        (request) -> request
+                                .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain appFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher("/app/**")
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        (request) -> request
+                                .requestMatchers("/app/auth/login").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .formLogin(
+                        (login) -> login
+                                .loginPage("/app/auth/login").permitAll()
+                )
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 }
