@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layouts/admin :: metadata(${meta.title})}"></head>
+<head th:replace="~{fragments/head :: metadata(${meta.title})}" />
 
 <body style="display: flex;">
-    <aside th:replace="~{layouts/admin :: app-menu}"></aside>
+    <nav th:replace="~{fragments/menu}" />
 
     <section style="flex-grow: 1">
-        <header th:replace="~{layouts/admin :: header(${page.title})}"></header>
+        <header th:replace="~{fragments/header :: header(${page.title})}" />
 
         <main class="p-2">
             <form method="post" action="#" th:action="|/app/categories/${category.id}/update|" th:object="${category}">

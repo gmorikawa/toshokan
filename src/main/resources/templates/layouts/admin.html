@@ -1,55 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="metadata(title)">
-    <title th:text="${title}" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-
-    <link rel="stylesheet" href="/styles/table.css">
-
-    <script src="/scripts/table.js"></script>
-    <script src="/scripts/loader.js"></script>
-</head>
 
 <body th:fragment="body" style="display: flex;">
-    <aside th:fragment="app-menu" class="menu p-2" style="flex-basis: auto;">
-        <p class="menu-label">Administration</p>
-        <ul class="menu-list">
-            <li><a>Dashboard</a></li>
-            <li><a href="/app/users/list">Users</a></li>
-        </ul>
-
-        <p class="menu-label">Documents</p>
-        <ul class="menu-list">
-            <li><a href="/app/books/list">Books</a></li>
-            <li><a href="/app/whitepapers/list">Whitepapers</a></li>
-        </ul>
-
-        <p class="menu-label">Settings</p>
-        <ul class="menu-list">
-            <li><a href="/app/authors/list">Authors</a></li>
-            <li><a href="/app/categories/list">Categories</a></li>
-            <li><a href="/app/publishers/list">Publishers</a></li>
-            <li><a href="/app/topics/list">Topics</a></li>
-        </ul>
-
-        <p class="menu-label">Authentication</p>
-        <ul class="menu-list">
-            <li>
-                <form action="/app/auth/logout" method="post">
-                    <button type="submit">
-                        Logout
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </aside>
+    <aside th:replace="~{fragments/menu}" />
 
     <section style="flex-grow: 1">
         <header th:fragment="header(title)" class="p-2">
-            <h1 th:text="${title}" class="is-size-1" />
+            <div th:replace="~{components/banner :: banner(${title})}"></div>
         </header>
 
         <main th:fragment="main" class="padding-2">
