@@ -2,14 +2,13 @@ spring:
     application:
         name: toshokan
     datasource:
-        # url: jdbc:postgresql://database:5432/toshokan
-        url: jdbc:postgresql://localhost:2010/toshokan
-        username: root
-        password: example
+        url: ${DATABASE_URI}
+        username: ${DATABASE_USERNAME}
+        password: ${DATABASE_PASSWORD}
         driver-class-name: org.postgresql.Driver
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: none
         show-sql: true
         properties:
             hibernate:
@@ -21,10 +20,10 @@ spring:
         multipart:
             max-file-size: 100MB
             max-request-size: 100MB
-    # flyway:
-    #     enabled: true
-    #     locations: classpath:db/migration/structure, classpath:db/migration/data
-    #     validate-on-migrate: true
+    flyway:
+        enabled: false
+        locations: classpath:db/migration/postgres
+        validate-on-migrate: true
     devtools:
         livereload:
             enabled: true

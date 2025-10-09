@@ -10,6 +10,12 @@ After I bought a machine to make my little home lab I decided to write this appl
 
 ## Getting Started
 
+First run migrations to create the database:
+
+```bash
+./mvnw flyway:migrate
+```
+
 To execute the project run the following command:
 
 ```bash
