@@ -1,7 +1,5 @@
 package dev.gmorikawa.toshokan.app.web.controller;
 
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +26,8 @@ public class AuthenticationController {
         this.service = service;
     }
 
-    private SecurityContextRepository securityContextRepository
-            = new HttpSessionSecurityContextRepository();
+    // private SecurityContextRepository securityContextRepository
+    //         = new HttpSessionSecurityContextRepository();
 
     @GetMapping("/login")
     public String login(

@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
@@ -20,11 +22,11 @@ public class UserServiceTest {
 
     @Test
     public void testGetUsers() {
-        List<User> list = new ArrayList<User>();
-        // list.add(new User("test1", "user1", "password1", "user1@email.com", UserRole.ADMIN, "User Uno"));
-        // list.add(new User("test2", "user2", "password2", "user2@email.com", UserRole.LIBRARIAN, "User Dos"));
-        // list.add(new User("test3", "user3", "password3", "user3@email.com", UserRole.READER, "User Tres"));
-        // list.add(new User("test4", "user4", "password4", "user4@email.com", UserRole.READER, "User Cuatro"));
+        List<User> list = new ArrayList<>();
+        list.add(new User("user1", "password1", "user1@email.com", UserRole.ADMIN, "User Uno"));
+        list.add(new User("user2", "password2", "user2@email.com", UserRole.LIBRARIAN, "User Dos"));
+        list.add(new User("user3", "password3", "user3@email.com", UserRole.READER, "User Tres"));
+        list.add(new User("user4", "password4", "user4@email.com", UserRole.READER, "User Cuatro"));
 
         Mockito.when(repository.findAll()).thenReturn(list);
 

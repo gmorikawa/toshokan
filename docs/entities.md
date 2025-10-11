@@ -1,6 +1,6 @@
 # Entities
 
-## Objects
+## Operational Module
 
 ### User
 
@@ -10,6 +10,28 @@
 * _email_: __unique, not null, varchar(127)__;
 * _role_: __UserRole, not null__;
 * _fullname_: __varchar(127)__;
+
+### FileType
+
+* _id_: __primary key, UUID, not null__;
+* _name_: __not null, varchar(127)__;
+* _extension_: __unique, not null, varchar(15)__;
+
+### File
+
+* _id_: __primary key, UUID, not null__;
+* _path_: __not null, varchar(1023)__;
+* _filename_: __not null, varchar(255)__;
+* _type_: __FileType, not null__;
+* _state_: __UserRole, not null__;
+
+### FileState
+
+* _UPLOADING_
+* _AVAILABLE_
+* _CORRUPTED_
+
+## Library Module
 
 ### Author
 
@@ -62,8 +84,6 @@
 * _id_: __primary key, UUID, not null__;
 * _name_: __varchar(63)__;
 * _description_: __varchar(4095)__;
-
-## Enums
 
 ### UserRole
 

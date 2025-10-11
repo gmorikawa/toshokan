@@ -14,6 +14,8 @@ JWT_EXPIRES_IN=
 JWT_ISSUER=
 JWT_SUBJECT=
 
+STORAGE_TYPE=
+
 LOCAL_STORAGE_ROOT_DIRECTORY=
 
 MINIO_ENDPOINT=
@@ -53,3 +55,53 @@ __Required__.
 ### JWT_SUBJECT
 
 __Required__.
+
+### STORAGE_TYPE
+
+__Required__.
+
+The possible values are: local and minio.
+
+### LOCAL_STORAGE_ROOT_DIRECTORY
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is local this property is required; Otherwise optional.
+
+The root directory is the main directory in the OS where the files will be stored. The application will manage file IO from this directory.
+
+### MINIO_ENDPOINT
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is minio this property is required; Otherwise optional.
+
+### MINIO_USER
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is minio this property is required; Otherwise optional.
+
+### MINIO_PASSWORD
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is minio this property is required; Otherwise optional.
+
+### MINIO_ACCESS_KEY
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is minio this property is required; Otherwise optional.
+
+### MINIO_SECRET_KEY
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is minio this property is required; Otherwise optional.
+
+### MINIO_BUCKET
+
+__Optional/Required__.
+
+If `STORAGE_TYPE` is minio this property is required; Otherwise optional.
