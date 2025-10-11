@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan;
+package dev.gmorikawa.toshokan.app.rest.serialization;
 
 import java.io.IOException;
 

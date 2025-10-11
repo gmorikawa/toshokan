@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan;
+package dev.gmorikawa.toshokan.app.rest.handlers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import dev.gmorikawa.toshokan.app.rest.serialization.ExceptionResponseBody;
 import dev.gmorikawa.toshokan.auth.exception.InvalidCredentialsException;
 import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
 @ControllerAdvice
-public class AppExceptionHandler extends ResponseEntityExceptionHandler {
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ 
         EmailNotAvailableException.class,
