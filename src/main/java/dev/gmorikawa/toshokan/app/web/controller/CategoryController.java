@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/edit")
-    public String update(@PathVariable String id, Model model) {
+    public String update(@PathVariable UUID id, Model model) {
         Category category = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Category || Toshokan"));
@@ -73,14 +74,14 @@ public class CategoryController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable String id, @ModelAttribute Category category) {
+    public String update(@PathVariable UUID id, @ModelAttribute Category category) {
         service.update(id, category);
 
         return "redirect:/app/categories/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable String id, @ModelAttribute Category category) {
+    public String remove(@PathVariable UUID id, @ModelAttribute Category category) {
         service.remove(id);
 
         return "redirect:/app/categories/list";

@@ -3,6 +3,7 @@ package dev.gmorikawa.toshokan.domain.document.file;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ public class DocumentFileService {
         return repository.getFilesByDocument(document);
     }
 
-    public InputStream downloadFileById(String fileId) {
+    public InputStream downloadFileById(UUID fileId) {
         return fileService.download(fileId);
     }
 
@@ -46,7 +47,7 @@ public class DocumentFileService {
         }
     }
 
-    public boolean remove(String id) {
+    public boolean remove(UUID id) {
         Optional<DocumentFile> documentFile = repository.findById(id);
 
         if (documentFile.isEmpty()) {

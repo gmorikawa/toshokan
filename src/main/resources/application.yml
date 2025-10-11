@@ -6,6 +6,8 @@ spring:
         username: ${DATABASE_USERNAME}
         password: ${DATABASE_PASSWORD}
         driver-class-name: org.postgresql.Driver
+        hikari:
+            schema: application
     jpa:
         hibernate:
             ddl-auto: none
@@ -24,6 +26,10 @@ spring:
         enabled: false
         locations: classpath:db/migration/postgres
         validate-on-migrate: true
+        schemas:
+            - configuration
+            - application
+        default-schema: configuration
     devtools:
         livereload:
             enabled: true

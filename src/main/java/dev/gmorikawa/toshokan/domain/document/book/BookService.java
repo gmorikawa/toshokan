@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.document.book;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class BookService {
         return repository.findAll();
     }
 
-    public Book getById(String id) {
+    public Book getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -38,7 +39,7 @@ public class BookService {
         return repository.save(entity);
     }
 
-    public Book update(String id, Book entity) {
+    public Book update(UUID id, Book entity) {
         Optional<Book> result = repository.findById(id);
 
         if (result.isEmpty()) {
@@ -59,7 +60,7 @@ public class BookService {
         return repository.save(book);
     }
 
-    public boolean remove(String id) {
+    public boolean remove(UUID id) {
         Optional<Book> book = repository.findById(id);
 
         if (!book.isEmpty()) {

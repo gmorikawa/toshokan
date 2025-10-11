@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}/edit")
-    public String update(@PathVariable String id, Model model) {
+    public String update(@PathVariable UUID id, Model model) {
         Author author = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Author || Toshokan"));
@@ -73,14 +74,14 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable String id, @ModelAttribute Author author) {
+    public String update(@PathVariable UUID id, @ModelAttribute Author author) {
         service.update(id, author);
 
         return "redirect:/app/authors/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable String id, @ModelAttribute Author author) {
+    public String remove(@PathVariable UUID id, @ModelAttribute Author author) {
         service.remove(id);
 
         return "redirect:/app/authors/list";

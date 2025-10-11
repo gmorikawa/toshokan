@@ -109,8 +109,10 @@
                     <user>${DATABASE_USERNAME}</user>
                     <password>${DATABASE_PASSWORD}</password>
                     <schemas>
-                        <schema>public</schema>
+                        <schema>configuration</schema>
+                        <schema>application</schema>
                     </schemas>
+                    <createSchemas>true</createSchemas>
                     <locations>
                         <location>classpath:db/migration/postgres</location> <!-- Default location for migration scripts -->
                     </locations>

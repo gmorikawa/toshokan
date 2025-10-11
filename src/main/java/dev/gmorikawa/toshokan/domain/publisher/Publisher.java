@@ -1,5 +1,7 @@
 package dev.gmorikawa.toshokan.domain.publisher;
 
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(unique = true, length = 63)
     private String name;
@@ -21,11 +23,11 @@ public class Publisher {
     @Column(nullable = true, length = 4095)
     private String description;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

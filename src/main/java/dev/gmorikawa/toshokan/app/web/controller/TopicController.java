@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class TopicController {
     }
 
     @GetMapping("/{id}/edit")
-    public String update(@PathVariable String id, Model model) {
+    public String update(@PathVariable UUID id, Model model) {
         Topic topic = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Topic || Toshokan"));
@@ -73,14 +74,14 @@ public class TopicController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable String id, @ModelAttribute Topic topic) {
+    public String update(@PathVariable UUID id, @ModelAttribute Topic topic) {
         service.update(id, topic);
 
         return "redirect:/app/topics/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable String id, @ModelAttribute Topic topic) {
+    public String remove(@PathVariable UUID id, @ModelAttribute Topic topic) {
         service.remove(id);
 
         return "redirect:/app/topics/list";

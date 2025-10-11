@@ -3,6 +3,7 @@ package dev.gmorikawa.toshokan.domain.file;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,7 @@ public class FileService {
         return repository.findAll();
     }
 
-    public File getById(String id) {
+    public File getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -56,7 +57,7 @@ public class FileService {
         return repository.save(entity);
     }
 
-    public File update(String id, File entity) {
+    public File update(UUID id, File entity) {
         Optional<File> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -71,7 +72,7 @@ public class FileService {
         return repository.save(file);
     }
 
-    public File remove(String id) {
+    public File remove(UUID id) {
         Optional<File> file = repository.findById(id);
 
         if(!file.isEmpty()) {
@@ -81,7 +82,7 @@ public class FileService {
         return file.orElse(null);
     }
 
-    public File upload(String id, MultipartFile binary) {
+    public File upload(UUID id, MultipartFile binary) {
         File file = repository.findById(id).orElse(null);
 
         try {
@@ -97,7 +98,7 @@ public class FileService {
         }
     }
 
-    public InputStream download(String id) {
+    public InputStream download(UUID id) {
         File file = repository.findById(id).orElseThrow(FileNotFoundException::new);
 
         return storageService.retrive(file);

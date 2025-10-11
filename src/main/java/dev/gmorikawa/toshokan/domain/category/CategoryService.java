@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +32,7 @@ public class CategoryService {
         return repository.findAll();
     }
 
-    public Category getById(String id) {
+    public Category getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -47,7 +48,7 @@ public class CategoryService {
         return repository.save(entity);
     }
 
-    public Category update(String id, Category entity) {
+    public Category update(UUID id, Category entity) {
         if (!isNameAvailable(entity.getName(), id)) {
             throw new CategoryNameNotAvailableException();
         }
@@ -65,7 +66,7 @@ public class CategoryService {
         return repository.save(category);
     }
 
-    public void remove(String id) {
+    public void remove(UUID id) {
         Optional<Category> category = repository.findById(id);
 
         if (!category.isEmpty()) {
@@ -77,7 +78,7 @@ public class CategoryService {
         return repository.findByName(name).isEmpty();
     }
 
-    public boolean isNameAvailable(String name, String ignoreId) {
+    public boolean isNameAvailable(String name, UUID ignoreId) {
         return repository.findByName(name, ignoreId).isEmpty();
     }
 }

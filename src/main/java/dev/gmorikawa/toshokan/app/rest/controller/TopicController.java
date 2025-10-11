@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class TopicController {
 
     @GetMapping("/{id}")
     public Topic getById(
-        @PathVariable String id
+        @PathVariable UUID id
     ) {
         return service.getById(id);
     }
@@ -56,7 +57,7 @@ public class TopicController {
     @PatchMapping("/{id}")
     public Topic update(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestBody Topic topic
     ) {
         return service.update(id, topic);
@@ -65,7 +66,7 @@ public class TopicController {
     @DeleteMapping("/{id}")
     public Topic remove(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id
+        @PathVariable UUID id
     ) {
         return service.remove(id);
     }

@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class UserController {
     @PatchMapping("/{id}")
     public User update(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestBody User user
     ) {
         return service.update(id, user);
@@ -47,7 +48,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public User remove(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id
+        @PathVariable UUID id
     ) {
         return service.remove(id);
     }

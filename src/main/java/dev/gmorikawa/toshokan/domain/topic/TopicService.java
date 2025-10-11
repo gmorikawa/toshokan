@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.topic;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class TopicService {
         return repository.findAll();
     }
 
-    public Topic getById(String id) {
+    public Topic getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -42,7 +43,7 @@ public class TopicService {
         return repository.save(entity);
     }
 
-    public Topic update(String id, Topic entity) {
+    public Topic update(UUID id, Topic entity) {
         Optional<Topic> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -56,7 +57,7 @@ public class TopicService {
         return repository.save(topic);
     }
 
-    public Topic remove(String id) {
+    public Topic remove(UUID id) {
         Optional<Topic> topic = repository.findById(id);
 
         if(!topic.isEmpty()) {

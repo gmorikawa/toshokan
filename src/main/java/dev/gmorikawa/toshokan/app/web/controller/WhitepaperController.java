@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,7 +95,7 @@ public class WhitepaperController {
 
     @GetMapping("/{id}")
     public String details(
-            @PathVariable String id,
+            @PathVariable UUID id,
             Model model
     ) {
         Whitepaper whitepaper = service.getById(id);
@@ -108,7 +109,7 @@ public class WhitepaperController {
 
     @GetMapping("/{id}/upload")
     public String upload(
-        @PathVariable String id,
+        @PathVariable UUID id,
         Model model
     ) {
         Whitepaper whitepaper = service.getById(id);
@@ -123,8 +124,8 @@ public class WhitepaperController {
 
      @GetMapping("/{id}/download/{fileId}")
     public void download(
-        @PathVariable String id,
-        @PathVariable String fileId,
+        @PathVariable UUID id,
+        @PathVariable UUID fileId,
         HttpServletResponse response
     ) {
         File file = fileService.getById(fileId);
@@ -144,7 +145,7 @@ public class WhitepaperController {
     }
 
     @GetMapping("/{id}/edit")
-    public String update(@PathVariable String id, Model model) {
+    public String update(@PathVariable UUID id, Model model) {
         Whitepaper whitepaper = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Whitepaper || Toshokan"));
@@ -166,14 +167,14 @@ public class WhitepaperController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable String id, @ModelAttribute Whitepaper whitepaper) {
+    public String update(@PathVariable UUID id, @ModelAttribute Whitepaper whitepaper) {
         service.update(id, whitepaper);
 
         return "redirect:/app/whitepapers/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable String id, @ModelAttribute Whitepaper whitepaper) {
+    public String remove(@PathVariable UUID id, @ModelAttribute Whitepaper whitepaper) {
         service.remove(id);
 
         return "redirect:/app/whitepapers/list";
@@ -181,7 +182,7 @@ public class WhitepaperController {
 
     @PostMapping("/{id}/upload")
     public String upload(
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestParam MultipartFile file,
         @RequestParam String label,
         RedirectAttributes redirectAttributes

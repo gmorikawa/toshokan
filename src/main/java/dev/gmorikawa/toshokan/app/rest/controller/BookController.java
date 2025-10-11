@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -47,8 +48,8 @@ public class BookController {
 
     @GetMapping("/{id}/files/{fileId}")
     public ResponseEntity<InputStreamResource> downloadFile(
-        @PathVariable("id") String id,
-        @PathVariable("fileId") String fileId
+        @PathVariable("id") UUID id,
+        @PathVariable("fileId") UUID fileId
     ) {
         InputStream binary = documentFileService.downloadFileById(fileId);
 
@@ -64,7 +65,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getById(@PathVariable String id) {
+    public Book getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -90,7 +91,7 @@ public class BookController {
     @PatchMapping("/{id}")
     public Book update(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestBody Book entity
     ) {
         return service.update(id, entity);
@@ -99,7 +100,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     public boolean remove(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id
+        @PathVariable UUID id
     ) {
         return service.remove(id);
     }

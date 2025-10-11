@@ -3,6 +3,7 @@ package dev.gmorikawa.toshokan.user;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +27,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(unique = true, length = 127)
     private String username;
@@ -43,10 +44,9 @@ public class User implements UserDetails {
     @Column(length = 127)
     private String fullname;
 
-    public User() {
-    }
+    public User() { }
 
-    public User(String id, String username, String password, String email, UserRole role, String fullname) {
+    public User(UUID id, String username, String password, String email, UserRole role, String fullname) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -63,11 +63,11 @@ public class User implements UserDetails {
         this.fullname = fullname;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

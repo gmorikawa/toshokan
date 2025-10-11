@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}/edit")
-    public String update(@PathVariable String id, Model model) {
+    public String update(
+        @PathVariable UUID id,
+        Model model
+    ) {
         User user = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update User || Toshokan"));
@@ -73,14 +77,20 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable String id, @ModelAttribute User user) {
+    public String update(
+        @PathVariable UUID id,
+        @ModelAttribute User user
+    ) {
         service.update(id, user);
 
         return "redirect:/app/users/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable String id, @ModelAttribute User user) {
+    public String remove(
+        @PathVariable UUID id,
+        @ModelAttribute User user
+    ) {
         service.remove(id);
 
         return "redirect:/app/users/list";

@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.user;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +41,7 @@ public class UserService {
         return repository.findByUsername(username).orElse(null);
     }
 
-    public User getById(String id) {
+    public User getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -58,7 +59,7 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public User update(String id, User entity) {
+    public User update(UUID id, User entity) {
         if(!isEmailIsAvailable(entity.getEmail(), id)) {
             throw new EmailNotAvailableException();
         }
@@ -82,7 +83,7 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User remove(String id) {
+    public User remove(UUID id) {
         Optional<User> user = repository.findById(id);
 
         if(!user.isEmpty()) {
@@ -96,7 +97,7 @@ public class UserService {
         return repository.findByUsername(username).isEmpty();
     }
 
-    private boolean isUsernameIsAvailable(String username, String ignoreId) {
+    private boolean isUsernameIsAvailable(String username, UUID ignoreId) {
         return repository.findByUsername(username, ignoreId).isEmpty();
     }
 
@@ -104,7 +105,7 @@ public class UserService {
         return repository.findByEmail(email).isEmpty();
     }
 
-    private boolean isEmailIsAvailable(String email, String ignoreId) {
+    private boolean isEmailIsAvailable(String email, UUID ignoreId) {
         return repository.findByEmail(email, ignoreId).isEmpty();
     }
 }

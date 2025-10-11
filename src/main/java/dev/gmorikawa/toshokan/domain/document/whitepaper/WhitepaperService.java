@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.document.whitepaper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class WhitepaperService {
         return repository.findAll();
     }
 
-    public Whitepaper getById(String id) {
+    public Whitepaper getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -38,7 +39,7 @@ public class WhitepaperService {
         return repository.save(entity);
     }
 
-    public Whitepaper update(String id, Whitepaper entity) {
+    public Whitepaper update(UUID id, Whitepaper entity) {
         Optional<Whitepaper> result = repository.findById(id);
 
         if (result.isEmpty()) {
@@ -57,7 +58,7 @@ public class WhitepaperService {
         return repository.save(whitepaper);
     }
 
-    public boolean remove(String id) {
+    public boolean remove(UUID id) {
         Optional<Whitepaper> whitepaper = repository.findById(id);
 
         if (whitepaper.isEmpty()) {

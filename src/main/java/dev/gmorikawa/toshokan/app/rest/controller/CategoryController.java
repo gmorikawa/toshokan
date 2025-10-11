@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public Category getById(@PathVariable String id) {
+    public Category getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -53,7 +54,7 @@ public class CategoryController {
     @PatchMapping("/{id}")
     public Category update(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestBody Category category
     ) throws CategoryNameNotAvailableException {
         return service.update(id, category);
@@ -62,7 +63,7 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void remove(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id
+        @PathVariable UUID id
     ) {
         service.remove(id);
     }

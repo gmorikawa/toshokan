@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.file.type;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class FileTypeService {
         return repository.findByExtension(extension).orElse(null);
     }
 
-    public FileType getById(String id) {
+    public FileType getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -30,7 +31,7 @@ public class FileTypeService {
         return repository.save(entity);
     }
 
-    public FileType update(String id, FileType entity) {
+    public FileType update(UUID id, FileType entity) {
         Optional<FileType> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -45,7 +46,7 @@ public class FileTypeService {
         return repository.save(fileType);
     }
 
-    public FileType remove(String id) {
+    public FileType remove(UUID id) {
         Optional<FileType> fileType = repository.findById(id);
 
         if(!fileType.isEmpty()) {

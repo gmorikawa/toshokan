@@ -1,5 +1,7 @@
 package dev.gmorikawa.toshokan.domain.file;
 
+import java.util.UUID;
+
 import dev.gmorikawa.toshokan.domain.file.enumerator.FileState;
 import dev.gmorikawa.toshokan.domain.file.type.FileType;
 import jakarta.persistence.Column;
@@ -20,7 +22,7 @@ public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(length = 255)
     private String path;
@@ -37,7 +39,7 @@ public class File {
 
     public File() { }
 
-    public File(String id, String path, String filename, FileType type, FileState state) {
+    public File(UUID id, String path, String filename, FileType type, FileState state) {
         this.id = id;
         this.path = path.trim();
         this.filename = filename.trim();
@@ -52,11 +54,11 @@ public class File {
         this.state = state;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

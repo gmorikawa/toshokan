@@ -1,70 +1,62 @@
--- Table: categories
-CREATE TABLE categories (
-    id UUID PRIMARY KEY,
+-- CREATE TYPE application.BOOK_TYPE AS ENUM ('FICTION', 'NON_FICTION');
+
+CREATE TABLE application.categories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(127) UNIQUE NOT NULL
 );
 
--- Table: authors
-CREATE TABLE authors (
-    id UUID PRIMARY KEY,
+CREATE TABLE application.authors (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     fullname VARCHAR(127) UNIQUE NOT NULL,
     biography VARCHAR(4095)
 );
 
--- Table: publishers
-CREATE TABLE publishers (
-    id UUID PRIMARY KEY,
+CREATE TABLE application.publishers (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(63) UNIQUE NOT NULL,
     description VARCHAR(4095)
 );
 
--- Table: topics
-CREATE TABLE topics (
-    id UUID PRIMARY KEY,
+CREATE TABLE application.topics (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(127) UNIQUE NOT NULL
 );
 
--- Table: documents
-CREATE TABLE document (
-    id UUID PRIMARY KEY,
+CREATE TABLE application.document (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(225) NOT NULL,
     description VARCHAR(1024),
-    category_id UUID REFERENCES categories(id)
+    category_id UUID REFERENCES application.categories(id)
 );
 
--- Table: books
-CREATE TABLE books (
-    id UUID PRIMARY KEY REFERENCES document(id),
+CREATE TABLE application.books (
+    id UUID PRIMARY KEY REFERENCES application.document(id),
     isbn VARCHAR(31) UNIQUE NOT NULL,
-    publisher_id UUID REFERENCES publishers(id),
+    publisher_id UUID REFERENCES application.publishers(id),
     published_at DATE,
-    type VARCHAR(32)
+    type VARCHAR(31) NOT NULL DEFAULT 'NON_FICTION'
 );
 
--- Table: whitepapers
-CREATE TABLE whitepapers (
-    id UUID PRIMARY KEY REFERENCES document(id),
+CREATE TABLE application.whitepapers (
+    id UUID PRIMARY KEY REFERENCES application.document(id),
     published_at DATE
 );
 
--- Table: document_files
-CREATE TABLE document_file (
-    id UUID PRIMARY KEY,
-    document_id UUID REFERENCES document(id),
-    file_id UUID REFERENCES files(id),
+CREATE TABLE application.document_file (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    document_id UUID REFERENCES application.document(id),
+    file_id UUID REFERENCES application.files(id),
     label VARCHAR(4095)
 );
 
--- Table: document_authors (many-to-many)
-CREATE TABLE document_authors (
-    document_id UUID REFERENCES document(id) ON DELETE CASCADE,
-    author_id UUID REFERENCES authors(id) ON DELETE CASCADE,
+CREATE TABLE application.document_authors (
+    document_id UUID REFERENCES application.document(id) ON DELETE CASCADE,
+    author_id UUID REFERENCES application.authors(id) ON DELETE CASCADE,
     PRIMARY KEY (document_id, author_id)
 );
 
--- Table: document_topics (many-to-many)
-CREATE TABLE document_topics (
-    document_id UUID REFERENCES document(id) ON DELETE CASCADE,
-    topic_id UUID REFERENCES topics(id) ON DELETE CASCADE,
+CREATE TABLE application.document_topics (
+    document_id UUID REFERENCES application.document(id) ON DELETE CASCADE,
+    topic_id UUID REFERENCES application.topics(id) ON DELETE CASCADE,
     PRIMARY KEY (document_id, topic_id)
 );

@@ -46,6 +46,13 @@
                 </div>
 
                 <div class="field">
+                    <label for="user.username" class="label">Username</label>
+                    <div class="control">
+                        <input th:field="*{username}" id="user.username" class="input" type="text" placeholder="philipkdick">
+                    </div>
+                </div>
+
+                <div class="field">
                     <label for="user.password" class="label">Password</label>
                     <div class="control">
                         <input th:field="*{password}" id="user.password" class="input" type="password" placeholder="******">

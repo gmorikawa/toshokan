@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.publisher;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class PublisherService {
         return repository.findAll();
     }
 
-    public Publisher getById(String id) {
+    public Publisher getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -42,7 +43,7 @@ public class PublisherService {
         return repository.save(entity);
     }
 
-    public Publisher update(String id, Publisher entity) {
+    public Publisher update(UUID id, Publisher entity) {
         Optional<Publisher> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -57,7 +58,7 @@ public class PublisherService {
         return repository.save(publisher);
     }
 
-    public Publisher remove(String id) {
+    public Publisher remove(UUID id) {
 
         Optional<Publisher> publisher = repository.findById(id);
 

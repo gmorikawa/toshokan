@@ -39,6 +39,13 @@
                 </div>
 
                 <div class="field">
+                    <label for="user.username" class="label">Username</label>
+                    <div class="control">
+                        <input th:field="*{username}" id="user.username" class="input" type="text" placeholder="philipkdick">
+                    </div>
+                </div>
+
+                <div class="field">
                     <label for="user.email" class="label">Email</label>
                     <div class="control">
                         <input th:field="*{email}" id="user.email" class="input" type="email" placeholder="example@email.com">

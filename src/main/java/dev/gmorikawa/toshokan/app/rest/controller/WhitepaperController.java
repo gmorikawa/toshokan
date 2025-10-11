@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,7 @@ public class WhitepaperController {
     }
 
     @GetMapping("/{id}")
-    public Whitepaper getById(@PathVariable String id) {
+    public Whitepaper getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -53,7 +54,7 @@ public class WhitepaperController {
     @PostMapping("/{id}/upload")
     public DocumentFile upload(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestParam("file") MultipartFile binary,
         @RequestParam("description") String description
     ) {
@@ -64,7 +65,7 @@ public class WhitepaperController {
     @PatchMapping("/{id}")
     public Whitepaper update(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id,
+        @PathVariable UUID id,
         @RequestBody Whitepaper entity
     ) {
         return service.update(id, entity);
@@ -73,7 +74,7 @@ public class WhitepaperController {
     @DeleteMapping("/{id}")
     public boolean remove(
         @RequestAttribute("user") User requestor,
-        @PathVariable String id
+        @PathVariable UUID id
     ) {
         return service.remove(id);
     }

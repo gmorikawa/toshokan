@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.app.rest.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class FileTypeController {
     }
 
     @GetMapping("/{id}")
-    public FileType getById(@PathVariable String id) {
+    public FileType getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -40,12 +41,12 @@ public class FileTypeController {
     }
 
     @PatchMapping("/{id}")
-    public FileType update(@PathVariable String id, @RequestBody FileType fileType) {
+    public FileType update(@PathVariable UUID id, @RequestBody FileType fileType) {
         return service.update(id, fileType);
     }
 
     @DeleteMapping("/{id}")
-    public FileType remove(@PathVariable String id) {
+    public FileType remove(@PathVariable UUID id) {
         return service.remove(id);
     }
 }

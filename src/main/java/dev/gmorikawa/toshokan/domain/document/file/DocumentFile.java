@@ -1,5 +1,7 @@
 package dev.gmorikawa.toshokan.domain.document.file;
 
+import java.util.UUID;
+
 import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 import jakarta.persistence.Column;
@@ -16,7 +18,7 @@ public class DocumentFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @JoinColumn(
             name = "document_id",
@@ -38,7 +40,7 @@ public class DocumentFile {
     public DocumentFile() {
     }
 
-    public DocumentFile(String id, Document document, File file, String label) {
+    public DocumentFile(UUID id, Document document, File file, String label) {
         this.id = id;
         this.document = document;
         this.file = file;
@@ -51,11 +53,11 @@ public class DocumentFile {
         this.label = label;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -2,6 +2,7 @@ package dev.gmorikawa.toshokan.domain.author;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +31,7 @@ public class AuthorService {
         return repository.findAll();
     }
 
-    public Author getById(String id) {
+    public Author getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -42,7 +43,7 @@ public class AuthorService {
         return repository.save(entity);
     }
 
-    public Author update(String id, Author entity) {
+    public Author update(UUID id, Author entity) {
         Optional<Author> result = repository.findById(id);
 
         if (result.isEmpty()) {
@@ -57,7 +58,7 @@ public class AuthorService {
         return repository.save(author);
     }
 
-    public void remove(String id) {
+    public void remove(UUID id) {
         Optional<Author> author = repository.findById(id);
 
         if (!author.isEmpty()) {

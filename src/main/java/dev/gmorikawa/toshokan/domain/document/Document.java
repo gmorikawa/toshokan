@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.domain.document;
 
 import java.util.List;
+import java.util.UUID;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.category.Category;
@@ -22,12 +23,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(length = 225)
     private String title;
@@ -46,7 +47,7 @@ public class Document {
                     referencedColumnName = "id"
             ),
             inverseJoinColumns = @JoinColumn(
-                    name = "topic_id",
+                    name = "author_id",
                     referencedColumnName = "id"
             )
     )
@@ -74,11 +75,11 @@ public class Document {
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private List<DocumentFile> documentFiles;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

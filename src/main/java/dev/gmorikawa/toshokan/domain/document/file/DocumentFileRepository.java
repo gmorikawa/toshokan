@@ -1,6 +1,7 @@
 package dev.gmorikawa.toshokan.domain.document.file;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,7 @@ import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 
 @Repository
-public interface DocumentFileRepository extends JpaRepository<DocumentFile, String> {
+public interface DocumentFileRepository extends JpaRepository<DocumentFile, UUID> {
     @Query("SELECT f FROM DocumentFile df JOIN df.file f WHERE df.document = ?1")
     List<File> getFilesByDocument(Document document);
 }
