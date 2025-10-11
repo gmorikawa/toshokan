@@ -42,6 +42,7 @@ security:
         issuer: ${JWT_ISSUER:"issuer"}
         subject: ${JWT_SUBJECT:"subject"}
 storage:
+    type: local
     local:
         root-directory: ${LOCAL_STORAGE_ROOT_DIRECTORY}
     minio:

@@ -1,14 +1,10 @@
-package dev.gmorikawa.toshokan.domain.file.storage;
+package dev.gmorikawa.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import dev.gmorikawa.toshokan.domain.file.File;
-import dev.gmorikawa.toshokan.domain.file.exception.FileNotFoundException;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
@@ -16,7 +12,7 @@ import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.errors.MinioException;
 
-public class MinioStorage {
+public class MinioStorage implements Storage {
 
     private final String endpoint;
     private final String accessKey;
@@ -30,7 +26,8 @@ public class MinioStorage {
         this.bucket = bucket;
     }
 
-    public void store(File file, MultipartFile multipartFile) {
+    @Override
+    public void write(String path, InputStream stream, Integer length, Integer skip) {
         try {
             MinioClient client = buildClient();
             boolean found = client.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
@@ -39,12 +36,13 @@ public class MinioStorage {
                 client.makeBucket(MakeBucketArgs.builder().bucket(bucket).build());
             }
 
-            PutObjectArgs args = PutObjectArgs.builder()
-                                    .bucket(bucket)
-                                    .object(file.getFilePath())
-                                    .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
-                                    .build();
-            client.putObject(args);
+            client.putObject(
+                    PutObjectArgs.builder()
+                            .bucket(bucket)
+                            .object(path)
+                            .stream(stream, length, skip)
+                            .build()
+            );
         } catch (MinioException e) {
             System.out.println(e.getMessage());
             System.out.println("HTTP trace: " + e.httpTrace());
@@ -53,21 +51,27 @@ public class MinioStorage {
         }
     }
 
-    public InputStream retrive(File file) throws FileNotFoundException {
+    @Override
+    public void write(String path, InputStream stream, Integer length) {
+        write(path, stream, length, -1);
+    }
+
+    @Override
+    public InputStream read(String path) {
         try {
             MinioClient client = buildClient();
             boolean found = client.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
 
             if (!found) {
-                throw new FileNotFoundException();
+                throw new IOException("File not found");
             }
 
-            GetObjectArgs args = GetObjectArgs.builder()
-                                    .bucket(bucket)
-                                    .object(file.getFilePath())
-                                    .build();
-
-            return client.getObject(args);
+            return client.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(bucket)
+                            .object(path)
+                            .build()
+            );
         } catch (MinioException e) {
             System.out.println(e.getMessage());
             System.out.println("HTTP trace: " + e.httpTrace());

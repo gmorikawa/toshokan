@@ -1,5 +1,6 @@
-package dev.gmorikawa.toshokan.domain.file.storage;
+package dev.gmorikawa.storage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,29 +9,26 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import dev.gmorikawa.toshokan.domain.file.File;
-
-public class LocalStorage {
+public class LocalStorage implements Storage {
     private final String rootDirectory;
     
     public LocalStorage(String rootDirectory) {
         this.rootDirectory = rootDirectory;
     }
 
-    public void store(File file, MultipartFile multipartFile) {
+    @Override
+    public void write(String path, InputStream stream, Integer length, Integer skip) {
         try {
-            String filepath = buildFilepath(rootDirectory, file.getFilePath());
+            String filepath = buildFilepath(rootDirectory, path);
 
-            Files.createDirectories(Paths.get(rootDirectory.concat(file.getPath())));
+            Files.createDirectories(Paths.get(rootDirectory.concat(path)));
 
-            java.io.File binary = new java.io.File(filepath);
+            File binary = new File(filepath);
             binary.createNewFile();
 
-            FileOutputStream stream = new FileOutputStream(binary);
-            stream.write(multipartFile.getBytes());
-            stream.close();
+            try (FileOutputStream output = new FileOutputStream(binary)) {
+                output.write(stream.readNBytes(length));
+            }
         } 
         catch(FileNotFoundException e) {
             System.out.println("LinuxStorage: FileNotFoundException => " + e.getMessage());
@@ -40,9 +38,15 @@ public class LocalStorage {
         }
     }
 
-    public InputStream retrive(File file) {
+    @Override
+    public void write(String path, InputStream stream, Integer length) {
+        write(path, stream, length, -1);
+    }
+
+    @Override
+    public InputStream read(String path) {
         try {
-            String filepath = buildFilepath(rootDirectory, file.getFilePath());
+            String filepath = buildFilepath(rootDirectory, path);
             
             FileInputStream stream = new FileInputStream(filepath);
 
