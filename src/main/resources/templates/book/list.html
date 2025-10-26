@@ -22,7 +22,6 @@
                 <thead>
                     <tr>
                         <th>Actions</th>
-                        <th>ISBN</th>
                         <th>Title</th>
                         <th>Category</th>
                         <th>Publisher</th>
@@ -36,7 +35,6 @@
                             <a th:href="|/app/books/${book.id}/edit|" class="button is-primary">Edit</a>
                             <a th:href="|/app/books/${book.id}/remove|" class="button is-danger">Delete</a>
                         </td>
-                        <td th:text="${book.isbn}" />
                         <td th:text="${book.title}" />
                         <td th:text="${book.category}" />
                         <td th:text="${book.publisher}" />

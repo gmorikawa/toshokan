@@ -59,7 +59,6 @@
 ### Book
 
 * _document_: __Document, foreign key, UUID, not null__;
-* _isbn_: __varchar(31), unique__;
 * _publisher_: __Publisher, foreign key, UUID__;
 * _published\_at_: __datetime__;
 * _type_: __BookType, not null__;

@@ -17,9 +17,6 @@ import jakarta.persistence.Table;
 @Table(name = "books")
 public class Book extends Document {
 
-    @Column(unique = true, length = 31)
-    private String isbn;
-
     @JoinColumn(name = "publisher_id")
     @ManyToOne
     private Publisher publisher;
@@ -29,14 +26,6 @@ public class Book extends Document {
 
     @Enumerated(EnumType.STRING)
     private BookType type;
-
-    public String getIsbn() {
-        return isbn;
-    }
-    
-    public void setIsbn(String isbn) {
-        this.isbn = isbn.trim();
-    }
 
     public Publisher getPublisher() {
         return publisher;

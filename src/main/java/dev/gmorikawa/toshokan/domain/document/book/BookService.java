@@ -53,7 +53,6 @@ public class BookService {
         book.setDescription(entity.getDescription());
         book.setCategory(entity.getCategory());
         book.setPublisher(entity.getPublisher());
-        book.setIsbn(entity.getIsbn());
         book.setTopics(entity.getTopics());
         book.setType(entity.getType());
 
