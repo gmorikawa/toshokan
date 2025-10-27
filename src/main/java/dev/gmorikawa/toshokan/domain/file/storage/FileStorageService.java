@@ -29,4 +29,8 @@ public class FileStorageService {
     public InputStream retrive(File file) {
         return storage.read(file.getFilePath());
     }
+
+    public void remove(File file) {
+        storage.remove(file.getFilePath());
+    }
 }

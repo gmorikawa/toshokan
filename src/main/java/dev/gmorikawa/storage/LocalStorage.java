@@ -58,6 +58,15 @@ public class LocalStorage implements Storage {
         }
     }
 
+    @Override
+    public void remove(String path) {
+        String filepath = buildFilepath(rootDirectory, path);
+
+        File binary = new File(filepath);
+
+        binary.delete();
+    }
+
     private String buildFilepath(String root, String path) {
         return new StringBuilder().append(root).append(path).toString();
     }

@@ -9,7 +9,7 @@
     <section style="flex-grow: 1">
         <header th:replace="~{fragments/header :: header(${page})}" />
 
-        <a class="button is-primary" th:href="|/app/books/${book.id}/upload|">
+        <a class="button is-primary" th:href="|/app/books/${book.id}/file/upload|">
             Upload
         </a>
 
@@ -26,7 +26,8 @@
                 <tbody>
                     <tr th:each="documentFile : ${book.documentFiles}">
                         <td>
-                            <a th:href="|/app/books/${book.id}/download/${documentFile.file.id}|" class="button is-primary">Download</a>
+                            <a th:href="|/app/books/${book.id}/file/${documentFile.file.id}/download|" class="button is-primary">Download</a>
+                            <a th:href="|/app/books/${book.id}/file/${documentFile.id}/remove|" class="button is-danger">Remove</a>
                         </td>
                         <td th:text="${documentFile.label}" />
                         <td th:text="${documentFile.file.filename}" />

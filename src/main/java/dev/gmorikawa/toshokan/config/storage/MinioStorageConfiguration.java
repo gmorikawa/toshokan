@@ -1,9 +1,11 @@
 package dev.gmorikawa.toshokan.config.storage;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import dev.gmorikawa.storage.MinioStorage;
 
+@Configuration
 public class MinioStorageConfiguration {
 
     @Value("${storage.minio.endpoint}")

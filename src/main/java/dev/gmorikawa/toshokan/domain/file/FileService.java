@@ -76,6 +76,7 @@ public class FileService {
         Optional<File> file = repository.findById(id);
 
         if(!file.isEmpty()) {
+            storageService.remove(file.get());
             repository.delete(file.get());
         }
 

@@ -9,14 +9,25 @@ import dev.gmorikawa.storage.Storage;
 @Configuration
 public class StorageConfiguration {
 
+    private final LocalStorageConfiguration localStorageConfiguration;
+    private final MinioStorageConfiguration minioStorageConfiguration;
+
     @Value("${storage.type}")
     private String type;
+
+    public StorageConfiguration(
+        LocalStorageConfiguration localStorageConfiguration,
+        MinioStorageConfiguration minioStorageConfiguration
+    ) {
+        this.localStorageConfiguration = localStorageConfiguration;
+        this.minioStorageConfiguration = minioStorageConfiguration;
+    }
 
     @Bean
     public Storage appStorage() {
         return switch (StorageType.fromString(type)) {
-            case LOCAL -> new LocalStorageConfiguration().configure();
-            case MINIO -> new MinioStorageConfiguration().configure();
+            case LOCAL -> localStorageConfiguration.configure();
+            case MINIO -> minioStorageConfiguration.configure();
             default -> null;
         };
     }

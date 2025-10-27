@@ -23,6 +23,9 @@ public class FileType {
     @Column(unique = true, length = 15)
     private String extension;
 
+    @Column(length = 127)
+    private String mimeType;
+
     public FileType() { }
 
     public FileType(UUID id, String name, String extension) {
@@ -58,5 +61,13 @@ public class FileType {
 
     public void setExtension(String extension) {
         this.extension = extension.trim();
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType.trim();
     }
 }

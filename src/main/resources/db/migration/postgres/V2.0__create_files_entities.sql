@@ -3,7 +3,8 @@
 CREATE TABLE application.file_types (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(127) NOT NULL,
-    extension VARCHAR(15) UNIQUE NOT NULL
+    extension VARCHAR(15) UNIQUE NOT NULL,
+    mime_type VARCHAR(127) NOT NULL
 );
 
 CREATE TABLE application.files (

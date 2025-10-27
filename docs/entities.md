@@ -16,6 +16,7 @@
 * _id_: __primary key, UUID, not null__;
 * _name_: __not null, varchar(127)__;
 * _extension_: __unique, not null, varchar(15)__;
+* _mime\_type_: __not null, varchar(127)__;
 
 ### File
 

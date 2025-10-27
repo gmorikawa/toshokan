@@ -107,7 +107,7 @@ public class BookController {
         return "book/create";
     }
 
-    @GetMapping("/{id}/upload")
+    @GetMapping("/{id}/file/upload")
     public String upload(
         @PathVariable UUID id,
         Model model
@@ -121,7 +121,7 @@ public class BookController {
         return "book/upload";
     }
 
-     @GetMapping("/{id}/download/{fileId}")
+    @GetMapping("/{id}/file/{fileId}/download")
     public void download(
         @PathVariable UUID id,
         @PathVariable UUID fileId,
@@ -141,6 +141,17 @@ public class BookController {
         catch(IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @GetMapping("/{id}/file/{fileId}/remove")
+    public String removeFile(
+        @PathVariable UUID id,
+        @PathVariable UUID fileId,
+        HttpServletResponse response
+    ) {
+        documentFileService.remove(fileId);
+
+        return String.format("redirect:/app/books/%s", id);
     }
 
     @GetMapping("/{id}/edit")
@@ -179,7 +190,7 @@ public class BookController {
         return "redirect:/app/books/list";
     }
 
-    @PostMapping("/{id}/upload")
+    @PostMapping("/{id}/file/upload")
     public String upload(
         @PathVariable UUID id,
         @RequestParam MultipartFile file,

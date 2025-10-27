@@ -42,6 +42,7 @@ public class FileTypeService {
 
         fileType.setName(entity.getName());
         fileType.setExtension(entity.getExtension());
+        fileType.setMimeType(entity.getMimeType());
 
         return repository.save(fileType);
     }

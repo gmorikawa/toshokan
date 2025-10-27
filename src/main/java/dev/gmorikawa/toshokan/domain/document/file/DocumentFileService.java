@@ -55,6 +55,7 @@ public class DocumentFileService {
         }
 
         repository.delete(documentFile.get());
+        fileService.remove(documentFile.get().getFile().getId());
 
         return true;
     }

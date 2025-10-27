@@ -10,6 +10,7 @@ import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.RemoveObjectArgs;
 import io.minio.errors.MinioException;
 
 public class MinioStorage implements Storage {
@@ -79,6 +80,30 @@ public class MinioStorage implements Storage {
         } catch (InvalidKeyException | IOException | NoSuchAlgorithmException e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public void remove(String path) {
+        try {
+            MinioClient client = buildClient();
+            boolean found = client.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
+
+            if (!found) {
+                throw new IOException("File not found");
+            }
+
+            client.removeObject(
+                RemoveObjectArgs.builder()
+                    .bucket(bucket)
+                    .object(path)
+                    .build()
+            );
+        } catch (MinioException e) {
+            System.out.println(e.getMessage());
+            System.out.println("HTTP trace: " + e.httpTrace());
+        } catch (InvalidKeyException | IOException | NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
         }
     }
 
