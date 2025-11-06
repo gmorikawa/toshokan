@@ -19,6 +19,7 @@ public class FileTypeUpdateTest {
 
         fileType.setName("Electronic Publication");
         fileType.setExtension("epub");
+        fileType.setMimeType("application/epub+zip");
 
         FileType savedFileType = service.create(fileType);
 
@@ -28,11 +29,13 @@ public class FileTypeUpdateTest {
 
         savedFileType.setName("Mobipocket");
         savedFileType.setExtension("mobi");
+        savedFileType.setMimeType("application/x-mobipocket-ebook");
 
         FileType updatedFileType = service.update(savedFileType.getId(), savedFileType);
 
         assertThat(updatedFileType).isNotNull();
         assertThat(updatedFileType.getName()).isEqualTo(savedFileType.getName());
         assertThat(updatedFileType.getExtension()).isEqualTo(savedFileType.getExtension());
+        assertThat(updatedFileType.getMimeType()).isEqualTo(savedFileType.getMimeType());
     }
 }
