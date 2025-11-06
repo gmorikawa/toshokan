@@ -10,7 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.UserRepository;
+import dev.gmorikawa.toshokan.domain.user.UserService;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {

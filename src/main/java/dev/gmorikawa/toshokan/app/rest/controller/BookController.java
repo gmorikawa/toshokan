@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.gmorikawa.toshokan.domain.document.book.Book;
 import dev.gmorikawa.toshokan.domain.document.book.BookService;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
-import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.domain.user.User;
 
 @RestController("api.book")
 @RequestMapping(path = "api/books")

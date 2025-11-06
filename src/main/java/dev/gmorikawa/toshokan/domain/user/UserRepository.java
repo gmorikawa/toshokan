@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.user;
+package dev.gmorikawa.toshokan.domain.user;
 
 import java.util.Optional;
 import java.util.UUID;

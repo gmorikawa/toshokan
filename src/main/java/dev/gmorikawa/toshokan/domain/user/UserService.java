@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.user;
+package dev.gmorikawa.toshokan.domain.user;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
+import dev.gmorikawa.toshokan.domain.user.exception.UsernameNotAvailableException;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
-import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
-import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
 
 @Service
 public class UserService {

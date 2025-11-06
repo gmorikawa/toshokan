@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.category.CategoryService;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
-import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.domain.user.User;
 
 @RestController("api.category")
 @RequestMapping(path = "api/categories")

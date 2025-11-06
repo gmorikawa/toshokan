@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
-import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.domain.user.User;
 
 @RestController("api.publisher")
 @RequestMapping(path = "api/publishers")

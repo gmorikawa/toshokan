@@ -4,8 +4,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.UserRepository;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.UserRepository;
 
 @Service
 public class AuthenticationService {

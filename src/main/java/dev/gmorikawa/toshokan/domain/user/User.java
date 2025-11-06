@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.user;
+package dev.gmorikawa.toshokan.domain.user;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -19,7 +19,7 @@ import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
-import dev.gmorikawa.toshokan.user.User;
+import dev.gmorikawa.toshokan.domain.user.User;
 
 @RestController("api.whitepaper")
 @RequestMapping(path = "api/whitepapers")

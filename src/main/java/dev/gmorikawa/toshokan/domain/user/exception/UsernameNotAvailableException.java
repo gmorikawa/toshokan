@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.user.exception;
+package dev.gmorikawa.toshokan.domain.user.exception;
 
 public class UsernameNotAvailableException extends RuntimeException {
     public UsernameNotAvailableException() {

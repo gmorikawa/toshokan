@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.UserService;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.UserService;
 
 @Controller("web.user")
 @RequestMapping(path = "app/users")

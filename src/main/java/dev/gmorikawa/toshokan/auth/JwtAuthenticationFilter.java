@@ -10,8 +10,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.UserService;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

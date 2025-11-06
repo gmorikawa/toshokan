@@ -11,8 +11,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import dev.gmorikawa.toshokan.user.User;
-import dev.gmorikawa.toshokan.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 
 @Service
 public class JwtService {

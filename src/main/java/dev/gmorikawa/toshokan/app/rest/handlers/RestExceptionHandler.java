@@ -9,8 +9,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import dev.gmorikawa.toshokan.app.rest.serialization.ExceptionResponseBody;
 import dev.gmorikawa.toshokan.auth.exception.InvalidCredentialsException;
-import dev.gmorikawa.toshokan.user.exception.EmailNotAvailableException;
-import dev.gmorikawa.toshokan.user.exception.UsernameNotAvailableException;
+import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
+import dev.gmorikawa.toshokan.domain.user.exception.UsernameNotAvailableException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
