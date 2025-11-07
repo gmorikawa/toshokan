@@ -9,15 +9,23 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.Authorization;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class CategoryService {
 
+    private final Authorization authorization;
     private final CategoryRepository repository;
 
-    public CategoryService(CategoryRepository repository) {
+    public CategoryService(
+        Authorization authorization,
+        CategoryRepository repository
+    ) {
+        this.authorization = authorization;
         this.repository = repository;
     }
 
@@ -40,7 +48,9 @@ public class CategoryService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Category create(Category entity) {
+    public Category create(User user, Category entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         if (!isNameAvailable(entity.getName())) {
             throw new CategoryNameNotAvailableException();
         }
@@ -48,7 +58,9 @@ public class CategoryService {
         return repository.save(entity);
     }
 
-    public Category update(UUID id, Category entity) {
+    public Category update(User user, UUID id, Category entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         if (!isNameAvailable(entity.getName(), id)) {
             throw new CategoryNameNotAvailableException();
         }
@@ -66,7 +78,9 @@ public class CategoryService {
         return repository.save(category);
     }
 
-    public void remove(UUID id) {
+    public void remove(User user, UUID id) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         Optional<Category> category = repository.findById(id);
 
         if (!category.isEmpty()) {

@@ -45,27 +45,27 @@ public class CategoryController {
 
     @PostMapping()
     public Category create(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @RequestBody Category category
     ) throws CategoryNameNotAvailableException {
-        return service.create(category);
+        return service.create(user, category);
     }
 
     @PatchMapping("/{id}")
     public Category update(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id,
         @RequestBody Category category
     ) throws CategoryNameNotAvailableException {
-        return service.update(id, category);
+        return service.update(user, id, category);
     }
 
     @DeleteMapping("/{id}")
     public void remove(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id
     ) {
-        service.remove(id);
+        service.remove(user, id);
     }
 
 }

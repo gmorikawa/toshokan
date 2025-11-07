@@ -39,26 +39,26 @@ public class AuthorController {
 
     @PostMapping()
     public Author create(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @RequestBody Author author
     ) {
-        return service.create(author);
+        return service.create(user, author);
     }
 
     @PatchMapping("/{id}")
     public Author update(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id,
         @RequestBody Author author
     ) {
-        return service.update(id, author);
+        return service.update(user, id, author);
     }
 
     @DeleteMapping("/{id}")
     public void remove(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id
     ) {
-        service.remove(id);
+        service.remove(user, id);
     }
 }

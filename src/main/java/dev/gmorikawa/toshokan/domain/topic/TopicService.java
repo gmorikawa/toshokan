@@ -9,21 +9,29 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.Authorization;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class TopicService {
 
+    private final Authorization authorization;
     private final TopicRepository repository;
 
-    public TopicService(TopicRepository repository) {
+    public TopicService(
+            Authorization authorization,
+            TopicRepository repository
+    ) {
+        this.authorization = authorization;
         this.repository = repository;
     }
 
     public List<Topic> getAll(Pagination pagination) {
         Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
         Page<Topic> page = repository.findAll(pageable);
-        
+
         return page.getContent();
     }
 
@@ -39,14 +47,17 @@ public class TopicService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Topic create(Topic entity) {
+    public Topic create(User user, Topic entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         return repository.save(entity);
     }
 
-    public Topic update(UUID id, Topic entity) {
+    public Topic update(User user, UUID id, Topic entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
         Optional<Topic> result = repository.findById(id);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return null;
         }
 
@@ -57,10 +68,12 @@ public class TopicService {
         return repository.save(topic);
     }
 
-    public Topic remove(UUID id) {
+    public Topic remove(User user, UUID id) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         Optional<Topic> topic = repository.findById(id);
 
-        if(!topic.isEmpty()) {
+        if (!topic.isEmpty()) {
             repository.delete(topic.get());
         }
 

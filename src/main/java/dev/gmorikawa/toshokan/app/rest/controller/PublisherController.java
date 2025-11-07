@@ -48,26 +48,26 @@ public class PublisherController {
 
     @PostMapping()
     public Publisher create(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @RequestBody Publisher publisher
     ) {
-        return service.create(publisher);
+        return service.create(user, publisher);
     }
 
     @PatchMapping("/{id}")
     public Publisher update(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id,
         @RequestBody Publisher publisher
     ) {
-        return service.update(id, publisher);
+        return service.update(user, id, publisher);
     }
 
     @DeleteMapping("/{id}")
     public Publisher remove(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id
     ) {
-        return service.remove(id);
+        return service.remove(user, id);
     }
 }

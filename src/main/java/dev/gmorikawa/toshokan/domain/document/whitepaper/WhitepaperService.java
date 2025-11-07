@@ -9,14 +9,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.Authorization;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class WhitepaperService {
 
+    private final Authorization authorization;
     private final WhitepaperRepository repository;
 
-    public WhitepaperService(WhitepaperRepository repository) {
+    public WhitepaperService(
+            Authorization authorization,
+            WhitepaperRepository repository
+    ) {
+        this.authorization = authorization;
         this.repository = repository;
     }
 
@@ -35,11 +43,15 @@ public class WhitepaperService {
         return repository.findById(id).orElse(null);
     }
 
-    public Whitepaper create(Whitepaper entity) {
+    public Whitepaper create(User user, Whitepaper entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         return repository.save(entity);
     }
 
-    public Whitepaper update(UUID id, Whitepaper entity) {
+    public Whitepaper update(User user, UUID id, Whitepaper entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         Optional<Whitepaper> result = repository.findById(id);
 
         if (result.isEmpty()) {
@@ -49,7 +61,6 @@ public class WhitepaperService {
         Whitepaper whitepaper = result.get();
 
         whitepaper.setTitle(entity.getTitle());
-        // whitepaper.setYear(entity.getYear());
         whitepaper.setAuthors(entity.getAuthors());
         whitepaper.setDescription(entity.getDescription());
         whitepaper.setCategory(entity.getCategory());
@@ -58,7 +69,9 @@ public class WhitepaperService {
         return repository.save(whitepaper);
     }
 
-    public boolean remove(UUID id) {
+    public boolean remove(User user, UUID id) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         Optional<Whitepaper> whitepaper = repository.findById(id);
 
         if (whitepaper.isEmpty()) {

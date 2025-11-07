@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "categories")
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -39,6 +40,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return name;
+        return id + " " + name;
     }
 }

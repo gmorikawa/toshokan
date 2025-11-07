@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ import dev.gmorikawa.toshokan.domain.file.File;
 import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
+import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
@@ -160,22 +162,33 @@ public class WhitepaperController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Whitepaper whitepaper) {
-        service.create(whitepaper);
+    public String create(
+        @RequestAttribute User user,
+        @ModelAttribute Whitepaper whitepaper
+    ) {
+        service.create(user, whitepaper);
 
         return "redirect:/app/whitepapers/list";
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable UUID id, @ModelAttribute Whitepaper whitepaper) {
-        service.update(id, whitepaper);
+    public String update(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @ModelAttribute Whitepaper whitepaper
+    ) {
+        service.update(user, id, whitepaper);
 
         return "redirect:/app/whitepapers/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable UUID id, @ModelAttribute Whitepaper whitepaper) {
-        service.remove(id);
+    public String remove(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @ModelAttribute Whitepaper whitepaper
+    ) {
+        service.remove(user, id);
 
         return "redirect:/app/whitepapers/list";
     }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +17,7 @@ import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
+import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -56,7 +58,11 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}/edit")
-    public String update(@PathVariable UUID id, Model model) {
+    public String update(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        Model model
+    ) {
         Author author = service.getById(id);
 
         model.addAttribute("meta", new Meta("Update Author || Toshokan"));
@@ -67,22 +73,33 @@ public class AuthorController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Author author) {
-        service.create(author);
+    public String create(
+        @RequestAttribute User user,
+        @ModelAttribute Author author
+    ) {
+        service.create(user, author);
 
         return "redirect:/app/authors/list";
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable UUID id, @ModelAttribute Author author) {
-        service.update(id, author);
+    public String update(
+        @RequestAttribute User user,
+        @ModelAttribute Author author,
+        @PathVariable UUID id
+    ) {
+        service.update(user, id, author);
 
         return "redirect:/app/authors/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable UUID id, @ModelAttribute Author author) {
-        service.remove(id);
+    public String remove(
+        @RequestAttribute User user,
+        @ModelAttribute Author author,
+        @PathVariable UUID id
+    ) {
+        service.remove(user, id);
 
         return "redirect:/app/authors/list";
     }

@@ -9,14 +9,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.Authorization;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
 public class PublisherService {
 
+    private final Authorization authorization;
     private final PublisherRepository repository;
 
-    public PublisherService(PublisherRepository repository) {
+    public PublisherService(
+        Authorization authorization,
+        PublisherRepository repository
+    ) {
+        this.authorization = authorization;
         this.repository = repository;
     }
 
@@ -39,11 +47,15 @@ public class PublisherService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Publisher create(Publisher entity) {
+    public Publisher create(User user, Publisher entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         return repository.save(entity);
     }
 
-    public Publisher update(UUID id, Publisher entity) {
+    public Publisher update(User user, UUID id, Publisher entity) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+
         Optional<Publisher> result = repository.findById(id);
 
         if(result.isEmpty()) {
@@ -58,7 +70,8 @@ public class PublisherService {
         return repository.save(publisher);
     }
 
-    public Publisher remove(UUID id) {
+    public Publisher remove(User user, UUID id) {
+        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Publisher> publisher = repository.findById(id);
 

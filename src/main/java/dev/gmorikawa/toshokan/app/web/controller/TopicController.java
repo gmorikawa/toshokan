@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +17,7 @@ import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.topic.Topic;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
+import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -67,22 +69,33 @@ public class TopicController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Topic topic) {
-        service.create(topic);
+    public String create(
+        @RequestAttribute User user,
+        @ModelAttribute Topic topic
+    ) {
+        service.create(user, topic);
 
         return "redirect:/app/topics/list";
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable UUID id, @ModelAttribute Topic topic) {
-        service.update(id, topic);
+    public String update(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @ModelAttribute Topic topic
+    ) {
+        service.update(user, id, topic);
 
         return "redirect:/app/topics/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable UUID id, @ModelAttribute Topic topic) {
-        service.remove(id);
+    public String remove(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @ModelAttribute Topic topic
+    ) {
+        service.remove(user, id);
 
         return "redirect:/app/topics/list";
     }

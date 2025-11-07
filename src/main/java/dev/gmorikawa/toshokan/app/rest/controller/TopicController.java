@@ -48,26 +48,26 @@ public class TopicController {
 
     @PostMapping()
     public Topic create(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @RequestBody Topic topic
     ) {
-        return service.create(topic);
+        return service.create(user, topic);
     }
 
     @PatchMapping("/{id}")
     public Topic update(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id,
         @RequestBody Topic topic
     ) {
-        return service.update(id, topic);
+        return service.update(user, id, topic);
     }
 
     @DeleteMapping("/{id}")
     public Topic remove(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id
     ) {
-        return service.remove(id);
+        return service.remove(user, id);
     }
 }

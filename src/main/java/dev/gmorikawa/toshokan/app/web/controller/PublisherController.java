@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +17,7 @@ import dev.gmorikawa.toshokan.app.web.shared.Meta;
 import dev.gmorikawa.toshokan.app.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
+import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -67,22 +69,33 @@ public class PublisherController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Publisher publisher) {
-        service.create(publisher);
+    public String create(
+        @RequestAttribute User user,
+        @ModelAttribute Publisher publisher
+    ) {
+        service.create(user, publisher);
 
         return "redirect:/app/publishers/list";
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable UUID id, @ModelAttribute Publisher publisher) {
-        service.update(id, publisher);
+    public String update(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @ModelAttribute Publisher publisher
+    ) {
+        service.update(user, id, publisher);
 
         return "redirect:/app/publishers/list";
     }
 
     @GetMapping("/{id}/remove")
-    public String remove(@PathVariable UUID id, @ModelAttribute Publisher publisher) {
-        service.remove(id);
+    public String remove(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @ModelAttribute Publisher publisher
+    ) {
+        service.remove(user, id);
 
         return "redirect:/app/publishers/list";
     }

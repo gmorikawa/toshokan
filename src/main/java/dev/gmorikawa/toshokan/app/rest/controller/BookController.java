@@ -71,15 +71,15 @@ public class BookController {
 
     @PostMapping()
     public Book create(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @RequestBody Book entity
     ) {
-        return service.create(entity);
+        return service.create(user, entity);
     }
 
     // @PostMapping("/{id}/upload")
     // public DocumentFile upload(
-    //     @RequestAttribute("user") User requestor,
+    //     @RequestAttribute User user,
     //     @PathVariable String id,
     //     @RequestParam("file") MultipartFile binary,
     //     @RequestParam("description") String description
@@ -90,18 +90,18 @@ public class BookController {
 
     @PatchMapping("/{id}")
     public Book update(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id,
         @RequestBody Book entity
     ) {
-        return service.update(id, entity);
+        return service.update(user, id, entity);
     }
 
     @DeleteMapping("/{id}")
     public boolean remove(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute User user,
         @PathVariable UUID id
     ) {
-        return service.remove(id);
+        return service.remove(user, id);
     }
 }

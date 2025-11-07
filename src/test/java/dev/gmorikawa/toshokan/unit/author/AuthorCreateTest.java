@@ -2,32 +2,31 @@ package dev.gmorikawa.toshokan.unit.author;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
-import dev.gmorikawa.toshokan.domain.author.AuthorService;
+import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
-public class AuthorCreateTest {
-
-    @Autowired
-    private AuthorService service;
+public class AuthorCreateTest extends AuthorTestEnvironment {
 
     @Test
     public void testCreateAuthor() {
+        // Mock a admin user that will handle this action
+        User admin = UserFactory.buildAdmin();
+
+        // Create a new author and persist it in the database
         Author author = new Author();
-
-        String fullname = "John Doe";
-        String biography = "lorem ipsum";
-
-        author.setFullname(fullname);
-        author.setBiography(biography);
-
-        Author savedAuthor = service.create(author);
+        author.setFullname("John Doe");
+        author.setBiography("lorem ipsum");
+        Author savedAuthor = service.create(admin, author);
 
         assertThat(savedAuthor).isNotNull();
         assertThat(savedAuthor.getFullname()).isEqualTo(author.getFullname());
         assertThat(savedAuthor.getBiography()).isEqualTo(author.getBiography());
+
+        // clean-up
+        clean(savedAuthor);
     }
 }

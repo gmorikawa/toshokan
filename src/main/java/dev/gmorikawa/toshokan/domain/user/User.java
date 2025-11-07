@@ -1,6 +1,8 @@
 package dev.gmorikawa.toshokan.domain.user;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -113,8 +115,10 @@ public class User implements UserDetails {
         this.fullname = fullname;
     }
 
-    public boolean hasRole(Set<UserRole> roles) {
-        return roles.contains(getRole());
+    public boolean hasRole(UserRole ...roles) {
+        Set<UserRole> roleSet = new HashSet<>();
+        roleSet.addAll(Arrays.asList(roles));
+        return roleSet.contains(getRole());
     }
 
     public boolean compareId(User user) {
