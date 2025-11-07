@@ -1,5 +1,6 @@
 package dev.gmorikawa.toshokan.domain.file;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +9,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import dev.gmorikawa.storage.Storage;
 import dev.gmorikawa.toshokan.domain.file.enumerator.FileState;
 import dev.gmorikawa.toshokan.domain.file.exception.FileNotFoundException;
-import dev.gmorikawa.toshokan.domain.file.storage.FileStorageService;
 import dev.gmorikawa.toshokan.domain.file.type.FileTypeService;
 
 @Service
@@ -18,12 +19,12 @@ public class FileService {
 
     private final FileTypeService typeService;
     private final FileRepository repository;
-    private final FileStorageService storageService;
+    private final Storage storage;
 
-    public FileService(FileTypeService typeService, FileRepository repository, FileStorageService storageService) {
+    public FileService(FileTypeService typeService, FileRepository repository, Storage storage) {
         this.typeService = typeService;
         this.repository = repository;
-        this.storageService = storageService;
+        this.storage = storage;
     }
 
     public List<File> getAll() {
@@ -76,7 +77,7 @@ public class FileService {
         Optional<File> file = repository.findById(id);
 
         if(!file.isEmpty()) {
-            storageService.remove(file.get());
+            storage.remove(file.get().getFilePath());
             repository.delete(file.get());
         }
 
@@ -87,12 +88,12 @@ public class FileService {
         File file = repository.findById(id).orElse(null);
 
         try {
-            storageService.store(file, binary);
+            storage.write(file.getFilePath(), binary.getInputStream(), (int)binary.getSize());
 
             file.setState(FileState.AVAILABLE);
 
             return repository.save(file);
-        } catch(Exception e) {
+        } catch(IOException e) {
             file.setState(FileState.CORRUPTED);
 
             return repository.save(file);
@@ -102,6 +103,6 @@ public class FileService {
     public InputStream download(UUID id) {
         File file = repository.findById(id).orElseThrow(FileNotFoundException::new);
 
-        return storageService.retrive(file);
+        return storage.read(file.getFilePath());
     }
 }
