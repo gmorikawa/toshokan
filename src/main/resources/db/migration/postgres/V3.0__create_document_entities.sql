@@ -1,20 +1,7 @@
--- CREATE TYPE application.BOOK_TYPE AS ENUM ('FICTION', 'NON_FICTION');
-
-CREATE TABLE application.categories (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(127) UNIQUE NOT NULL
-);
-
 CREATE TABLE application.authors (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     fullname VARCHAR(127) UNIQUE NOT NULL,
     biography VARCHAR(4095)
-);
-
-CREATE TABLE application.publishers (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(63) UNIQUE NOT NULL,
-    description VARCHAR(4095)
 );
 
 CREATE TABLE application.topics (
@@ -32,18 +19,6 @@ CREATE TABLE application.document (
     title VARCHAR(225) NOT NULL,
     summary VARCHAR(4095),
     language_id UUID REFERENCES application.languages(id)
-);
-
-CREATE TABLE application.books (
-    id UUID PRIMARY KEY REFERENCES application.document(id),
-    category_id UUID REFERENCES application.categories(id),
-    publisher_id UUID REFERENCES application.publishers(id),
-    type VARCHAR(31) NOT NULL DEFAULT 'NON_FICTION'
-);
-
-CREATE TABLE application.whitepapers (
-    id UUID PRIMARY KEY REFERENCES application.document(id),
-    published_at DATE
 );
 
 CREATE TABLE application.document_file (
