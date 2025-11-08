@@ -32,14 +32,18 @@ public class DocumentFileService {
         return fileService.download(fileId);
     }
 
-    public DocumentFile create(Document document, MultipartFile binary, String label) {
+    public DocumentFile create(Document document, MultipartFile binary, String version) {
         File file = fileService.upload(
             fileService.create(binary, document.getTitle()).getId(),
             binary
         );
 
         if (file.getState() == FileState.AVAILABLE) {
-            DocumentFile documentFile = new DocumentFile(document, file, label);
+            DocumentFile documentFile = new DocumentFile();
+
+            documentFile.setDocument(document);
+            documentFile.setFile(file);
+            documentFile.setVersion(version);
 
             return repository.save(documentFile);
         } else {

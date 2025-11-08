@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
-import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
+import dev.gmorikawa.toshokan.domain.language.Language;
 import dev.gmorikawa.toshokan.domain.topic.Topic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -33,12 +33,12 @@ public class Document {
     @Column(length = 225)
     private String title;
 
-    @Column(length = 1024, nullable = true)
-    private String description;
+    @Column(length = 4095, nullable = true)
+    private String summary;
 
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "language_id")
     @ManyToOne
-    private Category category;
+    private Language language;
 
     @JoinTable(
             name = "document_authors",
@@ -91,20 +91,20 @@ public class Document {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
-    public Category getCategory() {
-        return category;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public List<Author> getAuthors() {

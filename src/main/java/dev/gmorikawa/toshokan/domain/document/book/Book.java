@@ -1,11 +1,9 @@
 package dev.gmorikawa.toshokan.domain.document.book;
 
-import java.time.LocalDate;
-
+import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.document.book.enumeration.BookType;
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,15 +15,24 @@ import jakarta.persistence.Table;
 @Table(name = "books")
 public class Book extends Document {
 
+    @JoinColumn(name = "category_id")
+    @ManyToOne
+    private Category category;
+
     @JoinColumn(name = "publisher_id")
     @ManyToOne
     private Publisher publisher;
 
-    @Column(nullable = true)
-    private LocalDate publishedAt;
-
     @Enumerated(EnumType.STRING)
     private BookType type;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Publisher getPublisher() {
         return publisher;
@@ -33,14 +40,6 @@ public class Book extends Document {
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
-    }
-
-    public LocalDate getPublishedAt() {
-        return publishedAt;
-    }
-
-    public void setPublishedAt(LocalDate publishedAt) {
-        this.publishedAt = publishedAt;
     }
 
     public BookType getType() {

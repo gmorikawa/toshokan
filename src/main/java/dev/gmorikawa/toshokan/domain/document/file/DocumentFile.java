@@ -34,24 +34,16 @@ public class DocumentFile {
     @ManyToOne(fetch = FetchType.LAZY)
     private File file;
 
+    @Column(length = 127)
+    private String version;
+
     @Column(nullable = true, length = 4095)
-    private String label;
+    private String description;
 
-    public DocumentFile() {
-    }
+    @Column(name = "publishing_year", nullable = true)
+    private Integer publishingYear;
 
-    public DocumentFile(UUID id, Document document, File file, String label) {
-        this.id = id;
-        this.document = document;
-        this.file = file;
-        this.label = label;
-    }
-
-    public DocumentFile(Document document, File file, String label) {
-        this.document = document;
-        this.file = file;
-        this.label = label;
-    }
+    public DocumentFile() { }
 
     public UUID getId() {
         return id;
@@ -77,11 +69,27 @@ public class DocumentFile {
         this.file = file;
     }
 
-    public String getLabel() {
-        return label;
+    public String getVersion() {
+        return version;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getPublishingYear() {
+        return publishingYear;
+    }
+
+    public void setPublishingYear(Integer publishingYear) {
+        this.publishingYear = publishingYear;
     }
 }

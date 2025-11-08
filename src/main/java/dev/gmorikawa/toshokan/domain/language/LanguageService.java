@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.domain.document.book;
+package dev.gmorikawa.toshokan.domain.language;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,72 +15,68 @@ import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @Service
-public class BookService {
+public class LanguageService {
 
     private final Authorization authorization;
-    private final BookRepository repository;
+    private final LanguageRepository repository;
 
-    public BookService(
+    public LanguageService(
             Authorization authorization,
-            BookRepository repository
+            LanguageRepository repository
     ) {
         this.authorization = authorization;
         this.repository = repository;
     }
 
-    public List<Book> getAll(Pagination pagination) {
+    public List<Language> getAll(Pagination pagination) {
         Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
-        Page<Book> page = repository.findAll(pageable);
+        Page<Language> page = repository.findAll(pageable);
 
         return page.getContent();
     }
 
-    public List<Book> getAll() {
+    public List<Language> getAll() {
         return repository.findAll();
     }
 
-    public Book getById(UUID id) {
+    public Language getById(UUID id) {
         return repository.findById(id).orElse(null);
     }
 
-    public Book create(User user, Book entity) {
+    public Language getByName(String name) {
+        return repository.findByName(name).orElse(null);
+    }
+
+    public Language create(User user, Language entity) {
         authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         return repository.save(entity);
     }
 
-    public Book update(User user, UUID id, Book entity) {
+    public Language update(User user, UUID id, Language entity) {
         authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
-
-        Optional<Book> result = repository.findById(id);
+        Optional<Language> result = repository.findById(id);
 
         if (result.isEmpty()) {
             return null;
         }
 
-        Book book = result.get();
+        Language language = result.get();
 
-        book.setTitle(entity.getTitle());
-        book.setAuthors(entity.getAuthors());
-        book.setSummary(entity.getSummary());
-        book.setCategory(entity.getCategory());
-        book.setPublisher(entity.getPublisher());
-        book.setTopics(entity.getTopics());
-        book.setType(entity.getType());
+        language.setName(entity.getName());
 
-        return repository.save(book);
+        return repository.save(language);
     }
 
-    public boolean remove(User user, UUID id) {
+    public Language remove(User user, UUID id) {
         authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
 
-        Optional<Book> book = repository.findById(id);
+        Optional<Language> language = repository.findById(id);
 
-        if (!book.isEmpty()) {
-            repository.delete(book.get());
-            return true;
+        if (!language.isEmpty()) {
+            repository.delete(language.get());
         }
 
-        return false;
+        return language.orElse(null);
     }
 }
