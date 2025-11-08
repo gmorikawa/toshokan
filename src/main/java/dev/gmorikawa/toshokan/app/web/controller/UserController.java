@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -70,28 +71,33 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute User user) {
-        service.create(user);
+    public String create(
+        @RequestAttribute("user") User client,
+        @ModelAttribute User user
+    ) {
+        service.create(client, user);
 
         return "redirect:/app/users/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
+        @RequestAttribute("user") User client,
         @PathVariable UUID id,
         @ModelAttribute User user
     ) {
-        service.update(id, user);
+        service.update(client, id, user);
 
         return "redirect:/app/users/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
+        @RequestAttribute("user") User client,
         @PathVariable UUID id,
         @ModelAttribute User user
     ) {
-        service.remove(id);
+        service.remove(client, id);
 
         return "redirect:/app/users/list";
     }

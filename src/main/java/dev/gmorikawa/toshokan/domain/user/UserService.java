@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.Authorization;
+import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.domain.user.exception.UsernameNotAvailableException;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
@@ -17,11 +20,16 @@ import dev.gmorikawa.toshokan.shared.query.Pagination;
 @Service
 public class UserService {
 
+    private final Authorization authorization;
     private final UserRepository repository;
-
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(
+            Authorization authorization,
+            UserRepository repository,
+            PasswordEncoder passwordEncoder
+    ) {
+        this.authorization = authorization;
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -33,7 +41,7 @@ public class UserService {
     public List<User> getAll(Pagination pagination) {
         Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
         Page<User> page = repository.findAll(pageable);
-        
+
         return page.getContent();
     }
 
@@ -45,12 +53,14 @@ public class UserService {
         return repository.findById(id).orElse(null);
     }
 
-    public User create(User entity) {
-        if(!isEmailIsAvailable(entity.getEmail())) {
+    public User create(User client, User entity) {
+        authorization.checkUserRole(client, UserRole.ADMIN);
+
+        if (!isEmailIsAvailable(entity.getEmail())) {
             throw new EmailNotAvailableException();
         }
 
-        if(!isUsernameIsAvailable(entity.getUsername())) {
+        if (!isUsernameIsAvailable(entity.getUsername())) {
             throw new UsernameNotAvailableException();
         }
 
@@ -59,18 +69,22 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public User update(UUID id, User entity) {
-        if(!isEmailIsAvailable(entity.getEmail(), id)) {
+    public User update(User client, UUID id, User entity) {
+        if (!client.hasRole(UserRole.ADMIN) && !client.isIdEqual(entity)) {
+            throw new UnauthorizedActionException();
+        }
+
+        if (!isEmailIsAvailable(entity.getEmail(), id)) {
             throw new EmailNotAvailableException();
         }
 
-        if(!isUsernameIsAvailable(entity.getUsername(), id)) {
+        if (!isUsernameIsAvailable(entity.getUsername(), id)) {
             throw new UsernameNotAvailableException();
         }
 
         Optional<User> result = repository.findById(id);
 
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return null;
         }
 
@@ -83,14 +97,40 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User remove(UUID id) {
+    public User remove(User client, UUID id) {
+        authorization.checkUserRole(client, UserRole.ADMIN);
+
         Optional<User> user = repository.findById(id);
 
-        if(!user.isEmpty()) {
+        if (!user.isEmpty()) {
             repository.delete(user.get());
         }
 
         return user.orElse(null);
+    }
+
+    public User activate(UUID id) {
+        Optional<User> user = repository.findById(id);
+
+        if (user.isPresent()) {
+            User userToActivate = user.get();
+            userToActivate.activate();
+            return repository.save(userToActivate);
+        } else {
+            return null;
+        }
+    }
+
+    public User block(UUID id) {
+        Optional<User> user = repository.findById(id);
+
+        if (user.isPresent()) {
+            User userToBlock = user.get();
+            userToBlock.block();
+            return repository.save(userToBlock);
+        } else {
+            return null;
+        }
     }
 
     private boolean isUsernameIsAvailable(String username) {

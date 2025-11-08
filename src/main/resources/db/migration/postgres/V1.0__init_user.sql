@@ -6,8 +6,9 @@ CREATE TABLE application.users (
     password VARCHAR(255) NOT NULL,
     email VARCHAR(127) UNIQUE NOT NULL,
     role VARCHAR(31) NOT NULL DEFAULT 'READER',
+    status VARCHAR(31) NOT NULL DEFAULT 'ACTIVE'
     fullname VARCHAR(127)
 );
 
-INSERT INTO application.users (username, password, email, role, fullname)
-    VALUES ('gmorikawa', '$2a$10$D2d9ikFdcpnQSr3xTQTAhuzvAIxsOcn1f9hFJpnVsBn84YI.j5GWG', 'gabriel.morikawa@live.com', 'ADMIN', 'Gabriel Morikawa');
+INSERT INTO application.users (username, password, email, role, status, fullname)
+    VALUES ('gmorikawa', '$2a$10$D2d9ikFdcpnQSr3xTQTAhuzvAIxsOcn1f9hFJpnVsBn84YI.j5GWG', 'gabriel.morikawa@live.com', 'ADMIN', 'ACTIVE', 'Gabriel Morikawa');

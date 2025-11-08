@@ -30,27 +30,27 @@ public class UserController {
 
     @PostMapping()
     public User create(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute("user") User client,
         @RequestBody User user
     ) {
-        return service.create(user);
+        return service.create(client, user);
     }
 
     @PatchMapping("/{id}")
     public User update(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute("user") User client,
         @PathVariable UUID id,
         @RequestBody User user
     ) {
-        return service.update(id, user);
+        return service.update(client, id, user);
     }
 
     @DeleteMapping("/{id}")
     public User remove(
-        @RequestAttribute("user") User requestor,
+        @RequestAttribute("user") User client,
         @PathVariable UUID id
     ) {
-        return service.remove(id);
+        return service.remove(client, id);
     }
 
 }

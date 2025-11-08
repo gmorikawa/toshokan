@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.domain.user.enumerator.UserStatus;
+import dev.gmorikawa.toshokan.domain.user.exception.ForbiddenAdminUpdateException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,6 +44,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.READER;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status = UserStatus.ACTIVE;
 
     @Column(length = 127)
     private String fullname;
@@ -107,6 +112,10 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    public UserStatus getStatus() {
+        return status;
+    }
+
     public String getFullname() {
         return fullname;
     }
@@ -125,8 +134,24 @@ public class User implements UserDetails {
         return user.getId().equals(id);
     }
 
+    public boolean isIdEqual(User user) {
+        return user.getId().equals(id);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    public void block() {
+        if (role == UserRole.ADMIN) {
+            throw new ForbiddenAdminUpdateException("Admin's status cannot be set blocked.");
+        }
+
+        this.status = UserStatus.BLOCKED;
+    }
+
+    public void activate() {
+        this.status = UserStatus.ACTIVE;
     }
 }
