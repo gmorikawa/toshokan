@@ -1,34 +1,26 @@
 package dev.gmorikawa.toshokan.domain.document.whitepaper;
 
-import java.time.LocalDate;
-
 import dev.gmorikawa.toshokan.domain.document.Document;
-import jakarta.persistence.Column;
+import dev.gmorikawa.toshokan.domain.organization.Organization;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "whitepapers")
 public class Whitepaper extends Document {
 
-    @Column(nullable = true)
-    private LocalDate publishedAt;
+    @JoinColumn(name = "organization_id")
+    @ManyToOne
+    private Organization organization;
 
-    public LocalDate getPublishedAt() {
-        return publishedAt;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setPublishedAt(LocalDate publishedAt) {
-        this.publishedAt = publishedAt;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
-    // @Override
-    // public String getFilePath() {
-    //     return new StringBuilder()
-    //         .append(getCategory().getName().toLowerCase().replace(' ', '_'))
-    //         .append("/")
-    //         .append(getId())
-    //         .append("/")
-    //         .toString();
-    // }
 }

@@ -105,7 +105,7 @@
 ### Organization
 
 * _id_: __primary key, UUID, not null__;
-* _name_: __varchar(63)__;
+* _name_: __varchar(127), not null__;
 * _description_: __varchar(4095)__;
 * _type_: __OrganizationType, not null__;
 

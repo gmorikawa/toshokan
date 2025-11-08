@@ -64,6 +64,7 @@ public class WhitepaperService {
         whitepaper.setAuthors(entity.getAuthors());
         whitepaper.setSummary(entity.getSummary());
         whitepaper.setTopics(entity.getTopics());
+        whitepaper.setOrganization(entity.getOrganization());
 
         return repository.save(whitepaper);
     }
