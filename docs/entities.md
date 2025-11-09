@@ -118,7 +118,7 @@
 
 * _document_: __Document, foreign key, UUID, not null__;
 * _organization_: __Organization, foreign key, UUID__;
-* _keywords_: __varchar(4095)__;
+* _keywords_: __varchar(255)__;
 
 ## Enums
 
