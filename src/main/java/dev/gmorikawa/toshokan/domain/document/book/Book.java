@@ -2,7 +2,7 @@ package dev.gmorikawa.toshokan.domain.document.book;
 
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.document.Document;
-import dev.gmorikawa.toshokan.domain.document.book.enumeration.BookType;
+import dev.gmorikawa.toshokan.domain.document.book.enumerator.BookType;
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
