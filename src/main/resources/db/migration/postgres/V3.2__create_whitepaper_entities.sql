@@ -7,5 +7,5 @@ CREATE TABLE application.organizations (
 
 CREATE TABLE application.whitepapers (
     id UUID PRIMARY KEY REFERENCES application.document(id),
-    organization_id UUID REFERENCES application.organizations(id),
+    organization_id UUID REFERENCES application.organizations(id)
 );

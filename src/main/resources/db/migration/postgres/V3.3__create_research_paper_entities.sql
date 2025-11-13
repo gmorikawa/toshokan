@@ -1,5 +1,5 @@
-CREATE TABLE application.whitepapers (
+CREATE TABLE application.research_papers (
     id UUID PRIMARY KEY REFERENCES application.document(id),
     organization_id UUID REFERENCES application.organizations(id),
-    keywords VARCHAR(255),
+    keywords VARCHAR(255)
 );

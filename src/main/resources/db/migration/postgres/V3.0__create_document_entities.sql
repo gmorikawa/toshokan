@@ -25,8 +25,8 @@ CREATE TABLE application.document_file (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id UUID REFERENCES application.document(id),
     file_id UUID REFERENCES application.files(id),
-    version NOT NULL VARCHAR(127),
-    description VARCHAR(4095)
+    version VARCHAR(127) NOT NULL,
+    description VARCHAR(4095),
     publishing_year SMALLINT
 );
 
