@@ -18,7 +18,7 @@ import dev.gmorikawa.toshokan.domain.language.LanguageService;
 import dev.gmorikawa.toshokan.domain.user.User;
 
 @RestController("api.language")
-@RequestMapping(path = "api/language")
+@RequestMapping(path = "api/languages")
 public class LanguageController {
 
     private final LanguageService service;

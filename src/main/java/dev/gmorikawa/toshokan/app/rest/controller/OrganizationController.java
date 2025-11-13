@@ -3,7 +3,6 @@ package dev.gmorikawa.toshokan.app.rest.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.gmorikawa.toshokan.domain.organization.Organization;
 import dev.gmorikawa.toshokan.domain.organization.OrganizationService;
 import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController
-@RequestMapping("/api/organizations")
+@RequestMapping("api/organizations")
 public class OrganizationController {
     
     private final OrganizationService service;
@@ -30,61 +28,45 @@ public class OrganizationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Organization>> getAll(Pagination pagination) {
-        return ResponseEntity.ok(service.getAll(pagination));
+    public List<Organization> getAll() {
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Organization> getById(@PathVariable UUID id) {
+    public Organization getById(@PathVariable UUID id) {
         Organization organization = service.getById(id);
 
-        if(organization == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(organization);
+        return organization;
     }
 
     @PostMapping
-    public ResponseEntity<Organization> create(
+    public Organization create(
         @AuthenticationPrincipal User user,
         @RequestBody Organization organization
     ) {
         Organization result = service.create(user, organization);
 
-        if(result == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(result);
+        return result;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Organization> update(
+    public Organization update(
         @AuthenticationPrincipal User user,
         @PathVariable UUID id,
         @RequestBody Organization organization
     ) {
         Organization result = service.update(user, id, organization);
 
-        if(result == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(result);
+        return result;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Organization> remove(
+    public Organization remove(
         @AuthenticationPrincipal User user,
         @PathVariable UUID id
     ) {
         Organization organization = service.remove(user, id);
 
-        if(organization == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(organization);
+        return organization;
     }
 }
