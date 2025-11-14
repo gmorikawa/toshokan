@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import dev.gmorikawa.toshokan.auth.Authorization;
 import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.domain.user.exception.AdminRemoveAttemptException;
 import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.domain.user.exception.UsernameNotAvailableException;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
@@ -102,8 +103,12 @@ public class UserService {
 
         Optional<User> user = repository.findById(id);
 
-        if (!user.isEmpty()) {
-            repository.delete(user.get());
+        if (user.isPresent()) {
+            if (user.get().getRole() != UserRole.ADMIN) {
+                repository.delete(user.get());
+            } else {
+                throw new AdminRemoveAttemptException();
+            }
         }
 
         return user.orElse(null);
