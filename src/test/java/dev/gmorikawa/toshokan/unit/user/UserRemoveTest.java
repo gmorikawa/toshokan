@@ -36,7 +36,7 @@ public class UserRemoveTest extends UserTestEnvironment {
 
         // Remove the author and check if it still exists in the database
         service.remove(admin, savedUser.getId());
-        User searchedUser = service.getById(savedUser.getId());
+        User searchedUser = service.getById(admin, savedUser.getId());
         assertThat(searchedUser).isNull();
     }
 }

@@ -50,7 +50,11 @@ public class UserService {
         return repository.findByUsername(username).orElse(null);
     }
 
-    public User getById(UUID id) {
+    public User getById(User client, UUID id) {
+        if (client.getRole() == UserRole.READER && client.getId() != id) {
+            throw new UnauthorizedActionException();
+        }
+
         return repository.findById(id).orElse(null);
     }
 
@@ -98,7 +102,7 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User remove(User client, UUID id) {
+    public boolean remove(User client, UUID id) {
         authorization.checkUserRole(client, UserRole.ADMIN);
 
         Optional<User> user = repository.findById(id);
@@ -106,12 +110,13 @@ public class UserService {
         if (user.isPresent()) {
             if (user.get().getRole() != UserRole.ADMIN) {
                 repository.delete(user.get());
+                return true;
             } else {
                 throw new AdminRemoveAttemptException();
             }
+        } else {
+            return false;
         }
-
-        return user.orElse(null);
     }
 
     public User activate(UUID id) {

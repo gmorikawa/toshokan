@@ -58,10 +58,11 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     public String update(
+        @RequestAttribute("user") User client,
         @PathVariable UUID id,
         Model model
     ) {
-        User user = service.getById(id);
+        User user = service.getById(client, id);
 
         model.addAttribute("meta", new Meta("Update User || Toshokan"));
         model.addAttribute("page", new Page("User", "Update"));

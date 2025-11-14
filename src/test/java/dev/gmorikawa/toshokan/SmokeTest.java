@@ -7,9 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import dev.gmorikawa.toshokan.app.rest.controller.BookController;
 import dev.gmorikawa.toshokan.app.rest.controller.PublisherController;
 import dev.gmorikawa.toshokan.app.rest.controller.TopicController;
+import dev.gmorikawa.toshokan.app.rest.controller.UserController;
 import dev.gmorikawa.toshokan.app.rest.controller.WhitepaperController;
 import dev.gmorikawa.toshokan.auth.AuthenticationController;
-import dev.gmorikawa.toshokan.domain.user.UserController;
 
 @SpringBootTest
 public class SmokeTest {
