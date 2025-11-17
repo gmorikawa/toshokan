@@ -26,18 +26,19 @@ public class File {
 
     @Column(length = 255)
     private String path;
-    
+
     @Column(length = 255)
     private String filename;
 
-    @JoinColumn(name="type_id")
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)
     private FileType type;
 
     @Enumerated(EnumType.STRING)
     private FileState state;
 
-    public File() { }
+    public File() {
+    }
 
     public File(UUID id, String path, String filename, FileType type, FileState state) {
         this.id = id;
@@ -101,8 +102,8 @@ public class File {
 
     public String getFilePath() {
         return new StringBuilder()
-            .append(path)
-            .append(filename)
-            .toString();
+                .append(path)
+                .append(filename)
+                .toString();
     }
 }

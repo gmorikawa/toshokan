@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dev.gmorikawa.toshokan.domain.document.book.Book;
 import dev.gmorikawa.toshokan.domain.document.book.BookService;
+import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.user.User;
 
@@ -40,33 +43,36 @@ public class BookController {
         return service.getAll();
     }
 
-    // @GetMapping("/{id}/files")
-    // public List<File> getFiles(@PathVariable String id) {
-    //     Book book = service.getById(id);
-    //     return documentFileService.getFilesByDocument(book);
-    // }
+    @GetMapping("/{id}")
+    public Book getById(@PathVariable UUID id) {
+        return service.getById(id);
+    }
 
-    @GetMapping("/{id}/files/{fileId}")
-    public ResponseEntity<InputStreamResource> downloadFile(
-        @PathVariable("id") UUID id,
-        @PathVariable("fileId") UUID fileId
+    @GetMapping("/{id}/files")
+    public List<DocumentFile> getFiles(
+        @RequestAttribute User user,
+        @PathVariable UUID id
     ) {
-        InputStream binary = documentFileService.downloadFileById(fileId);
+        Book book = service.getById(id);
+        return documentFileService.getFilesByDocument(book);
+    }
 
+    @GetMapping("/{id}/files/{documentFileId}/download")
+    public ResponseEntity<InputStreamResource> downloadFile(
+        @PathVariable UUID id,
+        @PathVariable UUID documentFileId
+    ) {
+        DocumentFile documentFile = documentFileService.getById(documentFileId);
+        InputStream binary = documentFileService.downloadFileById(documentFile.getFile().getId());
         InputStreamResource resource = new InputStreamResource(binary);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.txt");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s", documentFile.getFile().getFilename()));
 
         return ResponseEntity.ok()
             .headers(headers)
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .body(resource);
-    }
-
-    @GetMapping("/{id}")
-    public Book getById(@PathVariable UUID id) {
-        return service.getById(id);
     }
 
     @PostMapping()
@@ -77,16 +83,18 @@ public class BookController {
         return service.create(user, entity);
     }
 
-    // @PostMapping("/{id}/upload")
-    // public DocumentFile upload(
-    //     @RequestAttribute User user,
-    //     @PathVariable String id,
-    //     @RequestParam("file") MultipartFile binary,
-    //     @RequestParam("description") String description
-    // ) {
-    //     Book book = service.getById(id);
-    //     return documentFileService.create(requestor, book, binary, description);
-    // }
+    @PostMapping("/{id}/files/upload")
+    public DocumentFile upload(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @RequestParam MultipartFile binary,
+        @RequestParam String version,
+        @RequestParam String description,
+        @RequestParam Integer publishingYear
+    ) {
+        Book book = service.getById(id);
+        return documentFileService.create(user, book, binary, version, description, publishingYear);
+    }
 
     @PatchMapping("/{id}")
     public Book update(
@@ -103,5 +111,14 @@ public class BookController {
         @PathVariable UUID id
     ) {
         return service.remove(user, id);
+    }
+
+    @DeleteMapping("/{id}/files/{documentFileId}")
+    public boolean removeFile(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @PathVariable UUID documentFileId
+    ) {
+        return documentFileService.remove(documentFileId);
     }
 }

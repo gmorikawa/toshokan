@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "researchpapers")
+@Table(name = "research_papers")
 public class ResearchPaper extends Document {
 
     @JoinColumn(name = "organization_id")

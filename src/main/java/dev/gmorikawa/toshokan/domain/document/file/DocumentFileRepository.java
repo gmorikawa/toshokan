@@ -8,10 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import dev.gmorikawa.toshokan.domain.document.Document;
-import dev.gmorikawa.toshokan.domain.file.File;
 
 @Repository
 public interface DocumentFileRepository extends JpaRepository<DocumentFile, UUID> {
-    @Query("SELECT f FROM DocumentFile df JOIN df.file f WHERE df.document = ?1")
-    List<File> getFilesByDocument(Document document);
+    @Query("SELECT df FROM DocumentFile df WHERE df.document = ?1")
+    List<DocumentFile> getFilesByDocument(Document document);
 }

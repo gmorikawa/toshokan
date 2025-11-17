@@ -1,8 +1,13 @@
 package dev.gmorikawa.toshokan.app.rest.controller;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -43,6 +48,33 @@ public class WhitepaperController {
         return service.getById(id);
     }
 
+    @GetMapping("/{id}/files")
+    public List<DocumentFile> getFiles(
+        @RequestAttribute User user,
+        @PathVariable UUID id
+    ) {
+        Whitepaper whitepaper = service.getById(id);
+        return documentFileService.getFilesByDocument(whitepaper);
+    }
+
+    @GetMapping("/{id}/files/{documentFileId}/download")
+    public ResponseEntity<InputStreamResource> downloadFile(
+        @PathVariable UUID id,
+        @PathVariable UUID documentFileId
+    ) {
+        DocumentFile documentFile = documentFileService.getById(documentFileId);
+        InputStream binary = documentFileService.downloadFileById(documentFile.getFile().getId());
+        InputStreamResource resource = new InputStreamResource(binary);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s", documentFile.getFile().getFilename()));
+
+        return ResponseEntity.ok()
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(resource);
+    }
+
     @PostMapping()
     public Whitepaper create(
         @RequestAttribute User user,
@@ -51,15 +83,17 @@ public class WhitepaperController {
         return service.create(user, entity);
     }
 
-    @PostMapping("/{id}/upload")
+    @PostMapping("/{id}/files/upload")
     public DocumentFile upload(
         @RequestAttribute User user,
         @PathVariable UUID id,
-        @RequestParam("file") MultipartFile binary,
-        @RequestParam("description") String description
+        @RequestParam MultipartFile binary,
+        @RequestParam String version,
+        @RequestParam String description,
+        @RequestParam Integer publishingYear
     ) {
         Whitepaper whitepaper = service.getById(id);
-        return documentFileService.create(whitepaper, binary, description);
+        return documentFileService.create(user, whitepaper, binary, version, description, publishingYear);
     }
 
     @PatchMapping("/{id}")
@@ -77,5 +111,14 @@ public class WhitepaperController {
         @PathVariable UUID id
     ) {
         return service.remove(user, id);
+    }
+
+    @DeleteMapping("/{id}/files/{documentFileId}")
+    public boolean removeFile(
+        @RequestAttribute User user,
+        @PathVariable UUID id,
+        @PathVariable UUID documentFileId
+    ) {
+        return documentFileService.remove(documentFileId);
     }
 }

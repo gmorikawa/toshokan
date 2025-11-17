@@ -1,7 +1,10 @@
 package dev.gmorikawa.toshokan.domain.document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
@@ -21,8 +24,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "document")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Document {
 
@@ -42,38 +47,24 @@ public class Document {
 
     @JoinTable(
             name = "document_authors",
-            joinColumns = @JoinColumn(
-                    name = "document_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            )
+            joinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id")
     )
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Author> authors;
 
     @JoinTable(
             name = "document_topics",
-            joinColumns = @JoinColumn(
-                    name = "document_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "topic_id",
-                    referencedColumnName = "id"
-            )
+            joinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id", referencedColumnName = "id")
     )
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Topic> topics;
 
-    @OneToMany(
-        cascade = CascadeType.ALL,
-        fetch = FetchType.EAGER
-    )
     @JoinColumn(name = "document_id", referencedColumnName = "id")
-    private List<DocumentFile> documentFiles;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<DocumentFile> documentFiles = new ArrayList<>();
 
     public UUID getId() {
         return id;
@@ -125,6 +116,10 @@ public class Document {
 
     public List<DocumentFile> getDocumentFiles() {
         return documentFiles;
+    }
+
+    public void setDocumentFiles(List<DocumentFile> documentFiles) {
+        this.documentFiles = documentFiles;
     }
 
     public String getAuthorsAsString() {

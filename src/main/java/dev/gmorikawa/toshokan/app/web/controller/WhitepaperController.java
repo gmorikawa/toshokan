@@ -195,12 +195,15 @@ public class WhitepaperController {
 
     @PostMapping("/{id}/upload")
     public String upload(
+        @RequestAttribute User user,
         @PathVariable UUID id,
         @RequestParam MultipartFile file,
-        @RequestParam String label,
+        @RequestParam String version,
+        @RequestParam String description,
+        @RequestParam Integer publishingYear,
         RedirectAttributes redirectAttributes
     ) {
-        documentFileService.create(service.getById(id), file, label);
+        documentFileService.create(user, service.getById(id), file, version, description, publishingYear);
 
         return String.format("redirect:/app/whitepapers/%s", id);
     }

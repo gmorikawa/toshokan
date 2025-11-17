@@ -2,6 +2,8 @@ package dev.gmorikawa.toshokan.domain.document.file;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 import jakarta.persistence.Column;
@@ -12,26 +14,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "document_file")
 public class DocumentFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @JoinColumn(
-            name = "document_id",
-            referencedColumnName = "id"
-    )
+    @JoinColumn(name = "document_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Document document;
 
-    @JoinColumn(
-            name = "file_id",
-            referencedColumnName = "id"
-    )
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private File file;
 
     @Column(length = 127)

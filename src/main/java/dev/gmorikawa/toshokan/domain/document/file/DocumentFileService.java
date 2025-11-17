@@ -12,6 +12,7 @@ import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.file.enumerator.FileState;
+import dev.gmorikawa.toshokan.domain.user.User;
 
 @Service
 public class DocumentFileService {
@@ -24,15 +25,19 @@ public class DocumentFileService {
         this.repository = repository;
     }
 
-    public List<File> getFilesByDocument(Document document) {
+    public List<DocumentFile> getFilesByDocument(Document document) {
         return repository.getFilesByDocument(document);
+    }
+
+    public DocumentFile getById(UUID id) {
+        return repository.findById(id).orElse(null);
     }
 
     public InputStream downloadFileById(UUID fileId) {
         return fileService.download(fileId);
     }
 
-    public DocumentFile create(Document document, MultipartFile binary, String version) {
+    public DocumentFile create(User user, Document document, MultipartFile binary, String version, String description, Integer publishingYear) {
         File file = fileService.upload(
             fileService.create(binary, document.getTitle()).getId(),
             binary
@@ -44,6 +49,8 @@ public class DocumentFileService {
             documentFile.setDocument(document);
             documentFile.setFile(file);
             documentFile.setVersion(version);
+            documentFile.setDescription(description);
+            documentFile.setPublishingYear(publishingYear);
 
             return repository.save(documentFile);
         } else {
