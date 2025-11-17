@@ -49,4 +49,13 @@ public class Book extends Document {
     public void setType(BookType type) {
         this.type = type;
     }
+
+    @Override
+    public String getFileDirectory() {
+        return String.format(
+            "/%s/%s",
+            "books",
+            this.getId().toString().replace("-", "")
+        );
+    }
 }

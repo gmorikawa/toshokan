@@ -29,7 +29,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "document")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Document {
+public abstract class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -131,4 +131,6 @@ public class Document {
 
         return serialized;
     }
+
+    public abstract String getFileDirectory();
 }

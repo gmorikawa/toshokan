@@ -35,4 +35,12 @@ public class ResearchPaper extends Document {
         this.keywords = keywords;
     }
 
+    @Override
+    public String getFileDirectory() {
+        return String.format(
+            "/%s/%s",
+            "researchpapers",
+            this.getId().toString().replace("-", "")
+        );
+    }
 }

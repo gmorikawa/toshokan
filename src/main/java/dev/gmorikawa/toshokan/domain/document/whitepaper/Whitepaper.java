@@ -23,4 +23,12 @@ public class Whitepaper extends Document {
         this.organization = organization;
     }
 
+    @Override
+    public String getFileDirectory() {
+        return String.format(
+            "/%s/%s",
+            "whitepapers",
+            this.getId().toString().replace("-", "")
+        );
+    }
 }

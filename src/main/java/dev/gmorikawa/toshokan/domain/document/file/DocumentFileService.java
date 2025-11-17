@@ -39,7 +39,7 @@ public class DocumentFileService {
 
     public DocumentFile create(User user, Document document, MultipartFile binary, String version, String description, Integer publishingYear) {
         File file = fileService.upload(
-            fileService.create(binary, document.getTitle()).getId(),
+            fileService.create(binary, document.getFileDirectory()).getId(),
             binary
         );
 

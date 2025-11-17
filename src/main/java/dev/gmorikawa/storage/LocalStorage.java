@@ -10,18 +10,21 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class LocalStorage implements Storage {
+
     private final String rootDirectory;
-    
+
     public LocalStorage(String rootDirectory) {
-        this.rootDirectory = rootDirectory;
+        this.rootDirectory = rootDirectory.charAt(rootDirectory.length() - 1) == '/'
+                ? rootDirectory.substring(0, rootDirectory.length() - 1)
+                : rootDirectory;
     }
 
     @Override
     public void write(String path, InputStream stream, Integer length, Integer skip) {
         try {
             String filepath = buildFilepath(rootDirectory, path);
-
-            Files.createDirectories(Paths.get(rootDirectory));
+            String fileDirectory = filepath.substring(0, filepath.lastIndexOf('/'));
+            Files.createDirectories(Paths.get(fileDirectory));
 
             File binary = new File(filepath);
             binary.createNewFile();
@@ -29,11 +32,9 @@ public class LocalStorage implements Storage {
             try (FileOutputStream output = new FileOutputStream(binary)) {
                 output.write(stream.readNBytes(length));
             }
-        } 
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("LinuxStorage: FileNotFoundException => " + e.getMessage());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("LinuxStorage: IOException => " + e.getMessage());
         }
     }
@@ -47,12 +48,11 @@ public class LocalStorage implements Storage {
     public InputStream read(String path) {
         try {
             String filepath = buildFilepath(rootDirectory, path);
-            
+
             FileInputStream stream = new FileInputStream(filepath);
 
             return stream;
-        }
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("LinuxStorage: FileNotFoundException => " + e.getMessage());
             return null;
         }
