@@ -21,7 +21,7 @@ public class LocalStorage implements Storage {
         try {
             String filepath = buildFilepath(rootDirectory, path);
 
-            Files.createDirectories(Paths.get(rootDirectory.concat(path)));
+            Files.createDirectories(Paths.get(rootDirectory));
 
             File binary = new File(filepath);
             binary.createNewFile();
