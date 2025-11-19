@@ -35,6 +35,10 @@ public class OrganizationService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Organization> getAll() {
         return repository.findAll();
     }

@@ -35,6 +35,10 @@ public class AuthorService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Author> getAll() {
         return repository.findAll();
     }

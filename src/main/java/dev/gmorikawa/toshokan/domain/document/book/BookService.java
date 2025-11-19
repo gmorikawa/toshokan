@@ -35,6 +35,10 @@ public class BookService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Book> getAll() {
         return repository.findAll();
     }

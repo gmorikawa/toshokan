@@ -25,6 +25,7 @@ import dev.gmorikawa.toshokan.domain.document.book.BookService;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.book")
 @RequestMapping(path = "api/books")
@@ -39,8 +40,20 @@ public class BookController {
     }
 
     @GetMapping()
-    public List<Book> getAll() {
-        return service.getAll();
+    public List<Book> getAll(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll();
+        }
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination);
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")

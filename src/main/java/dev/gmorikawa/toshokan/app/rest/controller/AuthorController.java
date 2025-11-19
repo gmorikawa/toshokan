@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.author")
 @RequestMapping(path = "api/authors")
@@ -28,8 +30,20 @@ public class AuthorController {
     }
 
     @GetMapping()
-    public List<Author> getAll() {
-        return service.getAll();
+    public List<Author> getAll(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll();
+        }
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination);
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")

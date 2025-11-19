@@ -35,6 +35,10 @@ public class WhitepaperService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Whitepaper> getAll() {
         return repository.findAll();
     }

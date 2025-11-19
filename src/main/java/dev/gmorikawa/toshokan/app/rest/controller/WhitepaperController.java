@@ -25,6 +25,7 @@ import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
 import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.whitepaper")
 @RequestMapping(path = "api/whitepapers")
@@ -39,8 +40,21 @@ public class WhitepaperController {
     }
 
     @GetMapping()
-    public List<Whitepaper> getAll() {
-        return service.getAll();
+    public List<Whitepaper> getAll(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll();
+        }
+
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination);
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")

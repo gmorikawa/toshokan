@@ -46,6 +46,10 @@ public class UserService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public User getByUsername(String username) {
         return repository.findByUsername(username).orElse(null);
     }

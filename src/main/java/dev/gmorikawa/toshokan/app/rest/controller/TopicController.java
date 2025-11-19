@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.topic.Topic;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.topic")
 @RequestMapping(path = "api/topics")
@@ -28,8 +30,21 @@ public class TopicController {
     }
 
     @GetMapping()
-    public List<Topic> getAll() {
-        return service.getAll();
+    public List<Topic> getAll(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll();
+        }
+
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination);
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")

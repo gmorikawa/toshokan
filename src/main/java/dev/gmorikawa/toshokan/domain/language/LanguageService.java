@@ -35,6 +35,10 @@ public class LanguageService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Language> getAll() {
         return repository.findAll();
     }

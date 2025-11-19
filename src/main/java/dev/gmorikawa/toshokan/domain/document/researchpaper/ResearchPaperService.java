@@ -35,6 +35,10 @@ public class ResearchPaperService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<ResearchPaper> getAll() {
         return repository.findAll();
     }

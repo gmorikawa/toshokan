@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.app.rest.dto.UserWithoutPasswordDTO;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserService;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController
 @RequestMapping(path = "api/users")
@@ -29,11 +31,26 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<UserWithoutPasswordDTO> getUsers() {
-        return service.getAll()
+    public List<UserWithoutPasswordDTO> getUsers(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll()
+                .stream()
+                .map(UserWithoutPasswordDTO::new)
+                .collect(Collectors.toList());
+        }
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination)
             .stream()
             .map(UserWithoutPasswordDTO::new)
             .collect(Collectors.toList());
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")

@@ -36,6 +36,10 @@ public class CategoryService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Category> getAll() {
         return repository.findAll();
     }

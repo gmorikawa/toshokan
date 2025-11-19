@@ -35,6 +35,10 @@ public class TopicService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Topic> getAll() {
         return repository.findAll();
     }

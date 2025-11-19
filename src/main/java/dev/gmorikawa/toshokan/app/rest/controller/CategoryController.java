@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.category.CategoryService;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.category")
 @RequestMapping(path = "api/categories")
@@ -29,8 +31,20 @@ public class CategoryController {
     }
 
     @GetMapping()
-    public List<Category> getAll() {
-        return service.getAll();
+    public List<Category> getAll(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll();
+        }
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination);
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")

@@ -35,6 +35,10 @@ public class PublisherService {
         return page.getContent();
     }
 
+    public Integer countAll() {
+        return (int) repository.count();
+    }
+
     public List<Publisher> getAll() {
         return repository.findAll();
     }

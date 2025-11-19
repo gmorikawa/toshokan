@@ -25,6 +25,7 @@ import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaper;
 import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaperService;
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.researchpaper")
 @RequestMapping(path = "api/research-papers")
@@ -39,8 +40,20 @@ public class ResearchPaperController {
     }
 
     @GetMapping()
-    public List<ResearchPaper> getAll() {
-        return service.getAll();
+    public List<ResearchPaper> getAll(
+        @RequestParam(required = false, defaultValue = "0") Integer page,
+        @RequestParam(required = false, defaultValue = "0") Integer size
+    ) {
+        if (page == 0 && size == 0) {
+            return service.getAll();
+        }
+        Pagination pagination = new Pagination(page, size);
+        return service.getAll(pagination);
+    }
+
+    @GetMapping("/count")
+    public Integer countAll() {
+        return service.countAll();
     }
 
     @GetMapping("/{id}")
