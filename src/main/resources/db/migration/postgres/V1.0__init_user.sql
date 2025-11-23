@@ -1,5 +1,3 @@
--- CREATE TYPE application.USER_ROLE AS ENUM ('ADMIN', 'LIBRARIAN', 'READER');
-
 CREATE TABLE application.users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(127) UNIQUE NOT NULL,
@@ -9,6 +7,3 @@ CREATE TABLE application.users (
     status VARCHAR(31) NOT NULL DEFAULT 'ACTIVE',
     fullname VARCHAR(127)
 );
-
-INSERT INTO application.users (username, password, email, role, status, fullname)
-    VALUES ('gmorikawa', '$2a$10$D2d9ikFdcpnQSr3xTQTAhuzvAIxsOcn1f9hFJpnVsBn84YI.j5GWG', 'gabriel.morikawa@live.com', 'ADMIN', 'ACTIVE', 'Gabriel Morikawa');

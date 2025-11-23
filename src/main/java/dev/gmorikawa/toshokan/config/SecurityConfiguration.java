@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                         (request) -> request
                                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                                 .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/configuration/admin").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
