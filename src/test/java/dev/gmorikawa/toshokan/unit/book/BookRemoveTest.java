@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.document.book.Book;
+import dev.gmorikawa.toshokan.domain.document.book.enumerator.BookType;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
@@ -19,11 +20,13 @@ public class BookRemoveTest extends BookTestEnvironment {
         Book book = new Book();
         book.setTitle("Clean Code");
         book.setSummary("A Handbook of Agile Software Craftsmanship");
+        book.setType(BookType.NON_FICTION);
         Book savedBook = service.create(admin, book);
 
         assertThat(savedBook).isNotNull();
         assertThat(savedBook.getTitle()).isEqualTo(book.getTitle());
         assertThat(savedBook.getSummary()).isEqualTo(book.getSummary());
+        assertThat(savedBook.getType()).isEqualTo(book.getType());
 
         boolean removed = service.remove(admin, savedBook.getId());
         assertThat(removed).isTrue();
