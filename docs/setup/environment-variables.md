@@ -3,6 +3,8 @@
 Before starting the application, or even running first migrations, there are some environment variables that should be set in a `.env`. The following is an example of the variables:
 
 ```conf
+SERVER_PORT=
+
 DATABASE_URI=
 DATABASE_USERNAME=
 DATABASE_PASSWORD=
@@ -23,6 +25,12 @@ MINIO_ACCESS_KEY=
 MINIO_SECRET_KEY=
 MINIO_BUCKET=
 ```
+
+## SERVER_PORT
+
+__Optional__.
+
+Defines the port in which the application will be served. Default value is `8080`.
 
 ## DATABASE_URI
 
