@@ -29,12 +29,12 @@
 #   MVNW_VERBOSE - true: enable verbose log; debug: trace the mvnw script; others: silence the output
 # ----------------------------------------------------------------------------
 
-if [ -e .env ]
-then
-  set -a && . .env && set +a
-else
-  echo "No .env file found, please create one."
-fi
+# if [ -e .env ]
+# then
+#   set -a && . .env && set +a
+# else
+#   echo "No .env file found, please create one."
+# fi
 
 set -euf
 [ "${MVNW_VERBOSE-}" != debug ] || set -x
