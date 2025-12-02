@@ -20,7 +20,7 @@ import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserService;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
-@RestController
+@RestController("api.user")
 @RequestMapping(path = "api/users")
 public class UserController {
 

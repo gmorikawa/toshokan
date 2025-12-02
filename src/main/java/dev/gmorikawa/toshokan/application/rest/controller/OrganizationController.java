@@ -19,7 +19,7 @@ import dev.gmorikawa.toshokan.domain.organization.OrganizationService;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
-@RestController
+@RestController("api.organization")
 @RequestMapping("api/organizations")
 public class OrganizationController {
     

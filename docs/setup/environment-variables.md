@@ -16,6 +16,8 @@ JWT_SUBJECT=
 
 STORAGE_TYPE=
 
+FLYWAY_ENABLED=
+
 LOCAL_STORAGE_ROOT_DIRECTORY=
 
 MINIO_ENDPOINT=
@@ -67,6 +69,12 @@ __Required__.
 __Required__.
 
 The possible values are: local and minio.
+
+## FLYWAY_ENABLED
+
+__Optional__
+
+Allow flyway to run on application startup. Default value is `false`.
 
 ## LOCAL_STORAGE_ROOT_DIRECTORY
 

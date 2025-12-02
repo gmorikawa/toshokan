@@ -23,7 +23,7 @@ spring:
             max-file-size: 100MB
             max-request-size: 100MB
     flyway:
-        enabled: false
+        enabled: ${FLYWAY_ENABLED:false}
         locations: classpath:db/migration/postgres
         validate-on-migrate: true
         schemas:
