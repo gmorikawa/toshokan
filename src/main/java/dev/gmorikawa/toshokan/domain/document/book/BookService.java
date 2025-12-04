@@ -65,6 +65,7 @@ public class BookService {
         Book book = result.get();
 
         book.setTitle(entity.getTitle());
+        book.setSubtitle(entity.getSubtitle());
         book.setAuthors(entity.getAuthors());
         book.setSummary(entity.getSummary());
         book.setCategory(entity.getCategory());

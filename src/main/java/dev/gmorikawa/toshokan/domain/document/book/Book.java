@@ -4,6 +4,7 @@ import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.document.book.enumerator.BookType;
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,6 +16,9 @@ import jakarta.persistence.Table;
 @Table(name = "books")
 public class Book extends Document {
 
+    @Column(length = 225, nullable = true)
+    private String subtitle;
+
     @JoinColumn(name = "category_id")
     @ManyToOne
     private Category category;
@@ -25,6 +29,14 @@ public class Book extends Document {
 
     @Enumerated(EnumType.STRING)
     private BookType type;
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 
     public Category getCategory() {
         return category;
