@@ -70,6 +70,7 @@ public class BookService {
         book.setSummary(entity.getSummary());
         book.setCategory(entity.getCategory());
         book.setPublisher(entity.getPublisher());
+        book.setLanguage(entity.getLanguage());
         book.setTopics(entity.getTopics());
         book.setType(entity.getType());
 
