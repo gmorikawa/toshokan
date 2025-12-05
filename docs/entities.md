@@ -73,15 +73,15 @@
 * _description_: __varchar(2047)__;
 * _publishing\_year_: __integer__;
 
-### Collection
+### Bundle
 
 * _id_: __primary key, UUID, not null__;
 * _title_: __not null, varchar(127), unique__;
 * _description_: __varchar(4095)__;
 
-### CollectionDocument
+### BundleDocument
 
-* _collection_: __Collection, foreign key, UUID, not null__;
+* _collection_: __Bundle, foreign key, UUID, not null__;
 * _document_: __Document, foreign key, UUID, not null__;
 
 ### Category

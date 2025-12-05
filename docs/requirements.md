@@ -32,10 +32,10 @@
     1. Full access to all system features, configuration, and data.
     2. Cannot be deleted.
 2. __Librarian__:
-    1. Can create and modify documents, upload files, and manage collections.
+    1. Can create and modify documents, upload files, and manage bundles.
     2. Cannot modify administrative configuration settings.
 3. __Reader__:
-    1. Can view all public documents and public collections.
+    1. Can view all public documents and public bundles.
     2. Can only modify their own user-related data (profile, notes, personal lists).
 4. Role hierarchy is cumulative:
     _admin_ > _librarian_ > _reader_ (each role inherits the permissions of the lower role).
@@ -81,13 +81,13 @@
 1. Reasearch papers contains _keywords_. They differ from document's topis because it can contain very specific terms to the paper;
 2. Each research paper may have one _organization_ related to it;
 
-## Document Collections
+## Document Bundles
 
-1. _Admin_ and _librarians_ can create document collections giving a __title__ and a __description__ to it.
-2. There are no limits of how many documents a collection can have.
-3. Duplicates of documents are not allowed in one collection, but the same document can be present in more than one collection.
+1. _Admin_ and _librarians_ can create document bundles giving a __title__ and a __description__ to it.
+2. There are no limits of how many documents a bundle can have.
+3. Duplicates of documents are not allowed in one bundle, but the same document can be present in more than one bundle.
 4. Collection's title are unique in the system.
-5. Collections are visible to all users.
+5. Bundles are visible to all users.
 
 ## Shelves and Memo
 
