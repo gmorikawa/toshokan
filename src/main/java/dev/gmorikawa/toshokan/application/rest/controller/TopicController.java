@@ -31,15 +31,24 @@ public class TopicController {
 
     @GetMapping()
     public List<Topic> getAll(
+        @RequestParam(required = false) String query,
         @RequestParam(required = false, defaultValue = "0") Integer page,
         @RequestParam(required = false, defaultValue = "0") Integer size
     ) {
         if (page == 0 && size == 0) {
-            return service.getAll();
+            if (query == null) {
+                return service.getAll();
+            } else {
+                return service.searchByName(query);
+            }
         }
 
         Pagination pagination = new Pagination(page, size);
-        return service.getAll(pagination);
+        if (query != null && !query.isEmpty()) {
+            return service.searchByName(query, pagination);
+        } else {
+            return service.getAll(pagination);
+        }
     }
 
     @GetMapping("/count")

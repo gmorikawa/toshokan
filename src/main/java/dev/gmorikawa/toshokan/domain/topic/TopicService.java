@@ -21,11 +21,22 @@ public class TopicService {
     private final TopicRepository repository;
 
     public TopicService(
-            Authorization authorization,
-            TopicRepository repository
+        Authorization authorization,
+        TopicRepository repository
     ) {
         this.authorization = authorization;
         this.repository = repository;
+    }
+
+    public List<Topic> searchByName(String name, Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Topic> page = repository.searchByName(name, pageable);
+
+        return page.getContent();
+    }
+
+    public List<Topic> searchByName(String name) {
+        return repository.searchByName(name);
     }
 
     public List<Topic> getAll(Pagination pagination) {

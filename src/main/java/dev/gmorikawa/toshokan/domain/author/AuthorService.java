@@ -28,6 +28,17 @@ public class AuthorService {
         this.repository = repository;
     }
 
+    public List<Author> searchByFullname(String partialFullname) {
+        return repository.searchByFullname(partialFullname);
+    }
+
+    public List<Author> searchByFullname(String partialFullname, Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Author> page = repository.searchByFullname(partialFullname, pageable);
+
+        return page.getContent();
+    }
+
     public List<Author> getAll(Pagination pagination) {
         Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
         Page<Author> page = repository.findAll(pageable);
