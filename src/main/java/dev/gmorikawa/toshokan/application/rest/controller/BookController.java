@@ -41,14 +41,24 @@ public class BookController {
 
     @GetMapping()
     public List<Book> getAll(
+        @RequestParam(required = false) String query,
         @RequestParam(required = false, defaultValue = "0") Integer page,
         @RequestParam(required = false, defaultValue = "0") Integer size
     ) {
         if (page == 0 && size == 0) {
-            return service.getAll();
+            if (query != null && !query.isEmpty()) {
+                return service.searchByTitle(query);
+            } else {
+                return service.getAll();
+            }
         }
+
         Pagination pagination = new Pagination(page, size);
-        return service.getAll(pagination);
+        if (query != null && !query.isEmpty()) {
+            return service.searchByTitle(query, pagination);
+        } else {
+            return service.getAll(pagination);
+        }
     }
 
     @GetMapping("/count")

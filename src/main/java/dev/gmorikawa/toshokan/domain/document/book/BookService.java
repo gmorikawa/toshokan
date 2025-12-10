@@ -28,6 +28,16 @@ public class BookService {
         this.repository = repository;
     }
 
+    public List<Book> searchByTitle(String query, Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<Book> page = repository.searchByTitle(query, pageable);
+        return page.getContent();
+    }
+
+    public List<Book> searchByTitle(String query) {
+        return repository.searchByTitle(query);
+    }
+
     public List<Book> getAll(Pagination pagination) {
         Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
         Page<Book> page = repository.findAll(pageable);

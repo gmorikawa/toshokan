@@ -28,6 +28,16 @@ public class ResearchPaperService {
         this.repository = repository;
     }
 
+    public List<ResearchPaper> searchByTitle(String query, Pagination pagination) {
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Page<ResearchPaper> page = repository.searchByTitle(query, pageable);
+        return page.getContent();
+    }
+
+    public List<ResearchPaper> searchByTitle(String query) {
+        return repository.searchByTitle(query);
+    }
+
     public List<ResearchPaper> getAll(Pagination pagination) {
         Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
         Page<ResearchPaper> page = repository.findAll(pageable);
