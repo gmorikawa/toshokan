@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.UserSession;
 
 
 @RestController
@@ -22,7 +23,7 @@ public class AuthenticationController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<TokenCredential> login(@RequestBody Credential entity) {
+    public ResponseEntity<UserSession> login(@RequestBody Credential entity) {
         return ResponseEntity.ok(service.login(entity));
     }
     

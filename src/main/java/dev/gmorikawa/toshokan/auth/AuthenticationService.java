@@ -4,8 +4,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import dev.gmorikawa.toshokan.auth.exception.InvalidCredentialsException;
+import dev.gmorikawa.toshokan.domain.user.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserRepository;
+import dev.gmorikawa.toshokan.domain.user.UserSession;
 
 @Service
 public class AuthenticationService {
@@ -20,19 +23,26 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public TokenCredential login(Credential credentials) {
+    public UserSession login(Credential credentials) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword())
         );
 
-        User user = repository.findByUsername(credentials.getUsername()).orElseThrow();
+        User user = repository
+            .findByUsername(credentials.getUsername())
+            .orElseThrow(() -> new InvalidCredentialsException());
+
+        LoggedUser loggedUser = new LoggedUser(
+            user.getId(),
+            user.getUsername(),
+            user.getEmail(),
+            user.getRole(),
+            user.getStatus(),
+            user.getFullname()
+        );
 
         String token = jwtService.generateToken(user);
 
-        TokenCredential tokenCredential = new TokenCredential();
-
-        tokenCredential.setAccessToken(token);
-
-        return tokenCredential;
+        return new UserSession(loggedUser, token);
     }
 }

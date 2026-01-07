@@ -11,7 +11,7 @@ import dev.gmorikawa.toshokan.application.web.auth.AuthorizationCookie;
 import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.auth.AuthenticationService;
 import dev.gmorikawa.toshokan.auth.Credential;
-import dev.gmorikawa.toshokan.auth.TokenCredential;
+import dev.gmorikawa.toshokan.domain.user.UserSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -45,8 +45,8 @@ public class AuthenticationController {
         HttpServletRequest request,
         HttpServletResponse response
     ) {
-        TokenCredential tokenCredential = service.login(credential);
-        response.addCookie(new AuthorizationCookie(tokenCredential.getAccessToken()));
+        UserSession session = service.login(credential);
+        response.addCookie(new AuthorizationCookie(session.getToken()));
 
         return "redirect:/app/users/list";
     }
