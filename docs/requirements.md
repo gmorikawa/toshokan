@@ -1,6 +1,8 @@
 # Requirements
 
-## Autorization and Authentication
+## Functional Requirements
+
+### Autorization and Authentication
 
 1. There are three roles for users in the system: the _admin_, the _librarian_, and the _reader_.
 2. The _admin_ has full permissions while the _reader_ can only access content without doing modifications. The _librarian_ can do some modifications in data.
@@ -14,7 +16,7 @@
 7. If a token is expired the user will issue a new valid access token with a refresh token.
 8. If a user is blocked, any active access or refresh tokens must be revoked immediately.
 
-## User Registration and Account Management
+### User Registration and Account Management
 
 1. The _admin_ user:
     1. Is the first account in the system.
@@ -26,7 +28,7 @@
 4. _Admin_ can block or reactivate user accounts.
 5. Blocking a user prevents system access but does not remove their data.
 
-## Role Permissions
+### Role Permissions
 
 1. __Admin__:
     1. Full access to all system features, configuration, and data.
@@ -40,7 +42,7 @@
 4. Role hierarchy is cumulative:
     _admin_ > _librarian_ > _reader_ (each role inherits the permissions of the lower role).
 
-## File Storage
+### File Storage
 
 1. The storage is a separated service which provides a interface for the available actions.
 2. The maximum upload size by default is 50mb per file. It is configurable by _admin_.
@@ -48,7 +50,7 @@
 4. _Admin_ and _librarians_ may upload and download files; _readers_ can only download them.
 5. The storage system does not enforce directory structures; files are identified by generated keys.
 
-## Documents Management
+### Documents Management
 
 1. A document represents any written content: books, whitepapers, manuals, etc.
 2. Documents can be created and edited by _admin_ and _librarians_.
@@ -59,7 +61,7 @@
 7. Each document may have none or many topics that represents more specific subjects covered in the document.
 8. Each document may have one or many _authors_ related to it;
 
-## Books Registration
+### Books Registration
 
 1. If different versions exists, for example, in another language, it is considered a different book;
 2. The same applies if the book is reprinted in another publisher, it will be considered a different book;
@@ -69,19 +71,19 @@
 4. Each book may have one _publisher_ related to it;
 5. Each book should have a __category__ related to it. In fiction books, subjects may be interpreted as __genre__;
 
-## Whitepapers Registration
+### Whitepapers Registration
 
 1. Each whitepaper may have one _organization_ related to it;
 2. Organizations are classified in:
     1. Company;
     2. University;
 
-## Research Papers Registration
+### Research Papers Registration
 
 1. Reasearch papers contains _keywords_. They differ from document's topis because it can contain very specific terms to the paper;
 2. Each research paper may have one _organization_ related to it;
 
-## Document Bundles
+### Document Bundles
 
 1. _Admin_ and _librarians_ can create document bundles giving a __title__ and a __description__ to it.
 2. There are no limits of how many documents a bundle can have.
@@ -89,7 +91,7 @@
 4. Collection's title are unique in the system.
 5. Bundles are visible to all users.
 
-## Shelves and Memo
+### Shelves and Memo
 
 1. Shelves and Memo are private to each user;
 2. All users can have their own favorites and document memos;
