@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.gmorikawa.toshokan.application.rest.dto.UserWithoutPasswordDTO;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserService;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.user")
@@ -55,36 +56,36 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserWithoutPasswordDTO getById(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        User user = service.getById(client, id);
+        User user = service.getById(loggedUser, id);
         return user != null ? new UserWithoutPasswordDTO(user) : null;
     }
 
     @PostMapping()
     public UserWithoutPasswordDTO create(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody User user
     ) {
-        return new UserWithoutPasswordDTO(service.create(client, user));
+        return new UserWithoutPasswordDTO(service.create(loggedUser, user));
     }
 
     @PatchMapping("/{id}")
     public UserWithoutPasswordDTO update(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody User user
     ) {
-        return new UserWithoutPasswordDTO(service.update(client, id, user));
+        return new UserWithoutPasswordDTO(service.update(loggedUser, id, user));
     }
 
     @DeleteMapping("/{id}")
     public boolean remove(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        return service.remove(client, id);
+        return service.remove(loggedUser, id);
     }
 
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.topic.Topic;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
@@ -14,7 +14,7 @@ public class TopicUpdateTest extends TopicTestEnvironment {
     @Test
     public void testUpdateTopic() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         Topic topic = new Topic();
         topic.setName("Crytography");

@@ -1,7 +1,11 @@
-package dev.gmorikawa.toshokan.domain.user;
+package dev.gmorikawa.toshokan.domain.user.entity;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserStatus;
 
@@ -30,6 +34,15 @@ public class LoggedUser {
         this.fullname = fullname;
     }
 
+    public LoggedUser(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.role = user.getRole();
+        this.status = user.getStatus();
+        this.fullname = user.getFullname();
+    }
+
     public UUID getId() {
         return id;
     }
@@ -52,6 +65,16 @@ public class LoggedUser {
 
     public String getFullname() {
         return fullname;
+    }
+
+    public boolean hasRole(UserRole ...roles) {
+        Set<UserRole> roleSet = new HashSet<>();
+        roleSet.addAll(Arrays.asList(roles));
+        return roleSet.contains(getRole());
+    }
+
+    public boolean isUserEqual(User user) {
+        return this.id.equals(user.getId());
     }
 
 }

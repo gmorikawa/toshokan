@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.gmorikawa.toshokan.domain.category.Category;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
@@ -16,7 +16,7 @@ public class CategoryUpdateTest extends CategoryTestEnvironment{
     @Test
     public void testUpdateCategory() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         Category category = new Category();
         category.setName("Computer Science");
@@ -38,7 +38,7 @@ public class CategoryUpdateTest extends CategoryTestEnvironment{
     // @Test
     // public void testUpdateDuplicatedNameFail() {
     //     // Mock a admin user that will handle this action
-    //     User admin = UserFactory.buildAdmin();
+    //     LoggedUser admin = UserFactory.buildAdmin();
 
     //     Category category1 = new Category();
     //     category1.setName("Economics");

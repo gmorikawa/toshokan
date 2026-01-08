@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.auth;
+package dev.gmorikawa.toshokan.domain.auth;
 
 import java.io.IOException;
 
@@ -12,6 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserService;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -87,7 +88,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
 
-            request.setAttribute("user", user);
+            request.setAttribute("loggedUser", new LoggedUser(user));
         }
 
         filterChain.doFilter(request, response);

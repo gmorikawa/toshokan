@@ -1,14 +1,15 @@
-package dev.gmorikawa.toshokan.auth;
+package dev.gmorikawa.toshokan.domain.auth;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.exception.InvalidCredentialsException;
-import dev.gmorikawa.toshokan.domain.user.LoggedUser;
+import dev.gmorikawa.toshokan.domain.auth.entity.Credential;
+import dev.gmorikawa.toshokan.domain.auth.exception.InvalidCredentialsException;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserRepository;
-import dev.gmorikawa.toshokan.domain.user.UserSession;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.domain.user.entity.UserSession;
 
 @Service
 public class AuthenticationService {

@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.document.book.Book;
 import dev.gmorikawa.toshokan.domain.document.book.enumerator.BookType;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
@@ -15,7 +15,7 @@ public class BookRemoveTest extends BookTestEnvironment {
     @Test
     public void testRemoveBook() {
         // Mock an admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         Book book = new Book();
         book.setTitle("Clean Code");

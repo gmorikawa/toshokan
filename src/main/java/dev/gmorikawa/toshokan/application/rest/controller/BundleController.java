@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.bundle.Bundle;
 import dev.gmorikawa.toshokan.domain.bundle.BundleService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.bundle")
@@ -55,26 +55,26 @@ public class BundleController {
 
     @PostMapping()
     public Bundle create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Bundle bundle
     ) {
-        return service.create(user, bundle);
+        return service.create(loggedUser, bundle);
     }
 
     @PatchMapping("/{id}")
     public Bundle update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Bundle bundle
     ) {
-        return service.update(user, id, bundle);
+        return service.update(loggedUser, id, bundle);
     }
 
     @DeleteMapping("/{id}")
     public void remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
     }
 }

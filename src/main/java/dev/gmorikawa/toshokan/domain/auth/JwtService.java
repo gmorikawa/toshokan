@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.auth;
+package dev.gmorikawa.toshokan.domain.auth;
 
 import java.util.Date;
 

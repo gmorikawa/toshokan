@@ -1,14 +1,11 @@
-package dev.gmorikawa.toshokan.domain.user;
+package dev.gmorikawa.toshokan.domain.user.entity;
 
 public class UserSession {
 
     private final LoggedUser loggedUser;
     private final String token;
 
-    public UserSession(
-            LoggedUser loggedUser,
-            String token
-    ) {
+    public UserSession(LoggedUser loggedUser, String token) {
         this.loggedUser = loggedUser;
         this.token = token;
     }

@@ -12,7 +12,7 @@ import dev.gmorikawa.toshokan.domain.document.Document;
 import dev.gmorikawa.toshokan.domain.file.File;
 import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.file.enumerator.FileState;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 
 @Service
 public class DocumentFileService {
@@ -37,7 +37,7 @@ public class DocumentFileService {
         return fileService.download(fileId);
     }
 
-    public DocumentFile create(User user, Document document, MultipartFile binary, String version, String description, Integer publishingYear) {
+    public DocumentFile create(LoggedUser loggedUser, Document document, MultipartFile binary, String version, String description, Integer publishingYear) {
         File file = fileService.upload(
             fileService.create(binary, document.getFileDirectory()).getId(),
             binary

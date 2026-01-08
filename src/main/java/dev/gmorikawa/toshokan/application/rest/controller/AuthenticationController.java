@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.auth;
+package dev.gmorikawa.toshokan.application.rest.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.domain.user.UserSession;
+import dev.gmorikawa.toshokan.domain.auth.AuthenticationService;
+import dev.gmorikawa.toshokan.domain.auth.entity.Credential;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.domain.user.entity.UserSession;
 
 
 @RestController
@@ -28,9 +30,9 @@ public class AuthenticationController {
     }
     
     @GetMapping("/logged-user")
-    public User getLoggedUser(
-        @RequestAttribute User user
+    public LoggedUser getLoggedUser(
+        @RequestAttribute LoggedUser loggedUser
     ) {
-        return user;
+        return loggedUser;
     }
 }

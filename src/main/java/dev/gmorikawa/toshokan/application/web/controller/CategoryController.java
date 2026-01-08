@@ -17,7 +17,7 @@ import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.application.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.category.CategoryService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -70,32 +70,32 @@ public class CategoryController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Category category
     ) {
-        service.create(user, category);
+        service.create(loggedUser, category);
 
         return "redirect:/app/categories/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Category category
     ) {
-        service.update(user, id, category);
+        service.update(loggedUser, id, category);
 
         return "redirect:/app/categories/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Category category
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/categories/list";
     }

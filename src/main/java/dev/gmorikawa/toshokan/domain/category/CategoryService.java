@@ -9,9 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.Authorization;
+import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -52,8 +52,8 @@ public class CategoryService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Category create(User user, Category entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Category create(LoggedUser loggedUser, Category entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         if (!isNameAvailable(entity.getName())) {
             throw new CategoryNameNotAvailableException();
@@ -62,8 +62,8 @@ public class CategoryService {
         return repository.save(entity);
     }
 
-    public Category update(User user, UUID id, Category entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Category update(LoggedUser loggedUser, UUID id, Category entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         if (!isNameAvailable(entity.getName(), id)) {
             throw new CategoryNameNotAvailableException();
@@ -82,8 +82,8 @@ public class CategoryService {
         return repository.save(category);
     }
 
-    public void remove(User user, UUID id) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public void remove(LoggedUser loggedUser, UUID id) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Category> category = repository.findById(id);
 

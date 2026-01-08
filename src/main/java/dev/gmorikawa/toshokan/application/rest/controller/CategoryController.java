@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.category.CategoryService;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.category")
@@ -59,27 +59,27 @@ public class CategoryController {
 
     @PostMapping()
     public Category create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Category category
     ) throws CategoryNameNotAvailableException {
-        return service.create(user, category);
+        return service.create(loggedUser, category);
     }
 
     @PatchMapping("/{id}")
     public Category update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Category category
     ) throws CategoryNameNotAvailableException {
-        return service.update(user, id, category);
+        return service.update(loggedUser, id, category);
     }
 
     @DeleteMapping("/{id}")
     public void remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
     }
 
 }

@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.Authorization;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -62,14 +62,14 @@ public class AuthorService {
         return repository.findByFullname(fullname).orElse(null);
     }
 
-    public Author create(User user, Author entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Author create(LoggedUser loggedUser, Author entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         return repository.save(entity);
     }
 
-    public Author update(User user, UUID id, Author entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Author update(LoggedUser loggedUser, UUID id, Author entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Author> result = repository.findById(id);
 
@@ -85,8 +85,8 @@ public class AuthorService {
         return repository.save(author);
     }
 
-    public void remove(User user, UUID id) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public void remove(LoggedUser loggedUser, UUID id) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Author> author = repository.findById(id);
 

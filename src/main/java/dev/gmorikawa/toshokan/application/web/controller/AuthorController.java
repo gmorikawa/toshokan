@@ -17,7 +17,7 @@ import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.application.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -59,7 +59,7 @@ public class AuthorController {
 
     @GetMapping("/{id}/edit")
     public String update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         Model model
     ) {
@@ -74,32 +74,32 @@ public class AuthorController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Author author
     ) {
-        service.create(user, author);
+        service.create(loggedUser, author);
 
         return "redirect:/app/authors/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Author author,
         @PathVariable UUID id
     ) {
-        service.update(user, id, author);
+        service.update(loggedUser, id, author);
 
         return "redirect:/app/authors/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Author author,
         @PathVariable UUID id
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/authors/list";
     }

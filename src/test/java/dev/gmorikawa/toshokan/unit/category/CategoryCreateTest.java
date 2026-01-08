@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.gmorikawa.toshokan.domain.category.Category;
 import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
@@ -19,7 +19,7 @@ public class CategoryCreateTest extends CategoryTestEnvironment {
     @Test
     public void testCreateCategory() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         // Create a new category and persist it in the database
         Category category = new Category();
@@ -36,7 +36,7 @@ public class CategoryCreateTest extends CategoryTestEnvironment {
     @Test
     public void testCreateDuplicatedNameFail() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         String name = "Computer Science";
         Category category = new Category();

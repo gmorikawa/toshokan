@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.author")
@@ -63,26 +63,26 @@ public class AuthorController {
 
     @PostMapping()
     public Author create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Author author
     ) {
-        return service.create(user, author);
+        return service.create(loggedUser, author);
     }
 
     @PatchMapping("/{id}")
     public Author update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Author author
     ) {
-        return service.update(user, id, author);
+        return service.update(loggedUser, id, author);
     }
 
     @DeleteMapping("/{id}")
     public void remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
     }
 }

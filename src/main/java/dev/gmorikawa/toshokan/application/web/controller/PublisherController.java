@@ -17,7 +17,7 @@ import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.application.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -70,32 +70,32 @@ public class PublisherController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Publisher publisher
     ) {
-        service.create(user, publisher);
+        service.create(loggedUser, publisher);
 
         return "redirect:/app/publishers/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Publisher publisher
     ) {
-        service.update(user, id, publisher);
+        service.update(loggedUser, id, publisher);
 
         return "redirect:/app/publishers/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Publisher publisher
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/publishers/list";
     }

@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.Authorization;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -57,14 +57,14 @@ public class WhitepaperService {
         return repository.findById(id).orElse(null);
     }
 
-    public Whitepaper create(User user, Whitepaper entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Whitepaper create(LoggedUser loggedUser, Whitepaper entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         return repository.save(entity);
     }
 
-    public Whitepaper update(User user, UUID id, Whitepaper entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Whitepaper update(LoggedUser loggedUser, UUID id, Whitepaper entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Whitepaper> result = repository.findById(id);
 
@@ -84,8 +84,8 @@ public class WhitepaperService {
         return repository.save(whitepaper);
     }
 
-    public boolean remove(User user, UUID id) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public boolean remove(LoggedUser loggedUser, UUID id) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Whitepaper> whitepaper = repository.findById(id);
 

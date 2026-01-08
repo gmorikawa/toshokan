@@ -17,6 +17,7 @@ import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.application.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.user.User;
 import dev.gmorikawa.toshokan.domain.user.UserService;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -58,11 +59,11 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     public String update(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         Model model
     ) {
-        User user = service.getById(client, id);
+        User user = service.getById(loggedUser, id);
 
         model.addAttribute("meta", new Meta("Update User || Toshokan"));
         model.addAttribute("page", new Page("User", "Update"));
@@ -73,32 +74,32 @@ public class UserController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute User user
     ) {
-        service.create(client, user);
+        service.create(loggedUser, user);
 
         return "redirect:/app/users/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute User user
     ) {
-        service.update(client, id, user);
+        service.update(loggedUser, id, user);
 
         return "redirect:/app/users/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute("user") User client,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute User user
     ) {
-        service.remove(client, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/users/list";
     }

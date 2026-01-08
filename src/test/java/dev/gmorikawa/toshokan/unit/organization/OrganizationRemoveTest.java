@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.organization.Organization;
 import dev.gmorikawa.toshokan.domain.organization.enumerator.OrganizationType;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
@@ -15,7 +15,7 @@ public class OrganizationRemoveTest extends OrganizationTestEnvironment {
     @Test
     public void testRemoveOrganization() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         Organization organization = new Organization();
         organization.setName("Google");

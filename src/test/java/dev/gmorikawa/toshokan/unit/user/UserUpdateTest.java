@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserStatus;
 import dev.gmorikawa.toshokan.utils.UserFactory;
@@ -15,7 +16,7 @@ public class UserUpdateTest extends UserTestEnvironment {
     @Test
     public void testUpdateUser() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         // Create a new user and persist it in the database
         User user = new User();
@@ -52,7 +53,7 @@ public class UserUpdateTest extends UserTestEnvironment {
     @Test
     public void testBlockAndReactivateUser() {
         // Mock a admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         // Create a new user and persist it in the database
         User user = new User();

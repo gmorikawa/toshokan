@@ -10,8 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.Authorization;
-import dev.gmorikawa.toshokan.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
+import dev.gmorikawa.toshokan.domain.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.domain.user.exception.AdminRemoveAttemptException;
 import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
@@ -54,16 +55,16 @@ public class UserService {
         return repository.findByUsername(username).orElse(null);
     }
 
-    public User getById(User client, UUID id) {
-        if (client.getRole() == UserRole.READER && client.getId() != id) {
+    public User getById(LoggedUser loggedUser, UUID id) {
+        if (loggedUser.getRole() == UserRole.READER && loggedUser.getId() != id) {
             throw new UnauthorizedActionException();
         }
 
         return repository.findById(id).orElse(null);
     }
 
-    public User create(User client, User entity) {
-        authorization.checkUserRole(client, UserRole.ADMIN);
+    public User create(LoggedUser loggedUser, User entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN);
 
         if (!isEmailIsAvailable(entity.getEmail())) {
             throw new EmailNotAvailableException();
@@ -78,8 +79,8 @@ public class UserService {
         return repository.save(entity);
     }
 
-    public User update(User client, UUID id, User entity) {
-        if (!client.hasRole(UserRole.ADMIN) && !client.isIdEqual(entity)) {
+    public User update(LoggedUser loggedUser, UUID id, User entity) {
+        if (!loggedUser.hasRole(UserRole.ADMIN) && !loggedUser.isUserEqual(entity)) {
             throw new UnauthorizedActionException();
         }
 
@@ -106,8 +107,8 @@ public class UserService {
         return repository.save(user);
     }
 
-    public boolean remove(User client, UUID id) {
-        authorization.checkUserRole(client, UserRole.ADMIN);
+    public boolean remove(LoggedUser loggedUser, UUID id) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN);
 
         Optional<User> user = repository.findById(id);
 

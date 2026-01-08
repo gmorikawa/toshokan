@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import dev.gmorikawa.toshokan.application.web.auth.AuthorizationCookie;
 import dev.gmorikawa.toshokan.application.web.shared.Meta;
-import dev.gmorikawa.toshokan.auth.AuthenticationService;
-import dev.gmorikawa.toshokan.auth.Credential;
-import dev.gmorikawa.toshokan.domain.user.UserSession;
+import dev.gmorikawa.toshokan.domain.auth.AuthenticationService;
+import dev.gmorikawa.toshokan.domain.auth.entity.Credential;
+import dev.gmorikawa.toshokan.domain.user.entity.UserSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

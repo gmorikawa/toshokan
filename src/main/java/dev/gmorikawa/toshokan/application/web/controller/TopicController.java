@@ -17,7 +17,7 @@ import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.application.web.shared.Page;
 import dev.gmorikawa.toshokan.domain.topic.Topic;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -70,32 +70,32 @@ public class TopicController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Topic topic
     ) {
-        service.create(user, topic);
+        service.create(loggedUser, topic);
 
         return "redirect:/app/topics/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Topic topic
     ) {
-        service.update(user, id, topic);
+        service.update(loggedUser, id, topic);
 
         return "redirect:/app/topics/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Topic topic
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/topics/list";
     }

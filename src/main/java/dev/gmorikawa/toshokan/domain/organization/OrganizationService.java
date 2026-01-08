@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.auth.Authorization;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
@@ -51,14 +51,14 @@ public class OrganizationService {
         return repository.findByName(name).orElse(null);
     }
 
-    public Organization create(User user, Organization entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Organization create(LoggedUser loggedUser, Organization entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         return repository.save(entity);
     }
 
-    public Organization update(User user, UUID id, Organization entity) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Organization update(LoggedUser loggedUser, UUID id, Organization entity) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Organization> result = repository.findById(id);
 
@@ -75,8 +75,8 @@ public class OrganizationService {
         return repository.save(organization);
     }
 
-    public Organization remove(User user, UUID id) {
-        authorization.checkUserRole(user, UserRole.ADMIN, UserRole.LIBRARIAN);
+    public Organization remove(LoggedUser loggedUser, UUID id) {
+        authorization.checkUserRole(loggedUser, UserRole.ADMIN, UserRole.LIBRARIAN);
 
         Optional<Organization> organization = repository.findById(id);
 

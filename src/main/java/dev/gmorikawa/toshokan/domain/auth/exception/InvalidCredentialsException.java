@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.auth.exception;
+package dev.gmorikawa.toshokan.domain.auth.exception;
 
 public class InvalidCredentialsException extends RuntimeException {
     public InvalidCredentialsException() {

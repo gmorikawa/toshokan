@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaper;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest
@@ -14,7 +14,7 @@ public class ResearchPaperCreateTest extends ResearchPaperTestEnvironment {
     @Test
     public void testCreateResearchPaper() {
         // Mock an admin user that will handle this action
-        User admin = UserFactory.buildAdmin();
+        LoggedUser admin = UserFactory.buildAdmin();
 
         ResearchPaper paper = new ResearchPaper();
         paper.setTitle("Artificial Intelligence in Healthcare");

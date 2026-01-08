@@ -24,7 +24,7 @@ import dev.gmorikawa.toshokan.domain.document.book.Book;
 import dev.gmorikawa.toshokan.domain.document.book.BookService;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.book")
@@ -73,7 +73,7 @@ public class BookController {
 
     @GetMapping("/{id}/files")
     public List<DocumentFile> getFiles(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
         Book book = service.getById(id);
@@ -100,15 +100,15 @@ public class BookController {
 
     @PostMapping()
     public Book create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Book entity
     ) {
-        return service.create(user, entity);
+        return service.create(loggedUser, entity);
     }
 
     @PostMapping("/{id}/files/upload")
     public DocumentFile upload(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile binary,
         @RequestParam String version,
@@ -116,29 +116,29 @@ public class BookController {
         @RequestParam Integer publishingYear
     ) {
         Book book = service.getById(id);
-        return documentFileService.create(user, book, binary, version, description, publishingYear);
+        return documentFileService.create(loggedUser, book, binary, version, description, publishingYear);
     }
 
     @PatchMapping("/{id}")
     public Book update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Book entity
     ) {
-        return service.update(user, id, entity);
+        return service.update(loggedUser, id, entity);
     }
 
     @DeleteMapping("/{id}")
     public boolean remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        return service.remove(user, id);
+        return service.remove(loggedUser, id);
     }
 
     @DeleteMapping("/{id}/files/{documentFileId}")
     public boolean removeFile(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @PathVariable UUID documentFileId
     ) {

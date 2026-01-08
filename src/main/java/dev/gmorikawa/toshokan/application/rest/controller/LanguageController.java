@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.language.Language;
 import dev.gmorikawa.toshokan.domain.language.LanguageService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.language")
@@ -62,26 +62,26 @@ public class LanguageController {
 
     @PostMapping()
     public Language create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Language language
     ) {
-        return service.create(user, language);
+        return service.create(loggedUser, language);
     }
 
     @PatchMapping("/{id}")
     public Language update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Language language
     ) {
-        return service.update(user, id, language);
+        return service.update(loggedUser, id, language);
     }
 
     @DeleteMapping("/{id}")
     public Language remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        return service.remove(user, id);
+        return service.remove(loggedUser, id);
     }
 }

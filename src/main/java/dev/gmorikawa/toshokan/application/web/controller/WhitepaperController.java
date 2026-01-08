@@ -30,7 +30,7 @@ import dev.gmorikawa.toshokan.domain.file.File;
 import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
@@ -163,39 +163,39 @@ public class WhitepaperController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @ModelAttribute Whitepaper whitepaper
     ) {
-        service.create(user, whitepaper);
+        service.create(loggedUser, whitepaper);
 
         return "redirect:/app/whitepapers/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Whitepaper whitepaper
     ) {
-        service.update(user, id, whitepaper);
+        service.update(loggedUser, id, whitepaper);
 
         return "redirect:/app/whitepapers/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @ModelAttribute Whitepaper whitepaper
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/whitepapers/list";
     }
 
     @PostMapping("/{id}/upload")
     public String upload(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile file,
         @RequestParam String version,
@@ -203,7 +203,7 @@ public class WhitepaperController {
         @RequestParam Integer publishingYear,
         RedirectAttributes redirectAttributes
     ) {
-        documentFileService.create(user, service.getById(id), file, version, description, publishingYear);
+        documentFileService.create(loggedUser, service.getById(id), file, version, description, publishingYear);
 
         return String.format("redirect:/app/whitepapers/%s", id);
     }

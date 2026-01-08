@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.publisher.Publisher;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.publisher")
@@ -62,26 +62,26 @@ public class PublisherController {
 
     @PostMapping()
     public Publisher create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Publisher publisher
     ) {
-        return service.create(user, publisher);
+        return service.create(loggedUser, publisher);
     }
 
     @PatchMapping("/{id}")
     public Publisher update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Publisher publisher
     ) {
-        return service.update(user, id, publisher);
+        return service.update(loggedUser, id, publisher);
     }
 
     @DeleteMapping("/{id}")
     public Publisher remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        return service.remove(user, id);
+        return service.remove(loggedUser, id);
     }
 }

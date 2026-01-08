@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.topic.Topic;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.topic")
@@ -72,26 +72,26 @@ public class TopicController {
 
     @PostMapping()
     public Topic create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody Topic topic
     ) {
-        return service.create(user, topic);
+        return service.create(loggedUser, topic);
     }
 
     @PatchMapping("/{id}")
     public Topic update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody Topic topic
     ) {
-        return service.update(user, id, topic);
+        return service.update(loggedUser, id, topic);
     }
 
     @DeleteMapping("/{id}")
     public Topic remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        return service.remove(user, id);
+        return service.remove(loggedUser, id);
     }
 }

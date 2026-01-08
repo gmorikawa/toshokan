@@ -8,7 +8,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import dev.gmorikawa.toshokan.application.rest.serialization.ExceptionResponseBody;
-import dev.gmorikawa.toshokan.auth.exception.InvalidCredentialsException;
+import dev.gmorikawa.toshokan.domain.auth.exception.InvalidCredentialsException;
 import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
 import dev.gmorikawa.toshokan.domain.user.exception.UsernameNotAvailableException;
 

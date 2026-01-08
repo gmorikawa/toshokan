@@ -24,7 +24,7 @@ import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
 import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaper;
 import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaperService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.researchpaper")
@@ -73,7 +73,7 @@ public class ResearchPaperController {
 
     @GetMapping("/{id}/files")
     public List<DocumentFile> getFiles(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
         ResearchPaper researchPaper = service.getById(id);
@@ -100,15 +100,15 @@ public class ResearchPaperController {
 
     @PostMapping()
     public ResearchPaper create(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @RequestBody ResearchPaper entity
     ) {
-        return service.create(user, entity);
+        return service.create(loggedUser, entity);
     }
 
     @PostMapping("/{id}/files/upload")
     public DocumentFile upload(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile binary,
         @RequestParam String version,
@@ -116,29 +116,29 @@ public class ResearchPaperController {
         @RequestParam Integer publishingYear
     ) {
         ResearchPaper researchPaper = service.getById(id);
-        return documentFileService.create(user, researchPaper, binary, version, description, publishingYear);
+        return documentFileService.create(loggedUser, researchPaper, binary, version, description, publishingYear);
     }
 
     @PatchMapping("/{id}")
     public ResearchPaper update(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestBody ResearchPaper entity
     ) {
-        return service.update(user, id, entity);
+        return service.update(loggedUser, id, entity);
     }
 
     @DeleteMapping("/{id}")
     public boolean remove(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id
     ) {
-        return service.remove(user, id);
+        return service.remove(loggedUser, id);
     }
 
     @DeleteMapping("/{id}/files/{documentFileId}")
     public boolean removeFile(
-        @RequestAttribute User user,
+        @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @PathVariable UUID documentFileId
     ) {

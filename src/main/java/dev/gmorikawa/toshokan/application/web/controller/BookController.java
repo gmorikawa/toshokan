@@ -30,7 +30,7 @@ import dev.gmorikawa.toshokan.domain.file.File;
 import dev.gmorikawa.toshokan.domain.file.FileService;
 import dev.gmorikawa.toshokan.domain.publisher.PublisherService;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
@@ -111,8 +111,8 @@ public class BookController {
 
     @GetMapping("/{id}/file/upload")
     public String upload(
-        @PathVariable UUID id,
-        Model model
+            @PathVariable UUID id,
+            Model model
     ) {
         Book book = service.getById(id);
         model.addAttribute("meta", new Meta("Upload Book || Toshokan"));
@@ -125,31 +125,28 @@ public class BookController {
 
     @GetMapping("/{id}/file/{fileId}/download")
     public void download(
-        @PathVariable UUID id,
-        @PathVariable UUID fileId,
-        HttpServletResponse response
+            @PathVariable UUID id,
+            @PathVariable UUID fileId,
+            HttpServletResponse response
     ) {
         File file = fileService.getById(fileId);
 
         try (
-            InputStream inputStream = fileService.download(fileId);
-            OutputStream outputStream = response.getOutputStream();
-        ) {
+                InputStream inputStream = fileService.download(fileId); OutputStream outputStream = response.getOutputStream();) {
             response.setHeader("Content-Transfer-Encoding", "binary;");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
 
             inputStream.transferTo(outputStream);
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
     @GetMapping("/{id}/file/{fileId}/remove")
     public String removeFile(
-        @PathVariable UUID id,
-        @PathVariable UUID fileId,
-        HttpServletResponse response
+            @PathVariable UUID id,
+            @PathVariable UUID fileId,
+            HttpServletResponse response
     ) {
         documentFileService.remove(fileId);
 
@@ -173,47 +170,47 @@ public class BookController {
 
     @PostMapping("/create")
     public String create(
-        @RequestAttribute User user,
-        @ModelAttribute Book book
+            @RequestAttribute LoggedUser loggedUser,
+            @ModelAttribute Book book
     ) {
-        service.create(user, book);
+        service.create(loggedUser, book);
 
         return "redirect:/app/books/list";
     }
 
     @PostMapping("/{id}/update")
     public String update(
-        @RequestAttribute User user,
-        @PathVariable UUID id,
-        @ModelAttribute Book book
+            @RequestAttribute LoggedUser loggedUser,
+            @PathVariable UUID id,
+            @ModelAttribute Book book
     ) {
-        service.update(user, id, book);
+        service.update(loggedUser, id, book);
 
         return "redirect:/app/books/list";
     }
 
     @GetMapping("/{id}/remove")
     public String remove(
-        @RequestAttribute User user,
-        @PathVariable UUID id,
-        @ModelAttribute Book book
+            @RequestAttribute LoggedUser loggedUser,
+            @PathVariable UUID id,
+            @ModelAttribute Book book
     ) {
-        service.remove(user, id);
+        service.remove(loggedUser, id);
 
         return "redirect:/app/books/list";
     }
 
     @PostMapping("/{id}/file/upload")
     public String upload(
-        @RequestAttribute User user,
-        @PathVariable UUID id,
-        @RequestParam MultipartFile file,
-        @RequestParam String version,
-        @RequestParam String description,
-        @RequestParam Integer publishingYear,
-        RedirectAttributes redirectAttributes
+            @RequestAttribute LoggedUser loggedUser,
+            @PathVariable UUID id,
+            @RequestParam MultipartFile file,
+            @RequestParam String version,
+            @RequestParam String description,
+            @RequestParam Integer publishingYear,
+            RedirectAttributes redirectAttributes
     ) {
-        documentFileService.create(user, service.getById(id), file, version, description, publishingYear);
+        documentFileService.create(loggedUser, service.getById(id), file, version, description, publishingYear);
 
         return String.format("redirect:/app/books/%s", id);
     }
