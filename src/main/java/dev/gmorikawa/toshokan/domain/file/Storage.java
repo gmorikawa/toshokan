@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.infrastructure.storage;
+package dev.gmorikawa.toshokan.domain.file;
 
 import java.io.InputStream;
 

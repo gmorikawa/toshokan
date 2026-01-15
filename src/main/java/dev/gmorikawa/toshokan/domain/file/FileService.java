@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import dev.gmorikawa.toshokan.domain.file.enumerator.FileState;
 import dev.gmorikawa.toshokan.domain.file.exception.FileNotFoundException;
 import dev.gmorikawa.toshokan.domain.file.type.FileTypeService;
-import dev.gmorikawa.toshokan.infrastructure.storage.Storage;
 
 @Service
 public class FileService {

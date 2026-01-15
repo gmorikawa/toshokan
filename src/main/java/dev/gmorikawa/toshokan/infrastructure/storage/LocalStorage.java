@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import dev.gmorikawa.toshokan.domain.file.Storage;
+
 public class LocalStorage implements Storage {
 
     private final String rootDirectory;
