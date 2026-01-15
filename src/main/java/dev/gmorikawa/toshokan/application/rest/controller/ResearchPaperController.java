@@ -111,12 +111,10 @@ public class ResearchPaperController {
         @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile binary,
-        @RequestParam String version,
-        @RequestParam String description,
-        @RequestParam Integer publishingYear
+        @RequestParam String description
     ) {
         ResearchPaper researchPaper = service.getById(id);
-        return documentFileService.create(loggedUser, researchPaper, binary, version, description, publishingYear);
+        return documentFileService.create(loggedUser, researchPaper, binary, description);
     }
 
     @PatchMapping("/{id}")

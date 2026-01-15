@@ -37,7 +37,7 @@ public class DocumentFileService {
         return fileService.download(fileId);
     }
 
-    public DocumentFile create(LoggedUser loggedUser, Document document, MultipartFile binary, String version, String description, Integer publishingYear) {
+    public DocumentFile create(LoggedUser loggedUser, Document document, MultipartFile binary, String description) {
         File file = fileService.upload(
             fileService.create(binary, document.getFileDirectory()).getId(),
             binary

@@ -198,12 +198,10 @@ public class WhitepaperController {
         @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile file,
-        @RequestParam String version,
         @RequestParam String description,
-        @RequestParam Integer publishingYear,
         RedirectAttributes redirectAttributes
     ) {
-        documentFileService.create(loggedUser, service.getById(id), file, version, description, publishingYear);
+        documentFileService.create(loggedUser, service.getById(id), file, description);
 
         return String.format("redirect:/app/whitepapers/%s", id);
     }

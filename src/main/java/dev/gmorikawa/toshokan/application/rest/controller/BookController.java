@@ -111,12 +111,10 @@ public class BookController {
         @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile binary,
-        @RequestParam String version,
-        @RequestParam String description,
-        @RequestParam Integer publishingYear
+        @RequestParam String description
     ) {
         Book book = service.getById(id);
-        return documentFileService.create(loggedUser, book, binary, version, description, publishingYear);
+        return documentFileService.create(loggedUser, book, binary, description);
     }
 
     @PatchMapping("/{id}")

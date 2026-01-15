@@ -111,12 +111,10 @@ public class WhitepaperController {
         @RequestAttribute LoggedUser loggedUser,
         @PathVariable UUID id,
         @RequestParam MultipartFile binary,
-        @RequestParam String version,
-        @RequestParam String description,
-        @RequestParam Integer publishingYear
+        @RequestParam String description
     ) {
         Whitepaper whitepaper = service.getById(id);
-        return documentFileService.create(loggedUser, whitepaper, binary, version, description, publishingYear);
+        return documentFileService.create(loggedUser, whitepaper, binary, description);
     }
 
     @PatchMapping("/{id}")
