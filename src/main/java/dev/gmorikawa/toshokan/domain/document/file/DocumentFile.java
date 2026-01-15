@@ -33,14 +33,8 @@ public class DocumentFile {
     @ManyToOne(fetch = FetchType.EAGER)
     private File file;
 
-    @Column(length = 127)
-    private String version;
-
     @Column(nullable = true, length = 4095)
     private String description;
-
-    @Column(name = "publishing_year", nullable = true)
-    private Integer publishingYear;
 
     public DocumentFile() { }
 
@@ -68,14 +62,6 @@ public class DocumentFile {
         this.file = file;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -84,11 +70,4 @@ public class DocumentFile {
         this.description = description;
     }
 
-    public Integer getPublishingYear() {
-        return publishingYear;
-    }
-
-    public void setPublishingYear(Integer publishingYear) {
-        this.publishingYear = publishingYear;
-    }
 }

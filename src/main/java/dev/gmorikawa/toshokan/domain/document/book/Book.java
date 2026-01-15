@@ -30,6 +30,9 @@ public class Book extends Document {
     @Enumerated(EnumType.STRING)
     private BookType type;
 
+    @Column(length = 127)
+    private String edition;
+
     public String getSubtitle() {
         return subtitle;
     }
@@ -60,6 +63,14 @@ public class Book extends Document {
 
     public void setType(BookType type) {
         this.type = type;
+    }
+
+    public String getEdition() {
+        return edition;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
     }
 
     @Override

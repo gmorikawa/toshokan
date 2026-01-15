@@ -83,6 +83,8 @@ public class BookService {
         book.setLanguage(entity.getLanguage());
         book.setTopics(entity.getTopics());
         book.setType(entity.getType());
+        book.setPublishingYear(entity.getPublishingYear());
+        book.setEdition(entity.getEdition());
 
         return repository.save(book);
     }

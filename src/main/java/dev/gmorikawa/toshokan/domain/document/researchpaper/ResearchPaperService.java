@@ -81,6 +81,7 @@ public class ResearchPaperService {
         researchPaper.setOrganization(entity.getOrganization());
         researchPaper.setLanguage(entity.getLanguage());
         researchPaper.setKeywords(entity.getKeywords());
+        researchPaper.setPublishingYear(entity.getPublishingYear());
 
         return repository.save(researchPaper);
     }

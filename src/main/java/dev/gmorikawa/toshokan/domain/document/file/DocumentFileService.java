@@ -48,9 +48,7 @@ public class DocumentFileService {
 
             documentFile.setDocument(document);
             documentFile.setFile(file);
-            documentFile.setVersion(version);
             documentFile.setDescription(description);
-            documentFile.setPublishingYear(publishingYear);
 
             return repository.save(documentFile);
         } else {

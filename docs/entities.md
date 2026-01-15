@@ -43,6 +43,7 @@
 * _title_: __not null, varchar(127)__;
 * _language_: __Language, foreign key, UUID, not null__;
 * _summary_: __varchar(4095)__;
+* _publishing\_year_: __integer__;
 
 ### Topic
 
@@ -69,9 +70,7 @@
 
 * _document_: __Document, foreign key, UUID, not null__;
 * _file_: __File, foreign key, UUID, not null__;
-* _version_: __not null, varchar(127)__;
 * _description_: __varchar(2047)__;
-* _publishing\_year_: __integer__;
 
 ### Bundle
 
@@ -98,9 +97,10 @@
 ### Book
 
 * _document_: __Document, foreign key, UUID, not null__;
+* _type_: __BookType, not null__;
 * _category_: __Category, foreign key, UUID, not null__;
 * _publisher_: __Publisher, foreign key, UUID__;
-* _type_: __BookType, not null__;
+* _edition_: __varchar(127), not null__;
 
 ### Organization
 

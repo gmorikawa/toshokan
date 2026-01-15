@@ -80,7 +80,7 @@ public class WhitepaperService {
         whitepaper.setTopics(entity.getTopics());
         whitepaper.setLanguage(entity.getLanguage());
         whitepaper.setOrganization(entity.getOrganization());
-
+        whitepaper.setPublishingYear(entity.getPublishingYear());
         return repository.save(whitepaper);
     }
 

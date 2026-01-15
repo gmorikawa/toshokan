@@ -45,6 +45,9 @@ public abstract class Document {
     @ManyToOne
     private Language language;
 
+    @Column(name = "publishing_year", nullable = true)
+    private Integer publishingYear;
+
     @JoinTable(
             name = "document_authors",
             joinColumns = @JoinColumn(name = "document_id", referencedColumnName = "id"),
@@ -96,6 +99,14 @@ public abstract class Document {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public Integer getPublishingYear() {
+        return publishingYear;
+    }
+
+    public void setPublishingYear(Integer publishingYear) {
+        this.publishingYear = publishingYear;
     }
 
     public List<Author> getAuthors() {
