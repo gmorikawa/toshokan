@@ -27,7 +27,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "document")
+@Table(name = "documents")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Document {
 

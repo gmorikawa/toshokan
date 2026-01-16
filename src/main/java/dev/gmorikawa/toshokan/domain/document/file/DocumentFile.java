@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "document_file")
+@Table(name = "document_files")
 public class DocumentFile {
 
     @Id
