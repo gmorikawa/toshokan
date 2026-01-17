@@ -1,6 +1,8 @@
 package dev.gmorikawa.toshokan.domain.user.exception;
 
-public class EmailNotAvailableException extends RuntimeException {
+import dev.gmorikawa.toshokan.shared.exceptions.DomainException;
+
+public class EmailNotAvailableException extends DomainException {
     public EmailNotAvailableException() {
         super("Email is already registered");
     }

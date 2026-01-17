@@ -1,6 +1,8 @@
 package dev.gmorikawa.toshokan.domain.file.exception;
 
-public class FileNotFoundException extends RuntimeException {
+import dev.gmorikawa.toshokan.shared.exceptions.DomainException;
+
+public class FileNotFoundException extends DomainException {
     public FileNotFoundException() {
         super("File with given ID not found.");
     }

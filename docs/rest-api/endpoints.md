@@ -1,4 +1,4 @@
-# REST API Endpoints
+# REST API - Endpoints
 
 ## Table of Contents
 

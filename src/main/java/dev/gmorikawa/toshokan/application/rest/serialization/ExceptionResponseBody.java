@@ -9,25 +9,24 @@ import com.fasterxml.jackson.databind.JsonSerializable;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
+import dev.gmorikawa.toshokan.shared.exceptions.DomainException;
+
 public class ExceptionResponseBody implements JsonSerializable{
     private final int status;
-    private final String message;
+    private final DomainException exception;
 
-    public ExceptionResponseBody(HttpStatus status, String message) {
+    public ExceptionResponseBody(HttpStatus status, DomainException exception) {
         this.status = status.value();
-        this.message = message;
-    }
-
-    public ExceptionResponseBody(HttpStatus status) {
-        this.status = status.value();
-        this.message = "An exception occured";
+        this.exception = exception;
     }
 
     @Override
     public void serialize(JsonGenerator generator, SerializerProvider serializerProvider) throws IOException {
         generator.writeStartObject();
         generator.writeNumberField("status", status);
-        generator.writeStringField("message", message);
+        generator.writeStringField("exception", exception.getClass().getSimpleName());
+        generator.writeStringField("message", exception.getMessage());
+        generator.writeStringField("timestamp", exception.getTimestamp().toString());
         generator.writeEndObject();
     }
 

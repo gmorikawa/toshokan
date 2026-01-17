@@ -1,6 +1,8 @@
 package dev.gmorikawa.toshokan.domain.auth.exception;
 
-public class UnauthorizedActionException extends RuntimeException {
+import dev.gmorikawa.toshokan.shared.exceptions.DomainException;
+
+public class UnauthorizedActionException extends DomainException {
     public UnauthorizedActionException() {
         super("User not authorized to execute action.");
     }

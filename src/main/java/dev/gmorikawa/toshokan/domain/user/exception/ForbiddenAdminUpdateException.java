@@ -1,6 +1,8 @@
 package dev.gmorikawa.toshokan.domain.user.exception;
 
-public class ForbiddenAdminUpdateException extends RuntimeException {
+import dev.gmorikawa.toshokan.shared.exceptions.DomainException;
+
+public class ForbiddenAdminUpdateException extends DomainException {
     public ForbiddenAdminUpdateException(String description) {
         super("Forbidden update on admin: " + description);
     }
