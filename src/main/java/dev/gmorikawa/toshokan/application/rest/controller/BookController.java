@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,10 +90,10 @@ public class BookController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s", documentFile.getFile().getFilename()));
+        headers.add(HttpHeaders.CONTENT_TYPE, documentFile.getFile().getType().getMimeType());
 
         return ResponseEntity.ok()
             .headers(headers)
-            .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .body(resource);
     }
 
