@@ -79,6 +79,14 @@ public class BookController {
         return documentFileService.getFilesByDocument(book);
     }
 
+    @GetMapping("/{id}/files/{documentFileId}")
+    public DocumentFile getFile(
+        @PathVariable UUID id,
+        @PathVariable UUID documentFileId
+    ) {
+        return documentFileService.getById(documentFileId);
+    }
+
     @GetMapping("/{id}/files/{documentFileId}/download")
     public ResponseEntity<InputStreamResource> downloadFile(
         @PathVariable UUID id,
