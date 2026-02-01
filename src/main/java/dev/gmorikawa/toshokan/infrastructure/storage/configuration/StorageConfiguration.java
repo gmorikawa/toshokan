@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.infrastructure.config.storage;
+package dev.gmorikawa.toshokan.infrastructure.storage.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

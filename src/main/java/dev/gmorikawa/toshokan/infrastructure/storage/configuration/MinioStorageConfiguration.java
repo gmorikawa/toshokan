@@ -1,9 +1,9 @@
-package dev.gmorikawa.toshokan.infrastructure.config.storage;
+package dev.gmorikawa.toshokan.infrastructure.storage.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import dev.gmorikawa.toshokan.infrastructure.storage.MinioStorage;
+import dev.gmorikawa.toshokan.infrastructure.storage.core.MinioStorage;
 
 @Configuration
 public class MinioStorageConfiguration {

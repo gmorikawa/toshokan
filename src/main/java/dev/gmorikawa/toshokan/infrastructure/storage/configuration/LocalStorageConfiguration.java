@@ -1,9 +1,9 @@
-package dev.gmorikawa.toshokan.infrastructure.config.storage;
+package dev.gmorikawa.toshokan.infrastructure.storage.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import dev.gmorikawa.toshokan.infrastructure.storage.LocalStorage;
+import dev.gmorikawa.toshokan.infrastructure.storage.core.LocalStorage;
 
 @Configuration
 public class LocalStorageConfiguration {

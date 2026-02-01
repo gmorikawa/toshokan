@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.infrastructure.config.storage;
+package dev.gmorikawa.toshokan.infrastructure.storage.configuration;
 
 public enum StorageType {
     LOCAL("local"),

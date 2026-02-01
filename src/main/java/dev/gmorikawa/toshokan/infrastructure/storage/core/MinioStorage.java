@@ -1,4 +1,4 @@
-package dev.gmorikawa.toshokan.infrastructure.storage;
+package dev.gmorikawa.toshokan.infrastructure.storage.core;
 
 import java.io.IOException;
 import java.io.InputStream;
