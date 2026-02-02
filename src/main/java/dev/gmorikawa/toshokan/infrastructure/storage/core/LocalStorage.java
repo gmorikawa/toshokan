@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import dev.gmorikawa.toshokan.domain.file.Storage;
+import dev.gmorikawa.toshokan.core.file.Storage;
 
 public class LocalStorage implements Storage {
 

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import dev.gmorikawa.toshokan.domain.file.type.FileType;
+import dev.gmorikawa.toshokan.core.file.type.FileType;
 
 @SpringBootTest
 public class FileTypeRemoveTest extends FileTypeTestEnvironment {

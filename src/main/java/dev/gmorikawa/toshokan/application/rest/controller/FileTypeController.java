@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.gmorikawa.toshokan.domain.file.type.FileType;
-import dev.gmorikawa.toshokan.domain.file.type.FileTypeService;
+import dev.gmorikawa.toshokan.core.file.type.FileType;
+import dev.gmorikawa.toshokan.core.file.type.FileTypeService;
 
 @RestController("api.file-type")
 @RequestMapping(path = "api/file-types")

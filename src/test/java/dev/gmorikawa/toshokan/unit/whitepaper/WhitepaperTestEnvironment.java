@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.unit.whitepaper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.gmorikawa.toshokan.domain.document.whitepaper.Whitepaper;
-import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperRepository;
-import dev.gmorikawa.toshokan.domain.document.whitepaper.WhitepaperService;
+import dev.gmorikawa.toshokan.core.document.whitepaper.Whitepaper;
+import dev.gmorikawa.toshokan.core.document.whitepaper.WhitepaperRepository;
+import dev.gmorikawa.toshokan.core.document.whitepaper.WhitepaperService;
 
 public abstract class WhitepaperTestEnvironment {
 

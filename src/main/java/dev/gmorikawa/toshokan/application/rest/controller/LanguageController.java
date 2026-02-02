@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.gmorikawa.toshokan.domain.language.Language;
-import dev.gmorikawa.toshokan.domain.language.LanguageService;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.language.Language;
+import dev.gmorikawa.toshokan.core.language.LanguageService;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.language")

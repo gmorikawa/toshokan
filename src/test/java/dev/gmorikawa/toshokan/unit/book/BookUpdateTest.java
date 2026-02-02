@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import dev.gmorikawa.toshokan.domain.document.book.Book;
-import dev.gmorikawa.toshokan.domain.document.book.enumerator.BookType;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.document.book.Book;
+import dev.gmorikawa.toshokan.core.document.book.enumerator.BookType;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest

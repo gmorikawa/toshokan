@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.gmorikawa.toshokan.domain.document.file.DocumentFile;
-import dev.gmorikawa.toshokan.domain.document.file.DocumentFileService;
-import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaper;
-import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaperService;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.document.file.DocumentFile;
+import dev.gmorikawa.toshokan.core.document.file.DocumentFileService;
+import dev.gmorikawa.toshokan.core.document.researchpaper.ResearchPaper;
+import dev.gmorikawa.toshokan.core.document.researchpaper.ResearchPaperService;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.researchpaper")

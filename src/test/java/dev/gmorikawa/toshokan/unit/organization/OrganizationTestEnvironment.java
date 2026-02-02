@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.unit.organization;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.gmorikawa.toshokan.domain.organization.Organization;
-import dev.gmorikawa.toshokan.domain.organization.OrganizationRepository;
-import dev.gmorikawa.toshokan.domain.organization.OrganizationService;
+import dev.gmorikawa.toshokan.core.organization.Organization;
+import dev.gmorikawa.toshokan.core.organization.OrganizationRepository;
+import dev.gmorikawa.toshokan.core.organization.OrganizationService;
 
 public abstract class OrganizationTestEnvironment {
 

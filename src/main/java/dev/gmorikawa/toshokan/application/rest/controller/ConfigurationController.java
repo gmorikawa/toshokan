@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.gmorikawa.toshokan.domain.user.User;
+import dev.gmorikawa.toshokan.core.user.User;
 import dev.gmorikawa.toshokan.infrastructure.config.ConfigurationService;
 
 @RestController("api.configuration")

@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.unit.researchpaper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaper;
-import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaperRepository;
-import dev.gmorikawa.toshokan.domain.document.researchpaper.ResearchPaperService;
+import dev.gmorikawa.toshokan.core.document.researchpaper.ResearchPaper;
+import dev.gmorikawa.toshokan.core.document.researchpaper.ResearchPaperRepository;
+import dev.gmorikawa.toshokan.core.document.researchpaper.ResearchPaperService;
 
 public abstract class ResearchPaperTestEnvironment {
 

@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import dev.gmorikawa.toshokan.domain.file.Storage;
+import dev.gmorikawa.toshokan.core.file.Storage;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;

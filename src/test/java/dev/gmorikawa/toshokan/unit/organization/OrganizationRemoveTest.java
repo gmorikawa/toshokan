@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import dev.gmorikawa.toshokan.domain.organization.Organization;
-import dev.gmorikawa.toshokan.domain.organization.enumerator.OrganizationType;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.organization.Organization;
+import dev.gmorikawa.toshokan.core.organization.enumerator.OrganizationType;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest

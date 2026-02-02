@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
-import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
-import dev.gmorikawa.toshokan.domain.user.enumerator.UserStatus;
+import dev.gmorikawa.toshokan.core.user.User;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.core.user.enumerator.UserStatus;
 import dev.gmorikawa.toshokan.utils.UserFactory;
 
 @SpringBootTest

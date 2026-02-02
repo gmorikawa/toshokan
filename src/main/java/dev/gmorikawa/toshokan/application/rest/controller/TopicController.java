@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.gmorikawa.toshokan.domain.topic.Topic;
-import dev.gmorikawa.toshokan.domain.topic.TopicQueryFilter;
-import dev.gmorikawa.toshokan.domain.topic.TopicService;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.topic.Topic;
+import dev.gmorikawa.toshokan.core.topic.TopicQueryFilter;
+import dev.gmorikawa.toshokan.core.topic.TopicService;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.topic")

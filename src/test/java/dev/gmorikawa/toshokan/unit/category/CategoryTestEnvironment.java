@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.unit.category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.gmorikawa.toshokan.domain.category.Category;
-import dev.gmorikawa.toshokan.domain.category.CategoryRepository;
-import dev.gmorikawa.toshokan.domain.category.CategoryService;
+import dev.gmorikawa.toshokan.core.category.Category;
+import dev.gmorikawa.toshokan.core.category.CategoryRepository;
+import dev.gmorikawa.toshokan.core.category.CategoryService;
 
 public abstract class CategoryTestEnvironment {
 

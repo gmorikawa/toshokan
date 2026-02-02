@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import dev.gmorikawa.toshokan.application.web.shared.Meta;
 import dev.gmorikawa.toshokan.application.web.shared.Page;
-import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.domain.user.UserService;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.user.User;
+import dev.gmorikawa.toshokan.core.user.UserService;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.PaginationComponent;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 

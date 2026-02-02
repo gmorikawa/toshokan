@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.application.rest.dto;
 
 import java.util.UUID;
 
-import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.domain.user.enumerator.UserRole;
-import dev.gmorikawa.toshokan.domain.user.enumerator.UserStatus;
+import dev.gmorikawa.toshokan.core.user.User;
+import dev.gmorikawa.toshokan.core.user.enumerator.UserRole;
+import dev.gmorikawa.toshokan.core.user.enumerator.UserStatus;
 
 public class UserWithoutPasswordDTO {
     private final UUID id;

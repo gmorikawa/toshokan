@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.application.rest.dto.UserWithoutPasswordDTO;
-import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.domain.user.UserService;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.user.User;
+import dev.gmorikawa.toshokan.core.user.UserService;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.user")

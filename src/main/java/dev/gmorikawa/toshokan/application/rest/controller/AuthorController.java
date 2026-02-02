@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.gmorikawa.toshokan.domain.author.Author;
-import dev.gmorikawa.toshokan.domain.author.AuthorQueryFilter;
-import dev.gmorikawa.toshokan.domain.author.AuthorService;
-import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
+import dev.gmorikawa.toshokan.core.author.Author;
+import dev.gmorikawa.toshokan.core.author.AuthorQueryFilter;
+import dev.gmorikawa.toshokan.core.author.AuthorService;
+import dev.gmorikawa.toshokan.core.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
 
 @RestController("api.author")

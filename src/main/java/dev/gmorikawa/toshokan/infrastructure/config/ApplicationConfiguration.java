@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import dev.gmorikawa.toshokan.domain.user.UserRepository;
+import dev.gmorikawa.toshokan.core.user.UserRepository;
 
 @Configuration
 public class ApplicationConfiguration {

@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.unit.topic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.gmorikawa.toshokan.domain.topic.Topic;
-import dev.gmorikawa.toshokan.domain.topic.TopicRepository;
-import dev.gmorikawa.toshokan.domain.topic.TopicService;
+import dev.gmorikawa.toshokan.core.topic.Topic;
+import dev.gmorikawa.toshokan.core.topic.TopicRepository;
+import dev.gmorikawa.toshokan.core.topic.TopicService;
 
 public abstract class TopicTestEnvironment {
 

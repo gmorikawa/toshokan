@@ -2,9 +2,9 @@ package dev.gmorikawa.toshokan.unit.file.type;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.gmorikawa.toshokan.domain.file.type.FileType;
-import dev.gmorikawa.toshokan.domain.file.type.FileTypeRepository;
-import dev.gmorikawa.toshokan.domain.file.type.FileTypeService;
+import dev.gmorikawa.toshokan.core.file.type.FileType;
+import dev.gmorikawa.toshokan.core.file.type.FileTypeRepository;
+import dev.gmorikawa.toshokan.core.file.type.FileTypeService;
 
 public abstract class FileTypeTestEnvironment {
 

@@ -8,14 +8,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import dev.gmorikawa.toshokan.application.rest.serialization.ExceptionResponseBody;
-import dev.gmorikawa.toshokan.domain.auth.exception.InvalidCredentialsException;
-import dev.gmorikawa.toshokan.domain.auth.exception.UnauthorizedActionException;
-import dev.gmorikawa.toshokan.domain.category.exception.CategoryNameNotAvailableException;
-import dev.gmorikawa.toshokan.domain.file.exception.FileNotFoundException;
-import dev.gmorikawa.toshokan.domain.user.exception.AdminRemoveAttemptException;
-import dev.gmorikawa.toshokan.domain.user.exception.EmailNotAvailableException;
-import dev.gmorikawa.toshokan.domain.user.exception.ForbiddenAdminUpdateException;
-import dev.gmorikawa.toshokan.domain.user.exception.UsernameNotAvailableException;
+import dev.gmorikawa.toshokan.core.auth.exception.InvalidCredentialsException;
+import dev.gmorikawa.toshokan.core.auth.exception.UnauthorizedActionException;
+import dev.gmorikawa.toshokan.core.category.exception.CategoryNameNotAvailableException;
+import dev.gmorikawa.toshokan.core.file.exception.FileNotFoundException;
+import dev.gmorikawa.toshokan.core.user.exception.AdminRemoveAttemptException;
+import dev.gmorikawa.toshokan.core.user.exception.EmailNotAvailableException;
+import dev.gmorikawa.toshokan.core.user.exception.ForbiddenAdminUpdateException;
+import dev.gmorikawa.toshokan.core.user.exception.UsernameNotAvailableException;
 import dev.gmorikawa.toshokan.shared.exceptions.DomainException;
 
 @ControllerAdvice

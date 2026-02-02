@@ -3,8 +3,8 @@ package dev.gmorikawa.toshokan.infrastructure.config;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import dev.gmorikawa.toshokan.domain.user.User;
-import dev.gmorikawa.toshokan.domain.user.UserRepository;
+import dev.gmorikawa.toshokan.core.user.User;
+import dev.gmorikawa.toshokan.core.user.UserRepository;
 
 @Service
 public class ConfigurationService {
