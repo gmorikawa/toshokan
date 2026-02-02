@@ -28,19 +28,22 @@ public class TopicService {
         this.repository = repository;
     }
 
-    public List<Topic> searchByName(String name, Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
-        Page<Topic> page = repository.searchByName(name, pageable);
+    public List<Topic> searchByName(TopicQueryFilter filter, Pagination pagination) {
+        Page<Topic> page = repository
+            .searchByName(
+                filter.getName().getValue(),
+                PageRequest.of(pagination.page - 1, pagination.limit)
+            );
 
         return page.getContent();
     }
 
-    public List<Topic> searchByName(String name) {
-        return repository.searchByName(name);
+    public List<Topic> searchByName(TopicQueryFilter filter) {
+        return repository.searchByName(filter.getName().getValue());
     }
 
     public List<Topic> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<Topic> page = repository.findAll(pageable);
 
         return page.getContent();

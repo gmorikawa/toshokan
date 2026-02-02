@@ -2,18 +2,18 @@ package dev.gmorikawa.toshokan.shared.query;
 
 public class Pagination {
     public final Integer page;
-    public final Integer size;
+    public final Integer limit;
 
-    public Pagination(Integer page, Integer size) {
+    public Pagination(Integer page, Integer limit) {
         this.page = page;
-        this.size = size;
+        this.limit = limit;
     }
 
     public Pagination getPrevious() {
-        return new Pagination(page - 1, size);
+        return new Pagination(page - 1, limit);
     }
 
     public Pagination getNext() {
-        return new Pagination(page + 1, size);
+        return new Pagination(page + 1, limit);
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.author.Author;
+import dev.gmorikawa.toshokan.domain.author.AuthorQueryFilter;
 import dev.gmorikawa.toshokan.domain.author.AuthorService;
 import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
@@ -31,21 +32,21 @@ public class AuthorController {
 
     @GetMapping()
     public List<Author> getAll(
-        @RequestParam(required = false) String query,
-        @RequestParam(required = false, defaultValue = "0") Integer page,
-        @RequestParam(required = false, defaultValue = "0") Integer size
+        @RequestAttribute(required = false) Pagination pagination,
+        @RequestParam(required = false) List<String> fullname
     ) {
-        if (page == 0 && size == 0) {
-            if (query == null) {
+        if (pagination == null) {
+            if (fullname == null) {
                 return service.getAll();
             } else {
-                return service.searchByFullname(query);
+                AuthorQueryFilter filter = new AuthorQueryFilter(fullname);
+                return service.searchByFullname(filter);
             }
         }
 
-        Pagination pagination = new Pagination(page, size);
-        if (query != null && !query.isEmpty()) {
-            return service.searchByFullname(query, pagination);
+        if (fullname != null && !fullname.isEmpty()) {
+            AuthorQueryFilter filter = new AuthorQueryFilter(fullname);
+            return service.searchByFullname(filter, pagination);
         } else {
             return service.getAll(pagination);
         }

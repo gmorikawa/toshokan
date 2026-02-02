@@ -29,7 +29,7 @@ public class ResearchPaperService {
     }
 
     public List<ResearchPaper> searchByTitle(String query, Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<ResearchPaper> page = repository.searchByTitle(query, pageable);
         return page.getContent();
     }
@@ -39,7 +39,7 @@ public class ResearchPaperService {
     }
 
     public List<ResearchPaper> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<ResearchPaper> page = repository.findAll(pageable);
 
         return page.getContent();

@@ -13,6 +13,6 @@ public class PaginationLink {
 
     public String getLink() {
         return basePath
-            .concat(String.format("?page=%d&size=%d", pagination.page, pagination.size));
+            .concat(String.format("?page=%d&size=%d", pagination.page, pagination.limit));
     }
 }

@@ -40,11 +40,10 @@ public class WhitepaperController {
 
     @GetMapping()
     public List<Whitepaper> getAll(
-        @RequestParam(required = false) String query,
-        @RequestParam(required = false, defaultValue = "0") Integer page,
-        @RequestParam(required = false, defaultValue = "0") Integer size
+        @RequestAttribute(required = false) Pagination pagination,
+        @RequestParam(required = false) String query
     ) {
-        if (page == 0 && size == 0) {
+        if (pagination == null) {
             if (query != null && !query.isEmpty()) {
                 return service.searchByTitle(query);
             } else {
@@ -52,7 +51,6 @@ public class WhitepaperController {
             }
         }
 
-        Pagination pagination = new Pagination(page, size);
         if (query != null && !query.isEmpty()) {
             return service.searchByTitle(query, pagination);
         } else {

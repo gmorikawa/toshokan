@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
@@ -29,19 +28,20 @@ public class CategoryService {
         this.repository = repository;
     }
 
+    public List<Category> getAll() {
+        return repository.findAll();
+    }
+
     public List<Category> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
-        Page<Category> page = repository.findAll(pageable);
+        Page<Category> page = repository.findAll(
+            PageRequest.of(pagination.page - 1, pagination.limit)
+        );
         
         return page.getContent();
     }
 
     public Integer countAll() {
         return (int) repository.count();
-    }
-
-    public List<Category> getAll() {
-        return repository.findAll();
     }
 
     public Category getById(UUID id) {

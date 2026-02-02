@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dev.gmorikawa.toshokan.domain.auth.contract.Authorization;
@@ -28,20 +27,26 @@ public class AuthorService {
         this.repository = repository;
     }
 
-    public List<Author> searchByFullname(String partialFullname) {
-        return repository.searchByFullname(partialFullname);
+    public List<Author> searchByFullname(AuthorQueryFilter filter) {
+        return repository
+            .searchByFullname(
+                filter.getFullname().getValue()
+            );
     }
 
-    public List<Author> searchByFullname(String partialFullname, Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
-        Page<Author> page = repository.searchByFullname(partialFullname, pageable);
+    public List<Author> searchByFullname(AuthorQueryFilter filter, Pagination pagination) {
+        Page<Author> page = repository
+            .searchByFullname(
+                filter.getFullname().getValue(),
+                PageRequest.of(pagination.page - 1, pagination.limit)
+            );
 
         return page.getContent();
     }
 
     public List<Author> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
-        Page<Author> page = repository.findAll(pageable);
+        Page<Author> page = repository
+            .findAll(PageRequest.of(pagination.page - 1, pagination.limit));
         
         return page.getContent();
     }

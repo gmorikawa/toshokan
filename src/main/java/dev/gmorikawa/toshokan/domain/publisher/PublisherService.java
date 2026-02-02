@@ -29,7 +29,7 @@ public class PublisherService {
     }
 
     public List<Publisher> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<Publisher> page = repository.findAll(pageable);
         
         return page.getContent();

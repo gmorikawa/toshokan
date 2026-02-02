@@ -29,7 +29,7 @@ public class BookService {
     }
 
     public List<Book> searchByTitle(String query, Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<Book> page = repository.searchByTitle(query, pageable);
         return page.getContent();
     }
@@ -39,7 +39,7 @@ public class BookService {
     }
 
     public List<Book> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<Book> page = repository.findAll(pageable);
 
         return page.getContent();

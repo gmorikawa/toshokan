@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.gmorikawa.toshokan.domain.topic.Topic;
+import dev.gmorikawa.toshokan.domain.topic.TopicQueryFilter;
 import dev.gmorikawa.toshokan.domain.topic.TopicService;
 import dev.gmorikawa.toshokan.domain.user.entity.LoggedUser;
 import dev.gmorikawa.toshokan.shared.query.Pagination;
@@ -31,21 +32,21 @@ public class TopicController {
 
     @GetMapping()
     public List<Topic> getAll(
-        @RequestParam(required = false) String query,
-        @RequestParam(required = false, defaultValue = "0") Integer page,
-        @RequestParam(required = false, defaultValue = "0") Integer size
+        @RequestAttribute(required = false) Pagination pagination,
+        @RequestParam(required = false) List<String> name
     ) {
-        if (page == 0 && size == 0) {
-            if (query == null) {
+        if (pagination == null) {
+            if (name == null) {
                 return service.getAll();
             } else {
-                return service.searchByName(query);
+                TopicQueryFilter filter = new TopicQueryFilter(name);
+                return service.searchByName(filter);
             }
         }
 
-        Pagination pagination = new Pagination(page, size);
-        if (query != null && !query.isEmpty()) {
-            return service.searchByName(query, pagination);
+        if (name != null && !name.isEmpty()) {
+            TopicQueryFilter filter = new TopicQueryFilter(name);
+            return service.searchByName(filter, pagination);
         } else {
             return service.getAll(pagination);
         }

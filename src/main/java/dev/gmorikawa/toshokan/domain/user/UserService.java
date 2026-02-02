@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public List<User> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.size);
+        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
         Page<User> page = repository.findAll(pageable);
 
         return page.getContent();
