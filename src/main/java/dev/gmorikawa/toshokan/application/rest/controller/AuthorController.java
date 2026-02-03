@@ -33,7 +33,7 @@ public class AuthorController {
     @GetMapping()
     public List<Author> getAll(
         @RequestAttribute(required = false) Pagination pagination,
-        @RequestParam(required = false) List<String> fullname
+        @RequestParam(required = false, name = "contains_fullname") String fullname
     ) {
         if (pagination == null) {
             if (fullname == null) {

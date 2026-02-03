@@ -33,7 +33,7 @@ public class TopicController {
     @GetMapping()
     public List<Topic> getAll(
         @RequestAttribute(required = false) Pagination pagination,
-        @RequestParam(required = false) List<String> name
+        @RequestParam(required = false, name = "contains_name") String name
     ) {
         if (pagination == null) {
             if (name == null) {

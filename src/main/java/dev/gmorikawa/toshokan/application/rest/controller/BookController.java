@@ -45,7 +45,7 @@ public class BookController {
     @GetMapping()
     public List<Book> getAll(
         @RequestAttribute(required = false) Pagination pagination,
-        @RequestParam(required = false) List<String> title
+        @RequestParam(required = false, name = "contains_title") String title
     ) {
         if (pagination == null) {
             if (title == null) {
