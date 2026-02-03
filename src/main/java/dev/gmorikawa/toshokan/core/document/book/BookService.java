@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dev.gmorikawa.toshokan.core.auth.contract.Authorization;
@@ -28,19 +27,26 @@ public class BookService {
         this.repository = repository;
     }
 
-    public List<Book> searchByTitle(String query, Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
-        Page<Book> page = repository.searchByTitle(query, pageable);
+    public List<Book> searchByTitle(BookQueryFilter filter) {
+        return repository
+            .searchByTitle(
+                filter.getTitle().getValue()
+            );
+    }
+
+    public List<Book> searchByTitle(BookQueryFilter filter, Pagination pagination) {
+        Page<Book> page = repository
+            .searchByTitle(
+                filter.getTitle().getValue(),
+                PageRequest.of(pagination.page - 1, pagination.limit)
+            );
+
         return page.getContent();
     }
 
-    public List<Book> searchByTitle(String query) {
-        return repository.searchByTitle(query);
-    }
-
     public List<Book> getAll(Pagination pagination) {
-        Pageable pageable = PageRequest.of(pagination.page - 1, pagination.limit);
-        Page<Book> page = repository.findAll(pageable);
+        Page<Book> page = repository
+            .findAll(PageRequest.of(pagination.page - 1, pagination.limit));
 
         return page.getContent();
     }

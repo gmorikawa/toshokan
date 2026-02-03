@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import dev.gmorikawa.toshokan.core.document.book.Book;
+import dev.gmorikawa.toshokan.core.document.book.BookQueryFilter;
 import dev.gmorikawa.toshokan.core.document.book.BookService;
 import dev.gmorikawa.toshokan.core.document.file.DocumentFile;
 import dev.gmorikawa.toshokan.core.document.file.DocumentFileService;
@@ -44,18 +45,20 @@ public class BookController {
     @GetMapping()
     public List<Book> getAll(
         @RequestAttribute(required = false) Pagination pagination,
-        @RequestParam(required = false) String query
+        @RequestParam(required = false) List<String> title
     ) {
         if (pagination == null) {
-            if (query != null && !query.isEmpty()) {
-                return service.searchByTitle(query);
-            } else {
+            if (title == null) {
                 return service.getAll();
+            } else {
+                BookQueryFilter filter = new BookQueryFilter(title);
+                return service.searchByTitle(filter);
             }
         }
 
-        if (query != null && !query.isEmpty()) {
-            return service.searchByTitle(query, pagination);
+        if (title != null && !title.isEmpty()) {
+            BookQueryFilter filter = new BookQueryFilter(title);
+            return service.searchByTitle(filter, pagination);
         } else {
             return service.getAll(pagination);
         }
