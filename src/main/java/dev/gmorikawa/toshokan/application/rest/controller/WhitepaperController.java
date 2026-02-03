@@ -33,7 +33,10 @@ public class WhitepaperController {
     private final WhitepaperService service;
     private final DocumentFileService documentFileService;
 
-    public WhitepaperController(WhitepaperService service, DocumentFileService documentFileService) {
+    public WhitepaperController(
+        WhitepaperService service,
+        DocumentFileService documentFileService
+    ) {
         this.service = service;
         this.documentFileService = documentFileService;
     }

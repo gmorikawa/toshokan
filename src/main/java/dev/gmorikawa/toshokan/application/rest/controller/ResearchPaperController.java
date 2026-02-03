@@ -33,7 +33,10 @@ public class ResearchPaperController {
     private final ResearchPaperService service;
     private final DocumentFileService documentFileService;
 
-    public ResearchPaperController(ResearchPaperService service, DocumentFileService documentFileService) {
+    public ResearchPaperController(
+        ResearchPaperService service,
+        DocumentFileService documentFileService
+    ) {
         this.service = service;
         this.documentFileService = documentFileService;
     }

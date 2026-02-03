@@ -33,7 +33,10 @@ public class BookController {
     private final BookService service;
     private final DocumentFileService documentFileService;
 
-    public BookController(BookService service, DocumentFileService documentFileService) {
+    public BookController(
+        BookService service,
+        DocumentFileService documentFileService
+    ) {
         this.service = service;
         this.documentFileService = documentFileService;
     }
