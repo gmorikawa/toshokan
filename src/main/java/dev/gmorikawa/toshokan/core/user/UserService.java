@@ -100,7 +100,6 @@ public class UserService {
 
         User user = result.get();
 
-        user.setFullname(entity.getFullname());
         user.setEmail(entity.getEmail());
         user.setUsername(entity.getUsername());
 

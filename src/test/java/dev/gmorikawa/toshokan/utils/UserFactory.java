@@ -13,8 +13,7 @@ public class UserFactory {
             "admin",
             "admin@email.com",
             UserRole.ADMIN,
-            UserStatus.ACTIVE,
-            "Admin Test"
+            UserStatus.ACTIVE
         );
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import dev.gmorikawa.toshokan.core.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.core.user.enumerator.UserStatus;
 import dev.gmorikawa.toshokan.core.user.exception.ForbiddenAdminUpdateException;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,6 +22,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -46,26 +49,29 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status = UserStatus.ACTIVE;
 
-    @Column(length = 127)
-    private String fullname;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private UserProfile profile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private UserConfiguration configuration;
 
     public User() { }
 
-    public User(UUID id, String username, String password, String email, UserRole role, String fullname) {
+    public User(UUID id, String username, String password, String email, UserRole role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.fullname = fullname;
     }
 
-    public User(String username, String password, String email, UserRole role, String fullname) {
+    public User(String username, String password, String email, UserRole role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.fullname = fullname;
     }
 
     public UUID getId() {
@@ -114,12 +120,20 @@ public class User implements UserDetails {
         return status;
     }
 
-    public String getFullname() {
-        return fullname;
+    public UserProfile getProfile() {
+        return profile;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+    }
+
+    public UserConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(UserConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     public boolean hasRole(UserRole ...roles) {

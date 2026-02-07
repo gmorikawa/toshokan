@@ -12,7 +12,6 @@ public class UserWithoutPasswordDTO {
     private final String email;
     private final UserRole role;
     private final UserStatus status;
-    private final String fullname;
 
     public UserWithoutPasswordDTO (User user) {
         this.id = user.getId();
@@ -20,7 +19,6 @@ public class UserWithoutPasswordDTO {
         this.email = user.getEmail();
         this.role = user.getRole();
         this.status = user.getStatus();
-        this.fullname = user.getFullname();
     }
 
     public UUID getId() {
@@ -41,9 +39,5 @@ public class UserWithoutPasswordDTO {
 
     public UserStatus getStatus() {
         return status;
-    }
-
-    public String getFullname() {
-        return fullname;
     }
 }

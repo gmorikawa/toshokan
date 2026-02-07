@@ -38,8 +38,7 @@ public class AuthenticationService {
             user.getUsername(),
             user.getEmail(),
             user.getRole(),
-            user.getStatus(),
-            user.getFullname()
+            user.getStatus()
         );
 
         String token = jwtService.generateToken(user);

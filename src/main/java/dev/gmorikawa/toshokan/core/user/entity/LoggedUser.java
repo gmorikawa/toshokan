@@ -16,22 +16,19 @@ public class LoggedUser {
     private final String email;
     private final UserRole role;
     private final UserStatus status;
-    private final String fullname;
 
     public LoggedUser(
             UUID id,
             String username,
             String email,
             UserRole role,
-            UserStatus status,
-            String fullname
+            UserStatus status
     ) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.role = role;
         this.status = status;
-        this.fullname = fullname;
     }
 
     public LoggedUser(User user) {
@@ -40,7 +37,6 @@ public class LoggedUser {
         this.email = user.getEmail();
         this.role = user.getRole();
         this.status = user.getStatus();
-        this.fullname = user.getFullname();
     }
 
     public UUID getId() {
@@ -61,10 +57,6 @@ public class LoggedUser {
 
     public UserStatus getStatus() {
         return status;
-    }
-
-    public String getFullname() {
-        return fullname;
     }
 
     public boolean hasRole(UserRole ...roles) {

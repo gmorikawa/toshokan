@@ -24,7 +24,6 @@ public class UserUpdateTest extends UserTestEnvironment {
         user.setPassword("password");
         user.setEmail("john.doe@email.com");
         user.setRole(UserRole.READER);
-        user.setFullname("John Doe");
         User savedUser = service.create(admin, user);
 
         assertThat(savedUser).isNotNull();
@@ -32,11 +31,9 @@ public class UserUpdateTest extends UserTestEnvironment {
         // assertThat(savedUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(savedUser.getEmail()).isEqualTo(user.getEmail());
         assertThat(savedUser.getRole()).isEqualTo(user.getRole());
-        assertThat(savedUser.getFullname()).isEqualTo(user.getFullname());
         assertThat(savedUser.getStatus()).isEqualTo(UserStatus.ACTIVE);
 
         // Modify the created user apply the modifications
-        savedUser.setFullname("Joe Don");
         savedUser.setEmail("joe.don@email.com");
         savedUser.setUsername("joedon");
         User updatedUser = service.update(admin, savedUser.getId(), savedUser);
@@ -44,7 +41,6 @@ public class UserUpdateTest extends UserTestEnvironment {
         assertThat(updatedUser).isNotNull();
         assertThat(updatedUser.getUsername()).isEqualTo(savedUser.getUsername());
         assertThat(updatedUser.getEmail()).isEqualTo(savedUser.getEmail());
-        assertThat(updatedUser.getFullname()).isEqualTo(savedUser.getFullname());
 
         // clean-up
         clean(updatedUser);
@@ -61,7 +57,6 @@ public class UserUpdateTest extends UserTestEnvironment {
         user.setPassword("password");
         user.setEmail("john.doe@email.com");
         user.setRole(UserRole.READER);
-        user.setFullname("John Doe");
         User savedUser = service.create(admin, user);
 
         assertThat(savedUser).isNotNull();
@@ -69,7 +64,6 @@ public class UserUpdateTest extends UserTestEnvironment {
         // assertThat(savedUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(savedUser.getEmail()).isEqualTo(user.getEmail());
         assertThat(savedUser.getRole()).isEqualTo(user.getRole());
-        assertThat(savedUser.getFullname()).isEqualTo(user.getFullname());
         assertThat(savedUser.getStatus()).isEqualTo(UserStatus.ACTIVE);
 
         // Block the user

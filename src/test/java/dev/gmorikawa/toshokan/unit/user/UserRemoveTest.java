@@ -24,7 +24,6 @@ public class UserRemoveTest extends UserTestEnvironment {
         user.setPassword("password");
         user.setEmail("john.doe@email.com");
         user.setRole(UserRole.READER);
-        user.setFullname("John Doe");
         User savedUser = service.create(admin, user);
 
         assertThat(savedUser).isNotNull();
@@ -32,7 +31,6 @@ public class UserRemoveTest extends UserTestEnvironment {
         // assertThat(savedUser.getPassword()).isEqualTo(user.getPassword());
         assertThat(savedUser.getEmail()).isEqualTo(user.getEmail());
         assertThat(savedUser.getRole()).isEqualTo(user.getRole());
-        assertThat(savedUser.getFullname()).isEqualTo(user.getFullname());
         assertThat(savedUser.getStatus()).isEqualTo(UserStatus.ACTIVE);
 
         // Remove the author and check if it still exists in the database
