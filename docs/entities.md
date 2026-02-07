@@ -10,12 +10,18 @@
 * _email_: __unique, not null, varchar(127)__;
 * _role_: __UserRole, not null__;
 * _status_: __UserStatus, not null__;
-* _fullname_: __varchar(127)__;
 
 ### User Configuration
 
 * _user_: __User, foreign key, UUID, not null__
-* _firstAccess_: __not null, boolean__
+* _email\_confirmed_: __not null, boolean__
+
+### User Profile
+
+* _user_: __User, foreign key, UUID, not null__
+* _fullname_: __varchar(127)__;
+* _biography_: __varchar(127)__;
+* _avatar_: __File__;
 
 ### FileType
 

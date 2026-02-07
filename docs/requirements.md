@@ -12,9 +12,10 @@
     3. A __unique e-mail address__ for notification ans password recovery.
 4. Only authenticated users may access system resources. Unauthenticated access is not permitted.
 5. Authentication is based on an access token issued upon successful login.
-6. The token have a configurable lifetime in which the _admin_ user can modify it. The default value is 7 days to expire.
-7. If a token is expired the user will issue a new valid access token with a refresh token.
-8. If a user is blocked, any active access or refresh tokens must be revoked immediately.
+6. Created users should confirm their email address by accessing a authorization link sent to their email. Prior to this confirmation, users cannot access their account.
+7. The token have a configurable lifetime in which the _admin_ user can modify it. The default value is 7 days to expire.
+8. If a token is expired the user will issue a new valid access token with a refresh token.
+9. If a user is blocked, any active access or refresh tokens must be revoked immediately.
 
 ### User Registration and Account Management
 
@@ -27,6 +28,18 @@
 3. When creating a user, the _admin_ must assign a temporary password. Upon first login, the user is required to set a new permanent password.
 4. _Admin_ can block or reactivate user accounts.
 5. Blocking a user prevents system access but does not remove their data.
+
+### User Profile
+
+1. Users can edit their own profile information.
+2. Profile information include (all not required):
+    1. Full name.
+    2. Biography.
+    3. Profile picture.
+3. A profile picture should be only PNG or JPEG types and cannot be over 20mb.
+4. When a profile picture is modified, if a previous exists it is deleted.
+5. The user can change email and password, but cannot change the username. Only the _admin_ user can change the username.
+6. If email address is changed, the user should re-do the email confirmation process.
 
 ### Role Permissions
 
