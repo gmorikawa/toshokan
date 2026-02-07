@@ -57,3 +57,15 @@ storage:
         access-key: ${MINIO_ACCESS_KEY}
         secret-key: ${MINIO_SECRET_KEY}
         bucket: ${MINIO_BUCKET}
+
+email:
+    host: ${EMAIL_HOST}
+    port: ${EMAIL_PORT}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+        mail:
+            smtp:
+                auth: true
+                starttls:
+                    enable: true

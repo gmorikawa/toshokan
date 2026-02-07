@@ -25,15 +25,18 @@ public class UserService {
     private final Authorization authorization;
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    // private final EmailClient emailClient;
 
     public UserService(
             Authorization authorization,
             UserRepository repository,
             PasswordEncoder passwordEncoder
+            // EmailClient emailClient
     ) {
         this.authorization = authorization;
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        // this.emailClient = emailClient;
     }
 
     public List<User> getAll() {
