@@ -33,13 +33,7 @@ public class AuthenticationService {
             .findByUsername(credentials.getUsername())
             .orElseThrow(() -> new InvalidCredentialsException());
 
-        LoggedUser loggedUser = new LoggedUser(
-            user.getId(),
-            user.getUsername(),
-            user.getEmail(),
-            user.getRole(),
-            user.getStatus()
-        );
+        LoggedUser loggedUser = new LoggedUser(user);
 
         String token = jwtService.generateToken(user);
 

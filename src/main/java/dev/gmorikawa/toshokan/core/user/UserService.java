@@ -83,6 +83,8 @@ public class UserService {
     }
 
     public User update(LoggedUser loggedUser, UUID id, User entity) {
+        entity.getProfile().setId(id);
+
         if (!loggedUser.hasRole(UserRole.ADMIN) && !loggedUser.isUserEqual(entity)) {
             throw new UnauthorizedActionException();
         }
@@ -105,6 +107,7 @@ public class UserService {
 
         user.setEmail(entity.getEmail());
         user.setUsername(entity.getUsername());
+        user.setProfile(entity.getProfile());
 
         return repository.save(user);
     }

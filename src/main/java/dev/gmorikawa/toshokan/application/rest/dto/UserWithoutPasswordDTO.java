@@ -2,23 +2,29 @@ package dev.gmorikawa.toshokan.application.rest.dto;
 
 import java.util.UUID;
 
+import dev.gmorikawa.toshokan.application.rest.dto.user.UserProfileDTO;
 import dev.gmorikawa.toshokan.core.user.User;
 import dev.gmorikawa.toshokan.core.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.core.user.enumerator.UserStatus;
 
 public class UserWithoutPasswordDTO {
+
     private final UUID id;
     private final String username;
     private final String email;
     private final UserRole role;
     private final UserStatus status;
+    private final UserProfileDTO profile;
 
-    public UserWithoutPasswordDTO (User user) {
+    public UserWithoutPasswordDTO(
+        User user
+    ) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.role = user.getRole();
         this.status = user.getStatus();
+        this.profile = new UserProfileDTO(user.getProfile());
     }
 
     public UUID getId() {
@@ -39,5 +45,9 @@ public class UserWithoutPasswordDTO {
 
     public UserStatus getStatus() {
         return status;
+    }
+
+    public UserProfileDTO getProfile() {
+        return profile;
     }
 }

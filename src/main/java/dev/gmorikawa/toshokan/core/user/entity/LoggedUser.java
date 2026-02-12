@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import dev.gmorikawa.toshokan.application.rest.dto.user.UserProfileDTO;
 import dev.gmorikawa.toshokan.core.user.User;
 import dev.gmorikawa.toshokan.core.user.enumerator.UserRole;
 import dev.gmorikawa.toshokan.core.user.enumerator.UserStatus;
@@ -16,19 +17,22 @@ public class LoggedUser {
     private final String email;
     private final UserRole role;
     private final UserStatus status;
+    private final UserProfileDTO profile;
 
     public LoggedUser(
             UUID id,
             String username,
             String email,
             UserRole role,
-            UserStatus status
+            UserStatus status,
+            UserProfileDTO profile
     ) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.role = role;
         this.status = status;
+        this.profile = profile;
     }
 
     public LoggedUser(User user) {
@@ -37,6 +41,7 @@ public class LoggedUser {
         this.email = user.getEmail();
         this.role = user.getRole();
         this.status = user.getStatus();
+        this.profile = new UserProfileDTO(user.getProfile());
     }
 
     public UUID getId() {
@@ -57,6 +62,10 @@ public class LoggedUser {
 
     public UserStatus getStatus() {
         return status;
+    }
+
+    public UserProfileDTO getProfile() {
+        return profile;
     }
 
     public boolean hasRole(UserRole ...roles) {

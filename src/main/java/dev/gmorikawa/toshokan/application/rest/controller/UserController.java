@@ -58,7 +58,9 @@ public class UserController {
         @PathVariable UUID id
     ) {
         User user = service.getById(loggedUser, id);
-        return user != null ? new UserWithoutPasswordDTO(user) : null;
+        return user != null
+            ? new UserWithoutPasswordDTO(user)
+            : null;
     }
 
     @PostMapping()
@@ -66,7 +68,9 @@ public class UserController {
         @RequestAttribute LoggedUser loggedUser,
         @RequestBody User user
     ) {
-        return new UserWithoutPasswordDTO(service.create(loggedUser, user));
+        return new UserWithoutPasswordDTO(
+            service.create(loggedUser, user)
+        );
     }
 
     @PatchMapping("/{id}")
@@ -75,7 +79,9 @@ public class UserController {
         @PathVariable UUID id,
         @RequestBody User user
     ) {
-        return new UserWithoutPasswordDTO(service.update(loggedUser, id, user));
+        return new UserWithoutPasswordDTO(
+            service.update(loggedUser, id, user)
+        );
     }
 
     @DeleteMapping("/{id}")
