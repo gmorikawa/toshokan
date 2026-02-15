@@ -24,7 +24,9 @@ public class UserWithoutPasswordDTO {
         this.email = user.getEmail();
         this.role = user.getRole();
         this.status = user.getStatus();
-        this.profile = new UserProfileDTO(user.getProfile());
+        this.profile = user.getProfile() != null
+            ? new UserProfileDTO(user.getProfile())
+            : null;
     }
 
     public UUID getId() {
